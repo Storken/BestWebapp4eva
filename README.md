@@ -3,11 +3,6 @@ BestWebapp4eva
 
 Best webapp forever!
 
-word
-
-whoa
-
-git in terminal HAXXORzzzzzz
-
-helo walld
+Erik Tholén - 9209280537 ltd180@gmail.com
+ 
 
