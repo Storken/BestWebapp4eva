@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import models.Cat;
+import models.BasicEntity;
 import services.CatService;
 
 /**
@@ -22,7 +22,7 @@ import services.CatService;
 @ViewScoped
 public class BasicView implements Serializable{
     
-    private List<Cat> cats;
+    private List<BasicEntity> cats;
     
     @ManagedProperty("#{catService}")
     private CatService service;
@@ -32,7 +32,7 @@ public class BasicView implements Serializable{
         cats = service.createCats(10);
     }
     
-    public List<Cat> getCats() {
+    public List<BasicEntity> getCats() {
         return cats;
     }
     

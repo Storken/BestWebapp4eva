@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.UUID;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import models.Cat;
+import models.BasicEntity;
 
 /**
  *
@@ -51,10 +51,10 @@ public class CatService {
         names[9] = "Myskatt";
     }
      
-    public List<Cat> createCats(int size) {
-        List<Cat> list = new ArrayList<>();
+    public List<BasicEntity> createCats(int size) {
+        List<BasicEntity> list = new ArrayList<>();
         for(int i = 0 ; i < size ; i++) {
-            list.add(new Cat(getRandomId(), getRandomName(), getRandomQuantity(), getRandomColor(), getRandomPrice(), getRandomSoldState()));
+            list.add(new BasicEntity(getRandomId(), getRandomName(), getRandomQuantity(), getRandomColor(), getRandomPrice(), getRandomSoldState()));
         }
          
         return list;
