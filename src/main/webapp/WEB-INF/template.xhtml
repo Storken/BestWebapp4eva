@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <h:outputStylesheet library="css" name="default.css"  />
+        <title>JSF Shop</title>
+    </h:head>
+
+    <h:body>
+        <header>
+        </header>
+        <nav class="navbar navbar-default" role="navigation">
+            <h:link value="Home" class="navbar-brand" outcome="home" />
+            <h:link value="Products" class="navbar-brand" outcome="products" />
+            <h:link value="Dashboard" class="navbar-brand" outcome="dashboard" />
+            <h:link value="Profile" class="navbar-brand" outcome="profile" />        
+        </nav>
+       
+        <div id="content">
+            <ui:insert name="content">Content</ui:insert>
+        </div>
+        <footer>
+        </footer>
+    </h:body>
+
+</html>
