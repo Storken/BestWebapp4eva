@@ -31,3 +31,9 @@ body {
     left: 0%;
     bottom: 0%;
 }
+
+#headimg {
+    position: relative;
+    top: -10px;
+    left: 42%;
+}
