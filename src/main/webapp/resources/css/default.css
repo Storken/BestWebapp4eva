@@ -8,3 +8,15 @@ and open the template in the editor.
     Author     : Bosch
 */
 
+#headerindx {
+    position: absolute;
+    left: 35%;
+    top: 30%;
+}
+
+#indxsearch {
+    position: absolute;
+    left: 30%;
+    right: 30%;
+    top: 40%;
+}
