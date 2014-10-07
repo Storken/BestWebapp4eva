@@ -18,6 +18,7 @@ import services.EntityService;
 /**
  *
  * @author simon
+ * @author erik
  */
 @ManagedBean(name="dtBasicView")
 @ViewScoped
