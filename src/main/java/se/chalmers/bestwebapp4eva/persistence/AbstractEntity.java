@@ -16,6 +16,7 @@ import javax.persistence.MappedSuperclass;
  * Base class for all entities that will be stored in the database
  * 
  * @author erik
+ * @author simon
  */
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable{

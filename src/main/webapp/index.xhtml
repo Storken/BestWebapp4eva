@@ -12,27 +12,28 @@
 <h:body>
 	<h1>Best Webapp4eva</h1>
         <br></br>
-        <h2>Epic cat data table 4eva</h2>
+        <h2>Epic data table 4eva</h2>
         <h:form>
-            <p:dataTable var="cat" value="#{dtBasicView.cats}">
+            <p:dataTable var="ent" value="#{dtBasicView.entities}">
             <p:column headerText="Id">
-                <h:outputText value="#{cat.id}" />
+                <h:outputText value="#{ent.id}" />
             </p:column>
  
             <p:column headerText="Name">
-                <h:outputText value="#{cat.title}" />
+                <h:outputText value="#{ent.title}" />
             </p:column>
  
-            <p:column headerText="Color">
-                <h:outputText value="#{cat.color}" />
-            </p:column>
-            
+                                
             <p:column headerText="Price">
-                <h:outputText value="#{cat.price}" />
+                <h:outputText value="$#{ent.price}" />
             </p:column>
- 
+
             <p:column headerText="Quantity">
-                <h:outputText value="#{cat.quantity}" />
+                <h:outputText value="#{ent.quantity}" />
+            </p:column>
+
+            <p:column headerText="Unit">
+                <h:outputText value="#{ent.unit}" />
             </p:column>
             </p:dataTable>
         </h:form>

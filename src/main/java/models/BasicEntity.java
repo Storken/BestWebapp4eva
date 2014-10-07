@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import se.chalmers.bestwebapp4eva.persistence.AbstractEntity;
 
 /**
  *
@@ -12,7 +13,7 @@ import javax.persistence.Enumerated;
 @Entity
 public class BasicEntity extends AbstractEntity{
 
-     public enum Unit {
+    public enum Unit {
         kg,
         pcs,
         l
