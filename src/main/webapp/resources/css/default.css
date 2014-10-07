@@ -8,15 +8,26 @@ and open the template in the editor.
     Author     : Bosch
 */
 
-#headerindx {
+body {
+    background-color: #66ccff;
+}
+
+#indxdiv {
     position: absolute;
     left: 35%;
-    top: 30%;
+    top: 300px;
+    bottom: 60%;
+    height: 100px;
+}
+
+#headerindx {
+    position: inherit;
+    left: 20px;
+    top: 0%;
 }
 
 #indxsearch {
-    position: absolute;
-    left: 30%;
-    right: 30%;
-    top: 40%;
+    position: inherit;
+    left: 0%;
+    bottom: 0%;
 }
