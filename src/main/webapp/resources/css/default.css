@@ -14,26 +14,40 @@ body {
 
 #indxdiv {
     position: absolute;
-    left: 35%;
+    left: 0px;
+    right: 0px;
     top: 300px;
-    bottom: 60%;
     height: 100px;
+    width: 600px;
+    margin: auto;
 }
 
 #headerindx {
-    position: inherit;
+    position: absolute;
     left: 20px;
     top: 0%;
 }
 
 #indxsearch {
-    position: inherit;
-    left: 0%;
+    position: absolute;
     bottom: 0%;
+    width:100%;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
 }
 
 #headimg {
-    position: relative;
-    top: -10px;
-    left: 42%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+}
+
+#headerdiv {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
 }
