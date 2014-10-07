@@ -25,7 +25,7 @@ public class BasicView implements Serializable{
     
     private List<BasicEntity> entities;
     
-    BasicEntityCollection bec = new BasicEntityCollection();
+    // BasicEntityCollection bec = new BasicEntityCollection();
     
     @ManagedProperty("#{entityService}")
     private EntityService service;
