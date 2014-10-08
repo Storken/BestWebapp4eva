@@ -1,10 +1,9 @@
-package se.chalmers.bestwebapp4eva.models;
+package se.chalmers.bestwebapp4eva.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import se.chalmers.bestwebapp4eva.persistence.AbstractEntity;
 
 /**
  *

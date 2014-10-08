@@ -1,9 +1,9 @@
-package se.chalmers.bestwebapp4eva.models;
+package se.chalmers.bestwebapp4eva.entity;
 
 import java.util.List;
 import javax.ejb.Local;
-import se.chalmers.bestwebapp4eva.models.BasicEntity.Unit;
-import se.chalmers.bestwebapp4eva.persistence.IDAO;
+import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
+import se.chalmers.bestwebapp4eva.dao.IDAO;
 
 /**
  *

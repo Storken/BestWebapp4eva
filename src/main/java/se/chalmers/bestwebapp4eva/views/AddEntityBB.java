@@ -12,7 +12,7 @@ import javax.inject.Named;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import se.chalmers.bestwebapp4eva.models.BasicEntity.Unit;
+import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 
 /**
  *
@@ -23,16 +23,16 @@ import se.chalmers.bestwebapp4eva.models.BasicEntity.Unit;
 public class AddEntityBB {
     
     private Long id;
-    @NotNull(message = "Only 2-20 characters allowed")
-    @Size(min = 2, max = 20, message = "Only 2-20 characters allowed")
+    //@NotNull(message = "Only 2-20 characters allowed")
+    //@Size(min = 2, max = 20, message = "Only 2-20 characters allowed")
     private String name;
     
-    @NotNull(message = "Price < 0 not allowed")
-    @Min(value = 0, message = "Price < 0 not allowed")
+    //@NotNull(message = "Price < 0 not allowed")
+    //@Min(value = 0, message = "Price < 0 not allowed")
     private double price;
     
-    @NotNull(message = "Quantity < 0 not allowed")
-    @Min(value = 0, message = "Quantity < 0 not allowed")
+    //@NotNull(message = "Quantity < 0 not allowed")
+    //@Min(value = 0, message = "Quantity < 0 not allowed")
     private double quantity;
     
     private Unit unit;

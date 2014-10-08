@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.chalmers.bestwebapp4eva.models;
+package se.chalmers.bestwebapp4eva.entity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import se.chalmers.bestwebapp4eva.persistence.AbstractDAO;
+import se.chalmers.bestwebapp4eva.dao.AbstractDAO;
 
 /**
  *

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.chalmers.bestwebapp4eva.persistence;
+package se.chalmers.bestwebapp4eva.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -34,6 +34,10 @@ public abstract class AbstractEntity implements Serializable{
     
     public Long getId(){
         return id;
+    }
+    
+    public void setId(long id) {
+        this.id = id;
     }
 
     @Override

@@ -5,14 +5,13 @@
  */
 package se.chalmers.bestwebapp4eva.ctrl;
 
-import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.models.BasicEntity;
-import se.chalmers.bestwebapp4eva.models.IBasicEntityCollection;
-import se.chalmers.bestwebapp4eva.models.MainContainer;
+import se.chalmers.bestwebapp4eva.entity.BasicEntity;
+import se.chalmers.bestwebapp4eva.entity.IBasicEntityCollection;
 import se.chalmers.bestwebapp4eva.views.AddEntityBB;
 
 /**
@@ -21,34 +20,14 @@ import se.chalmers.bestwebapp4eva.views.AddEntityBB;
  */
 @Named
 @RequestScoped
-public class AddEntityCtrl {
-private IBasicEntityCollection bec;
+public class AddEntityCtrl { 
+    @EJB
+    private IBasicEntityCollection bec;
+    @Inject
     private AddEntityBB entityBB;
-
-    protected AddEntityCtrl() {
-        // Must have for CDI
-    }
-
-    @PostConstruct
-    public void post() {
-    }
-
-    @PreDestroy
-    public void pre() {
-    }
-
-    @Inject
-    public AddEntityCtrl(MainContainer mc) {
-        this.bec = mc.getBasicEntityCollection();
-    }
-    
-    // Lie this --------------------
-    @Inject
-    public void setAddEntityBB(AddEntityBB addEntityBB) {
-        this.entityBB = addEntityBB;
-    }
    
-    public void add() {
+    public void add(ActionEvent actionEvent) {
+        System.out.println("We are here");
         bec.create(new BasicEntity(
                 entityBB.getName(), 
                 entityBB.getPrice(), 

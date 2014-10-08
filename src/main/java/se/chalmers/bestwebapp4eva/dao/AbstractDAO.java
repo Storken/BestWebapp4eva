@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.chalmers.bestwebapp4eva.persistence;
+package se.chalmers.bestwebapp4eva.dao;
 
 import java.util.ArrayList;
 import java.util.List;

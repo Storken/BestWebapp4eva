@@ -4,7 +4,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
  
 <h:head>
@@ -13,8 +12,7 @@
 	<h1>Best Webapp4eva</h1>
         <br></br>
         <h2>Epic data table 4eva</h2>
-        <h:form>
-            <p:dataTable var="ent" value="#{dtBasicView.entities}">
+        <p:dataTable id="entities" var="ent" value="#{basicView.entities}">
             <p:column headerText="Id">
                 <h:outputText value="#{ent.id}" />
             </p:column>
@@ -50,10 +48,10 @@
                         
                     </h:panelGrid>
                     <div class="btn-group">
-                        <h:commandButton value="Add entity" action="#{addEntityCtrl.add()}" class="btn btn-default"/>
+                        <p:commandButton value="Add entity"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
                     </div>
                 </h:form>
-        </h:form>
+        
         
  
 </h:body>
