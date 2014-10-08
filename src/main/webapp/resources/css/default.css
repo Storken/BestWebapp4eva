@@ -37,6 +37,7 @@ body {
 }
 
 #headimg {
+<<<<<<< HEAD
     position: absolute;
     top: 0px;
     left: 0px;
@@ -53,3 +54,10 @@ body {
     right: 0px;
     margin: auto;
 }
+=======
+    position: relative;
+    top: -10px;
+    left: 42%;
+}
+
+>>>>>>> origin/designDev
