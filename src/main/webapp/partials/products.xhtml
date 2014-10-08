@@ -12,31 +12,45 @@
          <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
         <br/>
-        <h2>Epic cat data table 4eva</h2>
-        <h:form>
-            <p:dataTable var="cat" value="#{dtBasicView.cats}">
+        <p:dataTable id="entities" var="ent" value="#{basicView.entities}">
             <p:column headerText="Id">
-                <h:outputText value="#{cat.id}" />
+                <h:outputText value="#{ent.id}" />
             </p:column>
  
             <p:column headerText="Name">
-                <h:outputText value="#{cat.name}" />
+                <h:outputText value="#{ent.title}" />
             </p:column>
  
-            <p:column headerText="Color">
-                <h:outputText value="#{cat.color}" />
-            </p:column>
-            
+                                
             <p:column headerText="Price">
-                <h:outputText value="#{cat.price}" />
+                <h:outputText value="$#{ent.price}" />
             </p:column>
- 
+
             <p:column headerText="Quantity">
-                <h:outputText value="#{cat.quantity}" />
+                <h:outputText value="#{ent.quantity}" />
+            </p:column>
+
+            <p:column headerText="Unit">
+                <h:outputText value="#{ent.unit}" />
             </p:column>
             </p:dataTable>
-        </h:form>
-        
+            <h3>Add entity</h3>
+                 <h:form>
+                    <h:panelGrid columns="2" class="table">
+                        <h:outputLabel value="Name"/>
+                        <h:inputText value="#{addEntityBB.name}"/> 
+                        <h:outputLabel value="Price" />
+                        <h:inputText value="#{addEntityBB.price}"/>
+                        <h:outputLabel value="Quantity" />
+                        <h:inputText value="#{addEntityBB.quantity}"/>
+                        <h:outputLabel value="Unit" />
+                        <h:inputText value="#{addEntityBB.unit}"/>
+                        
+                    </h:panelGrid>
+                    <div class="btn-group">
+                        <p:commandButton value="Add entity"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
+                    </div>
+                </h:form>
             </ui:define>
         </ui:composition>
  
