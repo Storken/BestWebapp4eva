@@ -11,9 +11,9 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import models.BasicEntity;
-import models.BasicEntityCollection;
-import services.EntityService;
+import se.chalmers.bestwebapp4eva.models.BasicEntity;
+import se.chalmers.bestwebapp4eva.models.BasicEntityCollection;
+import se.chalmers.bestwebapp4eva.services.EntityService;
 
 /**
  *

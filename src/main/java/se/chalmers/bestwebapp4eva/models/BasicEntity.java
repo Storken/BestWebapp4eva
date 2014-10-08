@@ -1,4 +1,4 @@
-package models;
+package se.chalmers.bestwebapp4eva.models;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
