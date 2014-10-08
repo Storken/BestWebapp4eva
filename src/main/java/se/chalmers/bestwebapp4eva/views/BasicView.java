@@ -46,7 +46,5 @@ public class BasicView implements Serializable{
     
     public void setService(EntityService service) {
         this.service = service;
-    }
-    
-    
+    }    
 }
