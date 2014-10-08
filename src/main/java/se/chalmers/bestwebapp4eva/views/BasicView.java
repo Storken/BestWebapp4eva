@@ -26,22 +26,22 @@ public class BasicView implements Serializable{
     
     private List<BasicEntity> entities;
     
-    // BasicEntityCollection bec = new BasicEntityCollection();
+    BasicEntityCollection bec = new BasicEntityCollection();
     
     @ManagedProperty("#{entityService}")
     private EntityService service;
     
     @PostConstruct
     public void init() {
-        entities = service.createEntities();
-    //    for(BasicEntity e : entities) {
-    //        bec.create(e);
-    //    }
+    //    entities = service.createEntities();
+        for(BasicEntity e : entities) {
+            bec.create(e);
+        }
     }
     
     public List<BasicEntity> getEntities() { 
-          return entities;
-    //    return bec.findAll();
+    //      return entities;
+            return bec.findAll();
     }
     
     public void setService(EntityService service) {
