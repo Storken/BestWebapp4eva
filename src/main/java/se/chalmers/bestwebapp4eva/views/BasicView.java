@@ -26,8 +26,6 @@ import se.chalmers.bestwebapp4eva.entity.IBasicEntityCollection;
 @ViewScoped
 public class BasicView implements Serializable{
     
-    private List<BasicEntity> entities;
-    
     @EJB    
     private IBasicEntityCollection bec;
     
@@ -35,14 +33,7 @@ public class BasicView implements Serializable{
         
     }
     
-    @PostConstruct
-    public void init() {
-        BasicEntity test = new BasicEntity("erik", 20, 1, Unit.kg);
-        bec.create(test);
-    }
-    
     public List<BasicEntity> getEntities() { 
-    //      return entities;
-            return bec.findAll();
+         return bec.findAll();
     }
 }
