@@ -36,6 +36,23 @@
                 <h:outputText value="#{ent.unit}" />
             </p:column>
             </p:dataTable>
+            <h3>Add entity</h3>
+                 <h:form>
+                    <h:panelGrid columns="2" class="table">
+                        <h:outputLabel value="Name"/>
+                        <h:inputText value="#{addEntityBB.name}"/> 
+                        <h:outputLabel value="Price" />
+                        <h:inputText value="#{addEntityBB.price}"/>
+                        <h:outputLabel value="Quantity" />
+                        <h:inputText value="#{addEntityBB.quantity}"/>
+                        <h:outputLabel value="Unit" />
+                        <h:inputText value="#{addEntityBB.unit}"/>
+                        
+                    </h:panelGrid>
+                    <div class="btn-group">
+                        <h:commandButton value="Add entity" action="#{addEntityCtrl.save()}" class="btn btn-default"/>
+                    </div>
+                </h:form>
         </h:form>
         
  
