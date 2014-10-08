@@ -11,8 +11,11 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.inject.Inject;
 import se.chalmers.bestwebapp4eva.models.BasicEntity;
+import se.chalmers.bestwebapp4eva.models.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.models.BasicEntityCollection;
+import se.chalmers.bestwebapp4eva.models.IBasicEntityCollection;
 import se.chalmers.bestwebapp4eva.services.EntityService;
 
 /**
@@ -26,17 +29,28 @@ public class BasicView implements Serializable{
     
     private List<BasicEntity> entities;
     
-    BasicEntityCollection bec = new BasicEntityCollection();
+    private IBasicEntityCollection bec;
     
     @ManagedProperty("#{entityService}")
     private EntityService service;
     
+    public BasicView() {
+        
+    }
+    
+    @Inject
+    public BasicView(IBasicEntityCollection bec) {
+        this.bec = bec;
+    }
+    
     @PostConstruct
     public void init() {
-    //    entities = service.createEntities();
-        for(BasicEntity e : entities) {
-            bec.create(e);
-        }
+        entities = service.createEntities();
+        BasicEntity test = new BasicEntity("erik", 20, 1, Unit.kg);
+        bec.create(test);
+        //for(BasicEntity e : entities) {
+          //  bec.create(e);
+        //}
     }
     
     public List<BasicEntity> getEntities() { 

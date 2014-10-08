@@ -37,7 +37,13 @@ public abstract class AbstractDAO<T,K>
      */
     @Override
     public void create(T t) {
-        getEntityManager().persist(t);
+        EntityManager em = getEntityManager();
+        if(em != null) {
+            em.persist(t);
+        }else{
+            System.out.println("EntityManager == NULLLLLLLL");
+        }
+        //getEntityManager().persist(t);
     }
 
     /**
