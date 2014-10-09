@@ -12,25 +12,25 @@
          <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
         <br/>
-        <p:dataTable id="entities" var="ent" value="#{basicView.entities}" scrollable="true" scrollWidth="100%" scrollHeight="600">
-            <p:column headerText="Id">
+        <p:dataTable id="entities" var="ent" value="#{basicView.entities}" sortMode="multiple" scrollable="true" scrollWidth="100%" scrollHeight="600">
+            <p:column headerText="Id" sortBy="#{ent.id}">
                 <h:outputText value="#{ent.id}" />
             </p:column>
  
-            <p:column headerText="Name">
+            <p:column headerText="Name" sortBy="#{ent.title}">
                 <h:outputText value="#{ent.title}" />
             </p:column>
  
                                 
-            <p:column headerText="Price">
+            <p:column headerText="Price" sortBy="#{ent.price}">
                 <h:outputText value="$#{ent.price}" />
             </p:column>
 
-            <p:column headerText="Quantity">
+            <p:column headerText="Quantity" sortBy="#{ent.quantity}">
                 <h:outputText value="#{ent.quantity}" />
             </p:column>
 
-            <p:column headerText="Unit">
+            <p:column headerText="Unit" sortBy="#{ent.unit}">
                 <h:outputText value="#{ent.unit}" />
             </p:column>
             </p:dataTable>

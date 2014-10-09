@@ -6,12 +6,17 @@
 package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.SelectEvent;
+import org.primefaces.model.LazyDataModel;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.dao.BasicEntityCollection;
@@ -26,7 +31,9 @@ import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
 @ViewScoped
 public class BasicView implements Serializable{
     
-    private List<BasicEntity> entities;
+    private LazyDataModel<BasicEntity> entities;
+    
+    private BasicEntity selectedEntity;
     
     @EJB    
     private IBasicEntityCollection bec;
@@ -37,12 +44,15 @@ public class BasicView implements Serializable{
     
     @PostConstruct
     public void init() {
-        BasicEntity test = new BasicEntity("erik", 20, 1, Unit.kg);
-        bec.create(test);
+        // TODO Bulk add code here!!!
     }
     
     public List<BasicEntity> getEntities() { 
-    //      return entities;
             return bec.findAll();
+    }
+    
+    public void onRowSelect(SelectEvent evt) {
+        FacesMessage msg = new FacesMessage("Entity selected.", ((BasicEntity)evt.getObject()).getId() + "");
+        FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 }
