@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.chalmers.bestwebapp4eva.views;
+package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
 import java.util.List;
@@ -14,8 +14,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
-import se.chalmers.bestwebapp4eva.entity.BasicEntityCollection;
-import se.chalmers.bestwebapp4eva.entity.IBasicEntityCollection;
+import se.chalmers.bestwebapp4eva.dao.BasicEntityCollection;
+import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
 
 /**
  *

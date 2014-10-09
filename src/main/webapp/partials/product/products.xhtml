@@ -12,7 +12,7 @@
          <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
         <br/>
-        <p:dataTable id="entities" var="ent" value="#{basicView.entities}">
+        <p:dataTable id="entities" var="ent" value="#{basicView.entities}" scrollable="true" scrollWidth="100%" scrollHeight="600">
             <p:column headerText="Id">
                 <h:outputText value="#{ent.id}" />
             </p:column>
