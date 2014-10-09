@@ -12,6 +12,7 @@
         <from-outcome>home</from-outcome>
         <to-view-id>index.xhtml</to-view-id>
     </navigation-case>
+     <from-view-id>*</from-view-id>
     <navigation-case>
         <from-outcome>products</from-outcome>
         <to-view-id>partials/products.xhtml</to-view-id>
@@ -25,6 +26,15 @@
         <to-view-id>partials/profile.xhtml</to-view-id>
     </navigation-case>
 </navigation-rule>       
+<navigation-rule>
+    <from-view-id>/index.html</from-view-id>
+    <navigtion-case>
+            <from-action>#{authBean.login}</from-action>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>partials/dashboard.xhtml</to-view-id>
+            <redirect/>
+    </navigtion-case>
+</navigation-rule>
     
 
 

@@ -13,8 +13,19 @@
     <ui:composition template="/WEB-INF/template.xhtml">
         <ui:define name="content"> 
             <div id="indxdiv">
-                <h:graphicImage id="headerindx" library="img" name="header.png"></h:graphicImage>
-                <h:inputText id="indxsearch" value="" />
+                <h:graphicImage id="headerindx" library="img" name="header.png"/>
+                <h:graphicImage id="theguy" library="img" name="theguy.png"/>
+                <div id="auth">
+                    <a class="authText">username:</a>
+                    <h:inputText id="usrname" class="auth" value="#{authBean.id}"/>
+                    <br/>
+                    <a class="authText">password:</a>
+                    <h:inputText id="passwrd" class="auth" value="#{authBean.password}"/>
+                    <div id="authbuttondiv">
+                        <h:commandButton id="crtauthbtn" value="Create new user"/>
+                        <h:commandButton id="authbtn" action="#{authBean.login}" value="Login" />
+                    </div>
+                </div>
             </div>
         </ui:define>
     </ui:composition>
