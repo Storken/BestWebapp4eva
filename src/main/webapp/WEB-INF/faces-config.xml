@@ -27,7 +27,7 @@
     </navigation-case>
 </navigation-rule>       
 <navigation-rule>
-    <from-view-id>/index.html</from-view-id>
+    <from-view-id>index.html</from-view-id>
     <navigtion-case>
             <from-action>#{authBean.login}</from-action>
             <from-outcome>fail</from-outcome>
