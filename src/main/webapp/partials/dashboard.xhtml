@@ -2,18 +2,60 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
  
 <h:head>
+     <script name="jquery/jquery.js" library="primefaces"></script>
 </h:head>
 <h:body>
        
     <ui:composition template="/WEB-INF/template.xhtml">
-       <ui:define name="content"> 
-        <br></br>
-        <h2>Best dashboard 4eva</h2>
+       <ui:define name="dash"> 
         
+         <br></br><br></br>
+         
+       <h:form id="form">
+             
+    <p:growl id="msgs" showDetail="true" />
+ 
+    
+    <p:tabView>
+        <p:tab title="Inventory">
+            <h:panelGrid columns="2" cellpadding="10">
+                
+                <h:outputText
+                    value="Inventory..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Purchasing">
+            <h:panelGrid columns="2" cellpadding="10">
+                
+                <h:outputText value="Purchasing" />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Sales">
+            <h:panelGrid columns="2" cellpadding="10">
+               
+                <h:outputText value="Sales" />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="Reports">
+            <h:panelGrid columns="2" cellpadding="10">
+               
+                <h:outputText value="Reports" />
+            </h:panelGrid>
+        </p:tab><p:tab title="Administration">
+            <h:panelGrid columns="2" cellpadding="10">
+               
+                <h:outputText value="Administration..." />
+            </h:panelGrid>
+        </p:tab>
+    </p:tabView>
+       </h:form>
         </ui:define>
     </ui:composition>
 </h:body>

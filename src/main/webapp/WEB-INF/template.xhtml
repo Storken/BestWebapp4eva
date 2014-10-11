@@ -32,25 +32,51 @@
       
        <!-- Brand logo -->
        <div class="navbar-header">
-             <a class="navbar-brand" href="#">BestWebapp4eva</a>
+            <h:link id="homeLink" value="BestWebapp4eva" class="navbar-brand" outcome="home" >
+                    <f:param name="page" value="home" />
+            </h:link>
        </div>
             
+       <ui class="nav navbar-nav pull-left">
+           <li>
+               
+            <li>
+                <h:link value="Dashboard" outcome="dashboard" >
+                    <!--<f:param> goes here -->
+                </h:link>
+            </li>
+               <li>
+                <h:link value="Products" outcome="products" >
+                    <!--<f:param> goes here -->
+                </h:link>
+            </li>
+           </li>
+       </ui>
         <!-- Right side menu items -->   
         <ul class="nav navbar-nav pull-right">
-            <li class="dropdown">
-                <a href="#"><strong>Admin</strong> </a>
-            </li>
             
             <li>
-                <a href="#">Log out</a>
+                <h:link value="Admin" outcome="dashboard" >
+                    <!--<f:param> goes here -->
+                </h:link>
+            </li>
+            
+            
+            <li>
+                <h:link value="Log out" outcome="dashboard" >
+                    <f:param name="page" value="dashboard" />
+                 </h:link>
             </li>
         </ul>
   
    </nav>
-      
-       
+    
+     
+     <ui:insert name="dash">Dash</ui:insert>
      <div id="content">
-            <ui:insert name="content">Content</ui:insert>
+         
+            <ui:insert name="content"></ui:insert>
+            
      </div>
   
    <footer>

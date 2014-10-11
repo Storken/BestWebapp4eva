@@ -34,7 +34,9 @@
                 <h:outputText value="#{ent.unit}" />
             </p:column>
             </p:dataTable>
-            <h3>Add entity</h3>
+        <div id="panelHeader"><h3>Add entity</h3></div>
+            
+        <div id="gridContainer">
                  <h:form>
                     <h:panelGrid columns="2" class="table">
                         <h:outputLabel value="Name"/>
@@ -51,6 +53,7 @@
                         <p:commandButton value="Add entity"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
                     </div>
                 </h:form>
+            </div>
             </ui:define>
         </ui:composition>
  
