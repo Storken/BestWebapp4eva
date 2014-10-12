@@ -6,22 +6,15 @@
 package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
-import se.chalmers.bestwebapp4eva.dao.BasicEntityCollection;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
 
 /**
@@ -54,7 +47,7 @@ public class BasicView implements Serializable{
                 return result;
                 }
             };
-        if(entities.getRowCount() == 0) {
+        if(bec.findAll().size() == 0) {
             bec.bulkAdd();
         }
     }
