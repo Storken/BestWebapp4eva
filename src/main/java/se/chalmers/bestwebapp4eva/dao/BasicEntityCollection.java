@@ -166,7 +166,9 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
             path = basicEntity.get(BasicEntity_.title);
         }else{
             switch(field) {
-               
+                case "id":
+                    path = basicEntity.get(BasicEntity_.id);
+                    break;
                 case "title":
                     path = basicEntity.get(BasicEntity_.title);
                     break;
