@@ -21,29 +21,20 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable{
 
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Id
-    private Long id; 
    
     protected AbstractEntity(){
     }
     
-    protected AbstractEntity(Long id){
-        this.id = id;
-    }
     
-    public Long getId(){
-        return id;
-    }
     
-    public void setId(long id) {
-        this.id = id;
-    }
+    public abstract Long getId();
+    
+    public abstract void setId(long id);
 
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + Objects.hashCode(this.id);
+        hash = 43 * hash + Objects.hashCode(getId());
         return hash;
     }
 
@@ -56,7 +47,7 @@ public abstract class AbstractEntity implements Serializable{
             return false;
         }
         final AbstractEntity other = (AbstractEntity) obj;
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(getId(), other.getId());
     }
 
    

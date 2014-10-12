@@ -4,6 +4,9 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 /**
  *
@@ -18,6 +21,10 @@ public class BasicEntity extends AbstractEntity{
         l
     }
     
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    protected Long id; 
+     
     @Column(nullable=false)
     private String title;
     
@@ -58,7 +65,7 @@ public class BasicEntity extends AbstractEntity{
      * @param unit Unit of the basic entity, like kg, pcs and l.
      */
     public BasicEntity(long id, String title, double price, double quantity, Unit unit) {
-        super(id);
+        this.id = id;
         this.title = title;
         this.price = price;
         this.quantity = quantity;
@@ -67,7 +74,12 @@ public class BasicEntity extends AbstractEntity{
     
     @Override
     public Long getId() {
-        return super.getId();
+        return id;
+    }
+    
+    @Override
+    public void setId(long id) {
+        this.id = id;
     }
   
     /**
