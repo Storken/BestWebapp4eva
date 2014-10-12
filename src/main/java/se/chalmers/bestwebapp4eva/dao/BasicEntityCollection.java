@@ -19,6 +19,7 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
+import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity_;
 
 /**
@@ -205,6 +206,26 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
         }
         
         return path;
+    }
+
+    @Override
+    public void bulkAdd() {
+        List<BasicEntity> tmpList = new ArrayList<>();
+        create(new BasicEntity("Screw", 25, 100, Unit.pcs));
+        create(new BasicEntity("Muppet", 1, 38, Unit.kg));
+        create(new BasicEntity("Book", 32, 95, Unit.pcs));
+        create(new BasicEntity("Water", 0.1, 5679, Unit.l));
+        create(new BasicEntity("Pepsi", 1, 10, Unit.l));
+        create(new BasicEntity("iPhone 6", 99999, 4, Unit.pcs));
+        create(new BasicEntity("Volvo 740 (red)", 30000, 79, Unit.pcs));
+        create(new BasicEntity("Sakkurugame", 15, 178, Unit.pcs));
+        create(new BasicEntity("Milk", 2, 481, Unit.l));
+        create(new BasicEntity("Oil", 250, 18, Unit.l));
+        create(new BasicEntity("Hamburger meat", 58, 36, Unit.kg));
+        create(new BasicEntity("Teacher", 1, 1, Unit.pcs));
+        create(new BasicEntity("Apocalypse", 193, 670, Unit.pcs));
+        create(new BasicEntity("Keyboard", 58, 475, Unit.pcs));
+        create(new BasicEntity("Rice", 3, 150, Unit.kg));
     }
     
 }

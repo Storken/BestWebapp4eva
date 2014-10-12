@@ -35,7 +35,7 @@ public class BasicView implements Serializable{
     
     private LazyDataModel<BasicEntity> entities;
     
-    private BasicEntity selectedEntity;
+    private List<BasicEntity> selectedEntities;
     
     @EJB    
     private IBasicEntityCollection bec;
@@ -54,17 +54,31 @@ public class BasicView implements Serializable{
                 return result;
                 }
             };
+        if(entities.getRowCount() == 0) {
+            bec.bulkAdd();
+        }
     }
     
     public LazyDataModel<BasicEntity> getEntities() { 
             return entities;
     }
     
+    public List<BasicEntity> getSelectedEntities() {
+        return this.selectedEntities;
+    }
+    
     public void setEntities(LazyDataModel<BasicEntity> entities) {
         this.entities = entities;
     }
     
+    public void setSelectedEntities(List<BasicEntity> selectedEntities) {
+        this.selectedEntities = selectedEntities;
+    }
+    
     public void onRowSelect(SelectEvent evt) {
+        for(BasicEntity selEntity : selectedEntities) {
+            System.out.println(selEntity.getTitle());
+        }
         FacesMessage msg = new FacesMessage("Entity selected.", ((BasicEntity)evt.getObject()).getId() + "");
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }

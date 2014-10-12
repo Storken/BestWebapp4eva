@@ -21,6 +21,8 @@ public interface IBasicEntityCollection extends IDAO<BasicEntity, Long>{
     public List<BasicEntity> getByQuantity(double quantity);
     
     public List<BasicEntity> getByUnit(Unit unit);
+
+    public void bulkAdd();
     
     
 }

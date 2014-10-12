@@ -21,6 +21,9 @@
                 rows="10"
                 sortBy="#{entity.id}"
                 emptyMessage="No entries found. Try to add some content or change your filters."
+                selectionMode="multiple"
+                selection="#{basicView.selectedEntities}"
+                rowKey="#{entity.id}"
                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
                 rowsPerPageTemplate="10,50,100"
                 id="sites"> 
