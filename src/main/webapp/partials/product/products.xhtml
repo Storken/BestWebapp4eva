@@ -12,28 +12,35 @@
          <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
         <br/>
-        <p:dataTable id="entities" var="ent" value="#{basicView.entities}" sortMode="multiple" scrollable="true" scrollWidth="100%" scrollHeight="600">
-            <p:column headerText="Id" sortBy="#{ent.id}">
-                <h:outputText value="#{ent.id}" />
+        <h:form>
+            <p:dataTable 
+                var="entity" 
+                value="#{basicView.entities}"
+                lazy="true" 
+                paginator="true" 
+                rows="10" 
+                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+                rowsPerPageTemplate="10,50,100"
+                id="sites"> 
+  
+            <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">                 
+                <h:outputText value="#{entity.id}" /> 
             </p:column>
- 
-            <p:column headerText="Name" sortBy="#{ent.title}">
-                <h:outputText value="#{ent.title}" />
+            <p:column sortBy="#{entity.title}" filterBy="#{entity.title}" filterMatchMode="contains" headerText="Title">                 
+                <h:outputText value="#{entity.title}" /> 
             </p:column>
- 
-                                
-            <p:column headerText="Price" sortBy="#{ent.price}">
-                <h:outputText value="$#{ent.price}" />
+            <p:column sortBy="#{entity.price}" filterBy="#{entity.price}" filterMatchMode="contains" headerText="Price">                 
+                <h:outputText value="#{entity.price}" /> 
             </p:column>
-
-            <p:column headerText="Quantity" sortBy="#{ent.quantity}">
-                <h:outputText value="#{ent.quantity}" />
+            <p:column sortBy="#{entity.quantity}" filterBy="#{entity.quantity}" filterMatchMode="contains" headerText="Quantity">                 
+                <h:outputText value="#{entity.quantity} " /> 
             </p:column>
-
-            <p:column headerText="Unit" sortBy="#{ent.unit}">
-                <h:outputText value="#{ent.unit}" />
+            <p:column sortBy="#{entity.unit}" filterBy="#{entity.unit}" filterMatchMode="contains" headerText="Unit">                
+                <h:outputText value="#{entity.unit}" /> 
             </p:column>
             </p:dataTable>
+        </h:form>
+        
             <h3>Add entity</h3>
                  <h:form>
                     <h:panelGrid columns="2" class="table">

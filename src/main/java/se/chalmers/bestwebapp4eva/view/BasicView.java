@@ -8,6 +8,7 @@ package se.chalmers.bestwebapp4eva.view;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -17,6 +18,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.dao.BasicEntityCollection;
@@ -43,12 +45,23 @@ public class BasicView implements Serializable{
     }
     
     @PostConstruct
-    public void init() {
-        // TODO Bulk add code here!!!
+    public void init() {      
+        this.entities = new LazyDataModel<BasicEntity>(){
+            @Override
+            public List<BasicEntity> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                List<BasicEntity> result = bec.getResultList(first, pageSize, sortField, sortOrder, filters);
+                entities.setRowCount(bec.count(sortField, sortOrder, filters));
+                return result;
+                }
+            };
     }
     
-    public List<BasicEntity> getEntities() { 
-            return bec.findAll();
+    public LazyDataModel<BasicEntity> getEntities() { 
+            return entities;
+    }
+    
+    public void setEntities(LazyDataModel<BasicEntity> entities) {
+        this.entities = entities;
     }
     
     public void onRowSelect(SelectEvent evt) {

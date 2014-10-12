@@ -64,6 +64,11 @@ public class BasicEntity extends AbstractEntity{
         this.quantity = quantity;
         this.unit = unit;
     }
+    
+    @Override
+    public Long getId() {
+        return super.getId();
+    }
   
     /**
      * Get the title.

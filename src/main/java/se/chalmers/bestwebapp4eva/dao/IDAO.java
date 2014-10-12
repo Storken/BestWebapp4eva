@@ -1,6 +1,8 @@
 package se.chalmers.bestwebapp4eva.dao;
 
 import java.util.List;
+import java.util.Map;
+import org.primefaces.model.SortOrder;
 
 /**
  * Basic interface for containers of different entities
@@ -24,5 +26,9 @@ public interface IDAO<T,K> {
     public List<T> findRange(int first, int n );
 
     public int count();
+    
+    public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters);
+    
+    public List<T> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters);
    
 }
