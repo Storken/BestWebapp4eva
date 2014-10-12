@@ -210,7 +210,6 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
 
     @Override
     public void bulkAdd() {
-        List<BasicEntity> tmpList = new ArrayList<>();
         create(new BasicEntity("Screw", 25, 100, Unit.pcs));
         create(new BasicEntity("Muppet", 1, 38, Unit.kg));
         create(new BasicEntity("Book", 32, 95, Unit.pcs));

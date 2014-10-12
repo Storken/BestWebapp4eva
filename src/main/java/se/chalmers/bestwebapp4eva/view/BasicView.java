@@ -74,12 +74,4 @@ public class BasicView implements Serializable{
     public void setSelectedEntities(List<BasicEntity> selectedEntities) {
         this.selectedEntities = selectedEntities;
     }
-    
-    public void onRowSelect(SelectEvent evt) {
-        for(BasicEntity selEntity : selectedEntities) {
-            System.out.println(selEntity.getTitle());
-        }
-        FacesMessage msg = new FacesMessage("Entity selected.", ((BasicEntity)evt.getObject()).getId() + "");
-        FacesContext.getCurrentInstance().addMessage(null, msg);
-    }
 }

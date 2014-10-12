@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+        xmlns:p="http://primefaces.org/ui"
+        xmlns:f="http://xmlns.jcp.org/jsf/core">
  
 <h:head>
 </h:head>
@@ -12,7 +13,7 @@
          <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
         <br/>
-        <h:form>
+        <h:form id="form">
             <p:dataTable 
                 var="entity" 
                 value="#{basicView.entities}"
@@ -26,8 +27,11 @@
                 rowKey="#{entity.id}"
                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
                 rowsPerPageTemplate="10,50,100"
-                id="sites"> 
+                id="entities"> 
   
+            <f:facet name="header">
+                Entities
+            </f:facet>
             <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">                 
                 <h:outputText value="#{entity.id}" /> 
             </p:column>
@@ -43,7 +47,18 @@
             <p:column sortBy="#{entity.unit}" filterBy="#{entity.unit}" filterMatchMode="contains" headerText="Unit">                
                 <h:outputText value="#{entity.unit}" /> 
             </p:column>
+            <f:facet name="footer">
+            <p:commandButton process="entities" update=":form:multiEntityDetail" icon="ui-icon-search" value="Temporary cart" oncomplete="PF('multiEntityDialog').show()" />
+            </f:facet>
             </p:dataTable>
+            
+            <p:dialog header="Selected Entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
+        <p:outputPanel id="multiEntityDetail" style="text-align:center;">
+            <ui:repeat value="#{basicView.selectedEntities}" var="entity">
+                <h:outputText value="#{entity.id} - #{entity.title}" style="display:block"/>
+            </ui:repeat>
+        </p:outputPanel>
+    </p:dialog>
         </h:form>
         
             <h3>Add entity</h3>
