@@ -5,14 +5,20 @@
  */
 package se.chalmers.bestwebapp4eva.ctrl;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.context.RequestContext;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
+import se.chalmers.bestwebapp4eva.view.BasicView;
 import se.chalmers.bestwebapp4eva.view.CartBB;
 
 /**
@@ -26,6 +32,8 @@ public class CartCtrl {
     private IBasicEntityCollection bec;
     @Inject
     private CartBB cart;
+    @Inject
+    private BasicView entities;
     
     public void checkout(ActionEvent actionEvent) {
         List<BasicEntity> items = cart.getCartItems();
@@ -35,8 +43,13 @@ public class CartCtrl {
     }
     
     public void addToCart(ActionEvent actionEvent) {
-        //cart.getCartItems().add(cart.getItem());
-        cart.getCartItems().add(bec.findAll().get(0));
-        System.out.println(cart.toString());
+        List<BasicEntity> items = entities.getSelectedEntities();
+        if(items != null) {
+            for(BasicEntity i: items) {
+                cart.add(i);
+            }
+        }
+        
     }
+    
 }

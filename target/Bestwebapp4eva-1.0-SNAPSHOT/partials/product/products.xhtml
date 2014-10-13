@@ -27,6 +27,7 @@
                 selectionMode="multiple"
                 selection="#{basicView.selectedEntities}"
                 rowKey="#{entity.id}"
+                widgetVar="entitiesList"
                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
                 rowsPerPageTemplate="10,50,100"
                 id="entities"> 
@@ -49,9 +50,9 @@
             <p:column sortBy="#{entity.unit}" filterBy="#{entity.unit}" filterMatchMode="contains" headerText="Unit">                
                 <h:outputText value="#{entity.unit}" /> 
             </p:column>
-            <f:facet name="footer">
-            <p:commandButton process="entities" update=":multiEntityDetail" icon="ui-icon-search" value="Temporary cart" oncomplete="PF('multiEntityDialog').show()" />
-            </f:facet>
+                <f:facet name="footer">
+                    <p:commandButton update=":cartItems" value="Add to cart" actionListener="#{cartCtrl.addToCart}"/>
+                </f:facet>
             </p:dataTable>
         </h:form>
             <h3>Add entity</h3>
@@ -67,27 +68,17 @@
                         <h:inputText value="#{addEntityBB.unit}"/>
                         
                     </h:panelGrid>
-                    <div class="btn-group">
+                         <div class="btn-group">
                         <p:commandButton value="Add entity"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
                     </div>
+                                         
                 </h:form>
     </p:layoutUnit>
- 
-            <p:layoutUnit position="east" collapsible="true" size="200" header="Cart" id="cart">
+    <p:layoutUnit position="east" collapsible="true" size="200" header="Cart" id="cart">
             <ui:include src="/partials/product/cart.xhtml"/>
     </p:layoutUnit>
 </p:layout>
-        <p:dialog header="Selected Entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
-        <p:outputPanel id="multiEntityDetail" style="text-align:center;">
-            <ui:repeat value="#{basicView.selectedEntities}" var="entity">
-                <h:outputText value="#{entity.id} - #{entity.title}" style="display:block"/>
-            </ui:repeat>
-        </p:outputPanel>
-    </p:dialog>
-        
-            
-            </ui:define>
-        </ui:composition>
- 
+        </ui:define>
+    </ui:composition>
 </h:body>
 </html>

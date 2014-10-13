@@ -5,10 +5,14 @@
  */
 package se.chalmers.bestwebapp4eva.view;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 
@@ -18,15 +22,13 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
  */
 @Named
 @RequestScoped
-public class CartBB {
+public class CartBB{
     
-    private List<BasicEntity> cartItems;
-    
-    private BasicEntity item;
+    private static List<BasicEntity> cartItems;
     
     @PostConstruct
     public void post() {
-        // Empty
+        if (cartItems == null) cartItems = new ArrayList<BasicEntity>();
     }
 
     @PreDestroy
@@ -39,17 +41,13 @@ public class CartBB {
     }
     
     public void setCartItems(List<BasicEntity> cartItems) {
-        this.cartItems = cartItems;
+        this.cartItems.addAll(cartItems);
     }
     
-    public BasicEntity getItem() {
-        return item;
+    public void add(BasicEntity entity) {
+        cartItems.add(entity);
     }
-    
-    public void setItem(BasicEntity item) {
-        this.item = item;
-    }
-    
+        
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
