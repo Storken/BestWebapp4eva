@@ -12,7 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.IBasicEntityCollection;
-import se.chalmers.bestwebapp4eva.views.AddEntityBB;
+import se.chalmers.bestwebapp4eva.view.AddEntityBB;
 
 /**
  *

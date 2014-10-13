@@ -12,6 +12,8 @@
          <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
         <br/>
+        <p:layout>
+            <p:layoutUnit position="center">
         <p:dataTable id="entities" var="ent" value="#{basicView.entities}">
             <p:column headerText="Id">
                 <h:outputText value="#{ent.id}" />
@@ -51,6 +53,14 @@
                         <p:commandButton value="Add entity"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
                     </div>
                 </h:form>
+    </p:layoutUnit>
+ 
+            <p:layoutUnit position="east" collapsible="true" size="200" header="Cart" id="cart">
+            <ui:include src="/partials/product/cart.xhtml"/>
+    </p:layoutUnit>
+</p:layout>
+        
+            
             </ui:define>
         </ui:composition>
  
