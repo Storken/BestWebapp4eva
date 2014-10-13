@@ -5,7 +5,7 @@ build/
 #netbeans specific
 core
 nbproject/*
-#target/*
+target/*
 !nbproject/project.properties
 !nbproject/project.xml
 !nbproject/build-impl.xml
@@ -21,3 +21,4 @@ nbproject/*
 *.swp
 *.DS_Store
 *.lock
+/target/
