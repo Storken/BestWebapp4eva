@@ -21,7 +21,6 @@ import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity_;
-
 /**
  *
  * @author simon
