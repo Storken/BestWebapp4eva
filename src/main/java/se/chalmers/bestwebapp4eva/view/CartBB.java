@@ -47,6 +47,10 @@ public class CartBB{
     public void add(BasicEntity entity) {
         cartItems.add(entity);
     }
+    
+    public void remove(BasicEntity entity) {
+        cartItems.remove(entity);
+    }
         
     @Override
     public String toString() {

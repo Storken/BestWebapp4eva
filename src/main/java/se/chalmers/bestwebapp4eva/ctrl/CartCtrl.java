@@ -46,10 +46,13 @@ public class CartCtrl {
         List<BasicEntity> items = entities.getSelectedEntities();
         if(items != null) {
             for(BasicEntity i: items) {
-                cart.add(i);
+                if(!cart.getCartItems().contains(i)) cart.add(i);
             }
         }
         
     }
     
+    public void removeFromCart(BasicEntity entity) {
+        cart.remove(entity);
+    }
 }

@@ -6,10 +6,24 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
         xmlns:p="http://primefaces.org/ui"
         xmlns:f="http://java.sun.com/jsf/core">
-    <p:panel id="cartItems">
-        <ui:repeat value="#{cartBB.cartItems}" var="entity">
-            <h:outputText value="#{entity.id} - #{entity.title}" style="display:block"/>
-            <hr/>
-        </ui:repeat>
-    </p:panel>
+    
+    <p:accordionPanel id="cartItems" value="#{cartBB.cartItems}" var="entity" multiple="true" activeIndex="null">
+        <p:tab title="#{entity.title}">
+            <p:commandButton value="Remove"  actionListener="#{cartCtrl.removeFromCart(entity)}" update="cartItems"/> 
+            <br>
+            </br>
+            <h:panelGrid columns="2">
+                <h:outputLabel value="ID:"  />
+                <h:outputLabel value="#{entity.id}" style="font-weight: bold"/>
+                
+                <h:outputText value="Price:"/>
+                <h:outputText value="$#{entity.price}" />
+ 
+                <h:outputText value="Quantity:"/>
+                <h:outputText value="#{entity.quantity} #{entity.unit}"/>
+            </h:panelGrid>
+        </p:tab>
+    </p:accordionPanel>
+    <hr/>
+    <p:commandButton value="Manage these products now (new page?)"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/> 
 </ui:composition>
