@@ -55,4 +55,9 @@ public class CartCtrl {
     public void removeFromCart(BasicEntity entity) {
         cart.remove(entity);
     }
+    
+    public void order(BasicEntity entity) {
+        entity.setQuantity(entity.getQuantity()-1);
+        bec.update(entity);
+    }
 }

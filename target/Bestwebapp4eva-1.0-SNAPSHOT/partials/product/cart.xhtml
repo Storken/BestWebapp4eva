@@ -8,8 +8,8 @@
         xmlns:f="http://java.sun.com/jsf/core">
     
     <p:accordionPanel id="cartItems" value="#{cartBB.cartItems}" var="entity" multiple="true" activeIndex="null">
-        <p:tab title="#{entity.title}">
-            <p:commandButton value="Remove"  actionListener="#{cartCtrl.removeFromCart(entity)}" update="cartItems"/> 
+        <p:tab title="#{entity.title}" id="item">
+            <p:commandButton value="Remove from cart" actionListener="#{cartCtrl.removeFromCart(entity)}" update="cartItems"/> 
             <br>
             </br>
             <h:panelGrid columns="2">
@@ -20,8 +20,10 @@
                 <h:outputText value="$#{entity.price}" />
  
                 <h:outputText value="Quantity:"/>
-                <h:outputText value="#{entity.quantity} #{entity.unit}"/>
+                <h:outputText id="quantity" value="#{entity.quantity} #{entity.unit}"/>
             </h:panelGrid>
+            <br/>
+            <p:commandButton value="Take from teh lager" actionListener="#{cartCtrl.order(entity)}" update="@(.ui-datatable), quantity"/> 
         </p:tab>
     </p:accordionPanel>
     <hr/>
