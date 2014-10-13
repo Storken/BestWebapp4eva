@@ -156,6 +156,8 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
             tq.setFirstResult(first);
         }
         
+        
+        
         return tq.getResultList();
     }
     

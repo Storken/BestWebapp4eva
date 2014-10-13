@@ -14,7 +14,7 @@
             <ui:define name="content"> 
         <br/>
         <p:layout>
-            <p:layoutUnit position="center">
+            <p:layoutUnit position="center">      
         <h:form id="form">
             <p:dataTable 
                 var="entity" 
@@ -28,9 +28,10 @@
                 selection="#{basicView.selectedEntities}"
                 rowKey="#{entity.id}"
                 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+                currentPageReportTemplate="Page {currentPage} of {totalPages}"
                 rowsPerPageTemplate="10,50,100"
                 id="entities"> 
-  
+ 
             <f:facet name="header">
                 Entities
             </f:facet>
@@ -54,6 +55,14 @@
             </f:facet>
             </p:dataTable>
         </h:form>
+                                        
+
+                    <h:form prependId="false">
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                            
+                        
+                        
+                    </h:form>
             <h3>Add entity</h3>
                  <h:form>
                     <h:panelGrid columns="2" class="table">
