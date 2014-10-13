@@ -4,8 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:p="http://primefaces.org/ui">
  
 <h:head>
 </h:head>
@@ -13,54 +12,30 @@
          <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
         <br/>
-        <h:form id="form">
-            <p:dataTable 
-                var="entity" 
-                value="#{basicView.entities}"
-                lazy="true" 
-                paginator="true" 
-                rows="15"
-                sortBy="#{entity.id}"
-                emptyMessage="No entries found. Try to add some content or change your filters."
-                selectionMode="multiple"
-                selection="#{basicView.selectedEntities}"
-                rowKey="#{entity.id}"
-                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
-                rowsPerPageTemplate="15,50,100"
-                id="entities"> 
-  
-            <f:facet name="header">
-                Entities
-            </f:facet>
-            <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">                 
-                <h:outputText value="#{entity.id}" /> 
+        <p:layout>
+            <p:layoutUnit position="center">
+        <p:dataTable id="entities" var="ent" value="#{basicView.entities}">
+            <p:column headerText="Id">
+                <h:outputText value="#{ent.id}" />
             </p:column>
-            <p:column sortBy="#{entity.title}" filterBy="#{entity.title}" filterMatchMode="contains" headerText="Title">                 
-                <h:outputText value="#{entity.title}" /> 
+ 
+            <p:column headerText="Name">
+                <h:outputText value="#{ent.title}" />
             </p:column>
-            <p:column sortBy="#{entity.price}" filterBy="#{entity.price}" filterMatchMode="contains" headerText="Price">                 
-                <h:outputText value="#{entity.price}" /> 
+ 
+                                
+            <p:column headerText="Price">
+                <h:outputText value="$#{ent.price}" />
             </p:column>
-            <p:column sortBy="#{entity.quantity}" filterBy="#{entity.quantity}" filterMatchMode="contains" headerText="Quantity">                 
-                <h:outputText value="#{entity.quantity} " /> 
+
+            <p:column headerText="Quantity">
+                <h:outputText value="#{ent.quantity}" />
             </p:column>
-            <p:column sortBy="#{entity.unit}" filterBy="#{entity.unit}" filterMatchMode="contains" headerText="Unit">                
-                <h:outputText value="#{entity.unit}" /> 
+
+            <p:column headerText="Unit">
+                <h:outputText value="#{ent.unit}" />
             </p:column>
-            <f:facet name="footer">
-            <p:commandButton process="entities" update=":form:multiEntityDetail" icon="ui-icon-search" value="Temporary cart" oncomplete="PF('multiEntityDialog').show()" />
-            </f:facet>
             </p:dataTable>
-            
-            <p:dialog header="Selected Entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
-        <p:outputPanel id="multiEntityDetail" style="text-align:center;">
-            <ui:repeat value="#{basicView.selectedEntities}" var="entity">
-                <h:outputText value="#{entity.id} - #{entity.title}" style="display:block"/>
-            </ui:repeat>
-        </p:outputPanel>
-    </p:dialog>
-        </h:form>
-        
             <h3>Add entity</h3>
                  <h:form>
                     <h:panelGrid columns="2" class="table">
@@ -78,6 +53,14 @@
                         <p:commandButton value="Add entity"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
                     </div>
                 </h:form>
+    </p:layoutUnit>
+ 
+            <p:layoutUnit position="east" collapsible="true" size="200" header="Cart" id="cart">
+            <ui:include src="/partials/product/cart.xhtml"/>
+    </p:layoutUnit>
+</p:layout>
+        
+            
             </ui:define>
         </ui:composition>
  
