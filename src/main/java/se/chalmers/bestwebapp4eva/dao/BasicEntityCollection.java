@@ -225,6 +225,16 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
         create(new BasicEntity("Apocalypse", 193, 670, Unit.pcs));
         create(new BasicEntity("Keyboard", 58, 475, Unit.pcs));
         create(new BasicEntity("Rice", 3, 150, Unit.kg));
+        create(new BasicEntity("iPhone 7", 999991, 78, Unit.pcs));
+        create(new BasicEntity("Volvo 240 DL (red)", 50000, 15, Unit.pcs));
+        create(new BasicEntity("Sakkurugame 2", 18, 6, Unit.pcs));
+        create(new BasicEntity("Juice", 4, 53, Unit.l));
+        create(new BasicEntity("Baby Powder", 679, 93, Unit.l));
+        create(new BasicEntity("Hamburger bread", 58, 36, Unit.kg));
+        create(new BasicEntity("Pupil", 1, 1, Unit.pcs));
+        create(new BasicEntity("Thunderstorm", 193, 670, Unit.pcs));
+        create(new BasicEntity("Drums", 58, 475, Unit.pcs));
+        create(new BasicEntity("Sallad", 3, 150, Unit.kg));
     }
     
 }
