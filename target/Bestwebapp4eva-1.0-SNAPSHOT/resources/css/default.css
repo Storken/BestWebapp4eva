@@ -1,0 +1,55 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2014-okt-07, 12:00:27
+    Author     : Bosch
+*/
+
+body {
+    background-color: #3399ff;
+}
+
+#indxdiv {
+    position: absolute;
+    left: 0px;
+    right: 0px;
+    top: 300px;
+    height: 100px;
+    width: 600px;
+    margin: auto;
+}
+
+#headerindx {
+    position: absolute;
+    left: 20px;
+    top: 0%;
+}
+
+#indxsearch {
+    position: absolute;
+    bottom: 0%;
+    width:100%;
+    box-sizing:border-box;
+    -moz-box-sizing:border-box;
+}
+
+#headimg {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+    width: 250px;
+    height: auto;
+}
+
+#headerdiv {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+}
