@@ -133,7 +133,7 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
                 
                 // If the attribute the filter is pointing to is a string (or enum). Filter by using SQL LIKE operator.      
                 if(pathFilter != null) {
-                    filterCondition = cb.and(filterCondition, cb.like(pathFilter, "%" + filter.getValue() + "%" ));
+                    filterCondition = cb.and(filterCondition, cb.like(cb.lower(pathFilter), "%" + filter.getValue().toString().toLowerCase() + "%" ));
                 }else{
                 // If the attribute the filter is pointing to isn't a string (id, quantity, price etc). Filter by using SQL = operator. Exact filtering.
                     Path<?> pathFilterNonString = getPath(filter.getKey(), basicEntity);
