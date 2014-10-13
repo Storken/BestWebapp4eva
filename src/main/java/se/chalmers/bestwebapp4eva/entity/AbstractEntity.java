@@ -25,8 +25,6 @@ public abstract class AbstractEntity implements Serializable{
     protected AbstractEntity(){
     }
     
-    
-    
     public abstract Long getId();
     
     public abstract void setId(long id);

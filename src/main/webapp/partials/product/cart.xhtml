@@ -12,9 +12,9 @@
                 value="Add shit here" />
             <hr/>
             <div class="btn-group">
-            <p:commandButton value="Add first item to cart"  actionListener="#{cartCtrl.addToCart}" update="form" styleClass="btn btn-default"/>
+            <p:commandButton value="Add first item to cart"  actionListener="#{cartCtrl.addToCart}" update="cartForm" styleClass="btn btn-default"/>
                     </div>
-            <h:form id="form">
+            <h:form id="cartForm">
                 <p:dataList value="#{cartBB.cartItems}" var="item" type="definition">
                      <f:facet name="header">
                         Items in cart
