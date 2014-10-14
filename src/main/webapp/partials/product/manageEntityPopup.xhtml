@@ -23,6 +23,8 @@
                     <td><h:outputText value="#{entity.id}" /></td>
                     <td><h:outputText value="#{entity.title}" /></td>
                     <td><h:outputText value="#{entity.quantity}" /></td>
+                    <td><p:commandButton update=":multiEntityDetail" value="+" actionListener="#{cartCtrl.incQuantity(entity)}"/></td>
+                    <td><p:commandButton update=":multiEntityDetail" value="-" actionListener="#{cartCtrl.decQuantity(entity)}"/></td>
                 </tr>
             </ui:repeat>
         </table>

@@ -62,6 +62,14 @@ public class CartCtrl {
         cart.getCartItems().clear();
 
     }
+    
+    public void incQuantity(BasicEntity entity) {
+        entity.setQuantity(entity.getQuantity()+1);
+    }
+    
+    public void decQuantity(BasicEntity entity) {
+        entity.setQuantity(entity.getQuantity()-1);
+    }
 
     public boolean collapseCart() {
         return cart.getCartItems().isEmpty();
