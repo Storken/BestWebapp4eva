@@ -32,7 +32,6 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
 
     @PersistenceContext
     private EntityManager em;
-    
 
     @Override
     protected EntityManager getEntityManager() {
@@ -105,18 +104,17 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
 
     @Override
     public List<BasicEntity> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<BasicEntity> q = cb.createQuery(BasicEntity.class);
-        
-
 
         Root<BasicEntity> basicEntity = q.from(BasicEntity.class);
         PredicateGenerator pGenerator = new PredicateGenerator(cb, filters, basicEntity);
-        
+
         q.select(basicEntity);
 
         // SORT
-        Path<?> path = pGenerator.getWildcardPath(sortField, basicEntity);
+        Path<?> path = getGeneralAttrPath(sortField, basicEntity);
         if (sortOrder == null) {
             // don't sort
         } else if (sortOrder.equals(SortOrder.ASCENDING)) {
@@ -131,7 +129,7 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
 
         // FILTER
         Predicate filterCondition = pGenerator.getPredicate();
-        
+
         // Apply the filter in the WHERE clause of the query
         q.where(filterCondition);
 
@@ -147,6 +145,32 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
         }
 
         return tq.getResultList();
+    }
+
+    public Path<?> getGeneralAttrPath(String field, Root basicEntity) {
+
+        Path<?> path = null;
+
+        if (field == null) {
+            path = basicEntity.get(BasicEntity_.title);
+        } else {
+            switch (field) {
+                case "id":
+                    path = basicEntity.get(BasicEntity_.id);
+                    break;
+                case "title":
+                    path = basicEntity.get(BasicEntity_.title);
+                    break;
+                case "price":
+                    path = basicEntity.get(BasicEntity_.price);
+                    break;
+                case "quantity":
+                    path = basicEntity.get(BasicEntity_.quantity);
+                    break;
+            }
+        }
+
+        return path;
     }
 
     @Override

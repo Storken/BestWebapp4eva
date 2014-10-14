@@ -16,80 +16,69 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity_;
  *
  * @author simon
  */
-public class PredicateGenerator {
-    
+public class PredicateGenerator<V> {
+
     private static final String[] logicalOperators = new String[]{"<", ">", "<=", ">=", "="};
     private CriteriaBuilder cb;
     private Map<String, Object> filters;
     private Root root;
-    
+
     public PredicateGenerator(CriteriaBuilder cb, Map<String, Object> filters, Root root) {
         this.cb = cb;
         this.filters = filters;
         this.root = root;
     }
-    
+
     public Predicate getPredicate() {
         // Loop through all filter entries. For each filter, do CriteriaBuilder.and(x,y) to add condition to the filter.
         Predicate filterCondition = cb.conjunction();
         for (Map.Entry<String, Object> filter : filters.entrySet()) {
+            // If current filter value isn't empty
             if (!filter.getValue().equals("")) {
-                Path<String> pathFilter = getStringPath(filter.getKey(), root);
+                Path<String> pathFilter = getStringAttrPath(filter.getKey(), root);
 
                 // If the attribute the filter is pointing to is a string (or enum). Filter by using SQL LIKE operator.      
                 if (pathFilter != null) {
-                        filterCondition = cb.and(filterCondition, cb.like(cb.lower(pathFilter), "%" + filter.getValue().toString().toLowerCase() + "%"));
-                // If the attribute the filter is pointing to isn't a string (id, quantity, price etc). Filter by using SQL = operator. Exact filtering.
+                    filterCondition = cb.and(filterCondition, cb.like(cb.lower(pathFilter), "%" + filter.getValue().toString().toLowerCase() + "%"));
+                    // If the attribute the filter is pointing to isn't a string...
                 } else {
-                    Path<?> pathFilterNonString = getWildcardPath(filter.getKey(), root);
-                    
+                    Long numberValue = Long.parseLong(filter.getValue().toString().replaceAll("\\D+", ""));
+                    Path<Long> pathFilterNonString = getLongAttrPath(filter.getKey(), root);
+
                     String operator = checkForLogicalOperators(filter.getValue().toString());
-                    
+
                     // If filter contains logical operators
-                    if(operator != null) {
-                        switch(operator) {
+                    if (operator != null) {
+                        switch (operator) {
                             case "<":
-                               if(pathFilterNonString.getClass().equals(Double.class))
-                                   filterCondition = cb.and(filterCondition, cb.lt((Path<Double>)pathFilterNonString, Double.parseDouble(filter.getValue().toString().replaceAll("\\D+",""))));
-                               else
-                                   filterCondition = cb.and(filterCondition, cb.lt((Path<Long>)pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+",""))));
+                                filterCondition = cb.and(filterCondition, cb.lt(pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+", ""))));
                                 break;
                             case ">":
-                                if(pathFilterNonString.getClass().equals(Double.class))
-                                   filterCondition = cb.and(filterCondition, cb.gt((Path<Double>)pathFilterNonString, Double.parseDouble(filter.getValue().toString().replaceAll("\\D+",""))));
-                               else
-                                   filterCondition = cb.and(filterCondition, cb.gt((Path<Long>)pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+",""))));
+                                filterCondition = cb.and(filterCondition, cb.gt(pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+", ""))));
                                 break;
                             case "<=":
-                                if(pathFilterNonString.getClass().equals(Double.class))
-                                   filterCondition = cb.and(filterCondition, cb.le((Path<Double>)pathFilterNonString, Double.parseDouble(filter.getValue().toString().replaceAll("\\D+",""))));
-                               else
-                                   filterCondition = cb.and(filterCondition, cb.le((Path<Long>)pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+",""))));
+                                filterCondition = cb.and(filterCondition, cb.le(pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+", ""))));
                                 break;
                             case ">=":
-                                if(pathFilterNonString.getClass().equals(Double.class))
-                                   filterCondition = cb.and(filterCondition, cb.ge((Path<Double>)pathFilterNonString, Double.parseDouble(filter.getValue().toString().replaceAll("\\D+",""))));
-                               else
-                                   filterCondition = cb.and(filterCondition, cb.ge((Path<Long>)pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+",""))));
+                                filterCondition = cb.and(filterCondition, cb.ge(pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+", ""))));
                                 break;
                             case "=":
                                 // do nothing, jump to else block and perform equal.
                                 break;
                         }
-                    }else{
-                    
-                    filterCondition = cb.and(filterCondition, cb.equal(pathFilterNonString, filter.getValue()));
+                    } else {
+
+                        filterCondition = cb.and(filterCondition, cb.equal(pathFilterNonString, filter.getValue()));
+                    }
                 }
             }
-        }}
-        
+        }
+
         return filterCondition;
     }
-    
-    // Method for getting a Path<?> (wildcard) to an attribute of BasicEntity
-    public Path<?> getWildcardPath(String field, Root basicEntity) {
-        
-        Path<?> path = null;
+
+    public Path<Long> getLongAttrPath(String field, Root basicEntity) {
+        Path<Long> path = null;
 
         if (field == null) {
             path = basicEntity.get(BasicEntity_.title);
@@ -107,9 +96,6 @@ public class PredicateGenerator {
                 case "quantity":
                     path = basicEntity.get(BasicEntity_.quantity);
                     break;
-                case "unit":
-                    path = basicEntity.get(BasicEntity_.unit);
-                    break;
             }
         }
 
@@ -117,33 +103,34 @@ public class PredicateGenerator {
     }
 
     // Method for getting a Path to a String attribute of BasicEntity
-    private Path<String> getStringPath(String field, Root basicEntity) {
+    private Path<String> getStringAttrPath(String field, Root root) {
         Path<String> path = null;
 
         if (field == null) {
-            path = basicEntity.get(BasicEntity_.title);
+            path = root.get(BasicEntity_.title);
         } else {
             switch (field) {
                 case "title":
-                    path = basicEntity.get(BasicEntity_.title);
+                    path = root.get(BasicEntity_.title);
                     break;
                 case "unit":
-                    path = basicEntity.get(BasicEntity_.unit);
+                    path = root.get(BasicEntity_.unit);
                     break;
             }
         }
 
         return path;
     }
-    
+
     private String checkForLogicalOperators(String filterValue) {
         String operator = null;
-        for(int i = 0; i < logicalOperators.length; i++) {
+        for (int i = 0; i < logicalOperators.length; i++) {
             // TODO can't handle double operators, "between logic"
-            if(filterValue.replaceAll("[0-9]","").equals(logicalOperators[i]) && operator == null)
+            if (filterValue.replaceAll("[0-9]", "").trim().equals(logicalOperators[i]) && operator == null) {
                 operator = logicalOperators[i];
+            }
         }
-        
+
         return operator;
     }
 }

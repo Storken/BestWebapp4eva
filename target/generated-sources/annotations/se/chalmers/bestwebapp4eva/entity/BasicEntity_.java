@@ -5,9 +5,9 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 
-@Generated(value="EclipseLink-2.5.2.v20140319-rNA", date="2014-10-14T15:10:20")
+@Generated(value = "EclipseLink-2.5.2.v20140319-rNA", date = "2014-10-14T17:07:56")
 @StaticMetamodel(BasicEntity.class)
-public class BasicEntity_ { 
+public class BasicEntity_ {
 
     public static volatile SingularAttribute<BasicEntity, Long> id;
     public static volatile SingularAttribute<BasicEntity, Unit> unit;

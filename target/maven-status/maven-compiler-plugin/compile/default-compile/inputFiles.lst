@@ -8,4 +8,5 @@
 /home/simon/Development/git/BestWebapp4eva/src/main/java/se/chalmers/bestwebapp4eva/dao/AbstractDAO.java
 /home/simon/Development/git/BestWebapp4eva/src/main/java/se/chalmers/bestwebapp4eva/dao/IDAO.java
 /home/simon/Development/git/BestWebapp4eva/src/main/java/se/chalmers/bestwebapp4eva/ctrl/CartCtrl.java
+/home/simon/Development/git/BestWebapp4eva/src/main/java/se/chalmers/bestwebapp4eva/utils/PredicateGenerator.java
 /home/simon/Development/git/BestWebapp4eva/src/main/java/se/chalmers/bestwebapp4eva/dao/IBasicEntityCollection.java

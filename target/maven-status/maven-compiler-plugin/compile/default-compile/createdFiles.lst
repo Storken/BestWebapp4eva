@@ -8,6 +8,7 @@ se/chalmers/bestwebapp4eva/entity/BasicEntity_.class
 se/chalmers/bestwebapp4eva/dao/BasicEntityCollection.class
 se/chalmers/bestwebapp4eva/ctrl/AddEntityCtrl.class
 se/chalmers/bestwebapp4eva/entity/BasicEntity.class
+se/chalmers/bestwebapp4eva/utils/PredicateGenerator.class
 se/chalmers/bestwebapp4eva/entity/BasicEntity$Unit.class
 se/chalmers/bestwebapp4eva/entity/AbstractEntity.class
 se/chalmers/bestwebapp4eva/view/BasicView$1.class

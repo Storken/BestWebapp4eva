@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:ui="http://java.sun.com/jsf/facelets"
-        xmlns:p="http://primefaces.org/ui"
-        xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
     <h:form id="tableForm">
-            <p:dataTable 
-                var="entity" 
-                value="#{basicView.entities}"
-                lazy="true" 
-                paginator="true" 
-                rows="10"
-                sortBy="#{entity.id}"
-                emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
-                selectionMode="multiple"
-                selection="#{basicView.selectedEntities}"
-                rowKey="#{entity.id}"
-                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
-                currentPageReportTemplate="Page {currentPage} of {totalPages}"
-                rowsPerPageTemplate="10,50,100"
-                id="entities"> 
- 
+        <p:dataTable 
+            var="entity" 
+            value="#{basicView.entities}"
+            lazy="true" 
+            paginator="true" 
+            rows="10"
+            sortBy="#{entity.id}"
+            emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
+            selectionMode="multiple"
+            selection="#{basicView.selectedEntities}"
+            rowKey="#{entity.id}"
+            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+            currentPageReportTemplate="Page {currentPage} of {totalPages}"
+            rowsPerPageTemplate="10,50,100"
+            id="entities"> 
+
             <f:facet name="header">
                 Entities
             </f:facet>
@@ -44,15 +44,15 @@
             <f:facet name="footer">
                 <p:commandButton update=":cartItems" value="Add to cart" actionListener="#{cartCtrl.addToCart}"/>
             </f:facet>
-            </p:dataTable>
-        </h:form>
-                                        
+        </p:dataTable>
+    </h:form>
 
-                    <h:form prependId="false">
-                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-                            
-                        
-                        
-                    </h:form>
-           
+
+    <h:form prependId="false">
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+
+
+    </h:form>
+
 </ui:composition>
