@@ -21,6 +21,7 @@ import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity_;
+import se.chalmers.bestwebapp4eva.utils.PredicateGenerator;
 
 /**
  *
@@ -32,7 +33,6 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
     @PersistenceContext
     private EntityManager em;
     
-    private static final String[] logicalOperators = new String[]{"<", ">", "<=", ">=", "="};
 
     @Override
     protected EntityManager getEntityManager() {
@@ -107,12 +107,16 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
     public List<BasicEntity> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<BasicEntity> q = cb.createQuery(BasicEntity.class);
+        
+
 
         Root<BasicEntity> basicEntity = q.from(BasicEntity.class);
+        PredicateGenerator pGenerator = new PredicateGenerator(cb, filters, basicEntity);
+        
         q.select(basicEntity);
 
         // SORT
-        Path<?> path = getPath(sortField, basicEntity);
+        Path<?> path = pGenerator.getWildcardPath(sortField, basicEntity);
         if (sortOrder == null) {
             // don't sort
         } else if (sortOrder.equals(SortOrder.ASCENDING)) {
@@ -126,60 +130,8 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
         }
 
         // FILTER
-        Predicate filterCondition = cb.conjunction();
-
-        // Loop through all filter entries. For each filter, do CriteriaBuilder.and(x,y) to add condition to the filter.
-        for (Map.Entry<String, Object> filter : filters.entrySet()) {
-            if (!filter.getValue().equals("")) {
-                Path<String> pathFilter = getStringPath(filter.getKey(), basicEntity);
-
-                // If the attribute the filter is pointing to is a string (or enum). Filter by using SQL LIKE operator.      
-                if (pathFilter != null) {
-                        filterCondition = cb.and(filterCondition, cb.like(cb.lower(pathFilter), "%" + filter.getValue().toString().toLowerCase() + "%"));
-                // If the attribute the filter is pointing to isn't a string (id, quantity, price etc). Filter by using SQL = operator. Exact filtering.
-                } else {
-                    Path<?> pathFilterNonString = getPath(filter.getKey(), basicEntity);
-                    
-                    String operator = checkForLogicalOperators(filter.getValue().toString());
-                    
-                    // If filter contains logical operators
-                    if(operator != null) {
-                        switch(operator) {
-                            case "<":
-                               if(pathFilterNonString.getClass().equals(Double.class))
-                                   filterCondition = cb.and(filterCondition, cb.lt((Path<Double>)pathFilterNonString, Double.parseDouble(filter.getValue().toString().replaceAll("\\D+",""))));
-                               else
-                                   filterCondition = cb.and(filterCondition, cb.lt((Path<Long>)pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+",""))));
-                                break;
-                            case ">":
-                                if(pathFilterNonString.getClass().equals(Double.class))
-                                   filterCondition = cb.and(filterCondition, cb.gt((Path<Double>)pathFilterNonString, Double.parseDouble(filter.getValue().toString().replaceAll("\\D+",""))));
-                               else
-                                   filterCondition = cb.and(filterCondition, cb.gt((Path<Long>)pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+",""))));
-                                break;
-                            case "<=":
-                                if(pathFilterNonString.getClass().equals(Double.class))
-                                   filterCondition = cb.and(filterCondition, cb.le((Path<Double>)pathFilterNonString, Double.parseDouble(filter.getValue().toString().replaceAll("\\D+",""))));
-                               else
-                                   filterCondition = cb.and(filterCondition, cb.le((Path<Long>)pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+",""))));
-                                break;
-                            case ">=":
-                                if(pathFilterNonString.getClass().equals(Double.class))
-                                   filterCondition = cb.and(filterCondition, cb.ge((Path<Double>)pathFilterNonString, Double.parseDouble(filter.getValue().toString().replaceAll("\\D+",""))));
-                               else
-                                   filterCondition = cb.and(filterCondition, cb.ge((Path<Long>)pathFilterNonString, Long.parseLong(filter.getValue().toString().replaceAll("\\D+",""))));
-                                break;
-                            case "=":
-                                // do nothing, jump to else block and perform equal.
-                                break;
-                        }
-                    }else{
-                    
-                    filterCondition = cb.and(filterCondition, cb.equal(pathFilterNonString, filter.getValue()));
-                }
-            }
-        }}
-
+        Predicate filterCondition = pGenerator.getPredicate();
+        
         // Apply the filter in the WHERE clause of the query
         q.where(filterCondition);
 
@@ -195,56 +147,6 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
         }
 
         return tq.getResultList();
-    }
-
-    // Method for getting a Path<?> (wildcard) to an attribute of BasicEntity
-    private Path<?> getPath(String field, Root basicEntity) {
-        
-        Path<?> path = null;
-
-        if (field == null) {
-            path = basicEntity.get(BasicEntity_.title);
-        } else {
-            switch (field) {
-                case "id":
-                    path = basicEntity.get(BasicEntity_.id);
-                    break;
-                case "title":
-                    path = basicEntity.get(BasicEntity_.title);
-                    break;
-                case "price":
-                    path = basicEntity.get(BasicEntity_.price);
-                    break;
-                case "quantity":
-                    path = basicEntity.get(BasicEntity_.quantity);
-                    break;
-                case "unit":
-                    path = basicEntity.get(BasicEntity_.unit);
-                    break;
-            }
-        }
-
-        return path;
-    }
-
-    // Method for getting a Path to a String attribute of BasicEntity
-    private Path<String> getStringPath(String field, Root basicEntity) {
-        Path<String> path = null;
-
-        if (field == null) {
-            path = basicEntity.get(BasicEntity_.title);
-        } else {
-            switch (field) {
-                case "title":
-                    path = basicEntity.get(BasicEntity_.title);
-                    break;
-                case "unit":
-                    path = basicEntity.get(BasicEntity_.unit);
-                    break;
-            }
-        }
-
-        return path;
     }
 
     @Override
@@ -274,17 +176,6 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
         create(new BasicEntity("Thunderstorm", 193, 670, Unit.pcs));
         create(new BasicEntity("Drums", 58, 475, Unit.pcs));
         create(new BasicEntity("Sallad", 3, 150, Unit.kg));
-    }
-
-    private String checkForLogicalOperators(String filterValue) {
-        String operator = null;
-        for(int i = 0; i < logicalOperators.length; i++) {
-            // TODO can't handle double operators, "between logic"
-            if(filterValue.replaceAll("[0-9]","").equals(logicalOperators[i]) && operator == null)
-                operator = logicalOperators[i];
-        }
-        
-        return operator;
     }
 
 }
