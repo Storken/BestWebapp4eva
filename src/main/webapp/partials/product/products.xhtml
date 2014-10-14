@@ -13,7 +13,7 @@
         <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
                 <br/>
-                <p:layout>
+                <p:layout id="layout">
                     <p:layoutUnit position="center">      
                         <ui:include src="/partials/product/catalogue.xhtml"/>
                         <h3>Add entity</h3>
@@ -35,16 +35,13 @@
                         </h:form>
                     </p:layoutUnit>
 
-                    <p:layoutUnit position="east" collapsible="true" size="300" header="Cart" id="cart">
+                    <p:layoutUnit position="east" size="300" header="Cart" id="cart" effect="slide" collapsed="#{cartCtrl.collapseCart()}">
                         <ui:include src="/partials/product/cart.xhtml"/>
                     </p:layoutUnit>
                 </p:layout>
-                <p:dialog header="Selected Entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="200">
-                    <p:outputPanel id="multiEntityDetail" style="text-align:center;">
-                        <ui:repeat value="#{basicView.selectedEntities}" var="entity">
-                            <h:outputText value="#{entity.id} - #{entity.title}" style="display:block"/>
-                        </ui:repeat>
-                    </p:outputPanel>
+
+                <p:dialog header="Manage entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="90%" closeOnEscape="true" draggable="false">
+                    <ui:include src="/partials/product/manageEntityPopup.xhtml"/>
                 </p:dialog>
             </ui:define>
         </ui:composition>

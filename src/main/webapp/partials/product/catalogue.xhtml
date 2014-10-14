@@ -42,7 +42,7 @@
                 <h:outputText value="#{entity.unit}" /> 
             </p:column>
             <f:facet name="footer">
-                <p:commandButton update=":cartItems" value="Add to cart" actionListener="#{cartCtrl.addToCart}"/>
+                <p:commandButton update=":layout :cartItems" value="Add to cart" actionListener="#{cartCtrl.addToCart}"/>
             </f:facet>
             </p:dataTable>
         </h:form>
