@@ -5,17 +5,12 @@
  */
 package se.chalmers.bestwebapp4eva.ctrl;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.context.RequestContext;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.view.BasicView;
@@ -57,10 +52,27 @@ public class CartCtrl {
 
     public void removeFromCart(BasicEntity entity) {
         cart.remove(entity);
+
     }
 
-    public void order(BasicEntity entity) {
-        entity.setQuantity(entity.getQuantity() - 1);
-        bec.update(entity);
+    public void executeChanges(List<BasicEntity> changed) {
+        for (BasicEntity e : changed) {
+            bec.update(e);
+        }
+        cart.getCartItems().clear();
+
+    }
+    
+    public void incQuantity(BasicEntity entity) {
+        entity.setQuantity(entity.getQuantity()+1);
+    }
+    
+    public void decQuantity(BasicEntity entity) {
+        entity.setQuantity(entity.getQuantity()-1);
+    }
+
+    public boolean collapseCart() {
+        return cart.getCartItems().isEmpty();
+
     }
 }

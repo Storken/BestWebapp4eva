@@ -6,10 +6,9 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-
     <p:accordionPanel id="cartItems" value="#{cartBB.cartItems}" var="entity" multiple="true" activeIndex="null">
         <p:tab title="#{entity.title}" id="item">
-            <p:commandButton value="Remove from cart" actionListener="#{cartCtrl.removeFromCart(entity)}" update="cartItems"/> 
+            <p:commandButton value="Remove from cart" actionListener="#{cartCtrl.removeFromCart(entity)}" update=":layout"/> 
             <br>
             </br>
             <h:panelGrid columns="2">
@@ -20,12 +19,11 @@
                 <h:outputText value="$#{entity.price}" />
 
                 <h:outputText value="Quantity:"/>
-                <h:outputText id="quantity" value="#{entity.quantity} #{entity.unit}"/>
+                <h:outputText value="#{entity.quantity} #{entity.unit}"/>
             </h:panelGrid>
             <br/>
-            <p:commandButton value="Take from teh lager" actionListener="#{cartCtrl.order(entity)}" update="@(.ui-datatable), quantity"/> 
         </p:tab>
     </p:accordionPanel>
     <hr/>
-    <p:commandButton value="Manage these products now (new page?)"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/> 
+    <p:commandButton id="manageButton" value="Manage these products" update="multiEntityDetail" oncomplete="PF('multiEntityDialog').show()"/>
 </ui:composition>
