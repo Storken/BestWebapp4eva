@@ -11,7 +11,7 @@ import org.primefaces.model.SortOrder;
  * @param <T> type of elements in container
  * @param <K> K is type of id (primary key)
  */
-public interface IDAO<T,K> {
+public interface IDAO<T, K> {
 
     public void create(T t);
 
@@ -23,12 +23,12 @@ public interface IDAO<T,K> {
 
     public List<T> findAll();
 
-    public List<T> findRange(int first, int n );
+    public List<T> findRange(int first, int n);
 
     public int count();
-    
+
     public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters);
-    
+
     public List<T> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters);
-   
+
 }

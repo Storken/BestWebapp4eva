@@ -20,18 +20,19 @@ import se.chalmers.bestwebapp4eva.view.AddEntityBB;
  */
 @Named
 @RequestScoped
-public class AddEntityCtrl { 
+public class AddEntityCtrl {
+
     @EJB
     private IBasicEntityCollection bec;
     @Inject
     private AddEntityBB entityBB;
-   
+
     public void add(ActionEvent actionEvent) {
         System.out.println("We are here");
         bec.create(new BasicEntity(
-                entityBB.getName(), 
-                entityBB.getPrice(), 
-                entityBB.getQuantity(), 
+                entityBB.getName(),
+                entityBB.getPrice(),
+                entityBB.getQuantity(),
                 entityBB.getUnit()
         ));
     }

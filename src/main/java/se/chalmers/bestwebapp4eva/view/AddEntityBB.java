@@ -21,20 +21,20 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 @Named
 @RequestScoped
 public class AddEntityBB {
-    
+
     private Long id;
     //@NotNull(message = "Only 2-20 characters allowed")
     //@Size(min = 2, max = 20, message = "Only 2-20 characters allowed")
     private String name;
-    
+
     //@NotNull(message = "Price < 0 not allowed")
     //@Min(value = 0, message = "Price < 0 not allowed")
     private double price;
-    
+
     //@NotNull(message = "Quantity < 0 not allowed")
     //@Min(value = 0, message = "Quantity < 0 not allowed")
     private double quantity;
-    
+
     private Unit unit;
 
     @PostConstruct
@@ -70,19 +70,19 @@ public class AddEntityBB {
     public void setPrice(double price) {
         this.price = price;
     }
-    
+
     public double getQuantity() {
         return quantity;
     }
-    
+
     public void setQuantity(double quantity) {
         this.quantity = quantity;
     }
-    
+
     public Unit getUnit() {
         return unit;
     }
-    
+
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
@@ -91,6 +91,5 @@ public class AddEntityBB {
     public String toString() {
         return "AddEntityBB{" + "id=" + id + ", name=" + name + ", price=" + price + ", quantity=" + quantity + ",unit=" + unit + '}';
     }
-   
-    
+
 }

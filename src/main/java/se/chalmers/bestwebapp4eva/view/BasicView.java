@@ -32,59 +32,61 @@ import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
  */
 @Named
 @ViewScoped
-public class BasicView implements Serializable{
-    
+public class BasicView implements Serializable {
+
     private LazyDataModel<BasicEntity> entities;
-    
+
     private List<BasicEntity> selectedEntities;
-    
-    @EJB    
+
+    @EJB
     private IBasicEntityCollection bec;
-    
+
     public BasicView() {
-        
+
     }
-    
+
     @PostConstruct
-    public void init() {      
-        this.entities = new LazyDataModel<BasicEntity>(){
+    public void init() {
+        this.entities = new LazyDataModel<BasicEntity>() {
             @Override
             public List<BasicEntity> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
                 List<BasicEntity> result = bec.getResultList(first, pageSize, sortField, sortOrder, filters);
                 entities.setRowCount(bec.count(sortField, sortOrder, filters));
-                if(entities.getRowCount() < bec.findAll().size() && entities.getRowCount() != 0)
+                if (entities.getRowCount() < bec.findAll().size() && entities.getRowCount() != 0) {
                     filterMessage();
-                return result;
                 }
-            };
-        if(bec.findAll().size() == 0) {
+                return result;
+            }
+        };
+        if (bec.findAll().size() == 0) {
             bec.bulkAdd();
         }
     }
-    
-    public LazyDataModel<BasicEntity> getEntities() { 
-            return entities;
+
+    public LazyDataModel<BasicEntity> getEntities() {
+        return entities;
     }
-    
+
     public List<BasicEntity> getSelectedEntities() {
         return this.selectedEntities;
     }
-    
+
     public void setEntities(LazyDataModel<BasicEntity> entities) {
         this.entities = entities;
     }
-    
+
     public void setSelectedEntities(List<BasicEntity> selectedEntities) {
         this.selectedEntities = selectedEntities;
     }
-    
+
     public void filterMessage() {
         String message;
-        if(entities.getRowCount() == 1) 
+        if (entities.getRowCount() == 1) {
             message = entities.getRowCount() + " item matching your criteria";
-        else
+        } else {
             message = entities.getRowCount() + " items matching your criteria";
-        
+        }
+
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Found", message));
     }
 }

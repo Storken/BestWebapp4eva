@@ -14,19 +14,18 @@ import javax.persistence.MappedSuperclass;
 
 /**
  * Base class for all entities that will be stored in the database
- * 
+ *
  * @author erik
  * @author simon
  */
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable{
+public abstract class AbstractEntity implements Serializable {
 
-   
-    protected AbstractEntity(){
+    protected AbstractEntity() {
     }
-    
+
     public abstract Long getId();
-    
+
     public abstract void setId(long id);
 
     @Override
@@ -48,5 +47,4 @@ public abstract class AbstractEntity implements Serializable{
         return Objects.equals(getId(), other.getId());
     }
 
-   
 }

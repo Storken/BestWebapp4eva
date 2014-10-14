@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/template.xhtml">
+            <ui:define name="content"> 
+                <br/>
+                <p:layout>
+                    <p:layoutUnit position="center">      
+                        <h:form id="form">
+                            <p:dataTable 
+                                var="entity" 
+                                value="#{basicView.entities}"
+                                lazy="true" 
+                                paginator="true" 
+                                rows="10"
+                                sortBy="#{entity.id}"
+                                emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
+                                selectionMode="multiple"
+                                selection="#{basicView.selectedEntities}"
+                                rowKey="#{entity.id}"
+                                widgetVar="entitiesList"
+                                paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+                                currentPageReportTemplate="Page {currentPage} of {totalPages}"
+                                rowsPerPageTemplate="10,50,100"
+                                id="entities"> 
+
+                                <f:facet name="header">
+                                    Entities
+                                </f:facet>
+                                <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">                 
+                                    <h:outputText value="#{entity.id}" /> 
+                                </p:column>
+                                <p:column sortBy="#{entity.title}" filterBy="#{entity.title}" filterMatchMode="contains" headerText="Title">                 
+                                    <h:outputText value="#{entity.title}" /> 
+                                </p:column>
+                                <p:column sortBy="#{entity.price}" filterBy="#{entity.price}" filterMatchMode="contains" headerText="Price">                 
+                                    <h:outputText value="#{entity.price}" /> 
+                                </p:column>
+                                <p:column sortBy="#{entity.quantity}" filterBy="#{entity.quantity}" filterMatchMode="contains" headerText="Quantity">                 
+                                    <h:outputText value="#{entity.quantity} " /> 
+                                </p:column>
+                                <p:column sortBy="#{entity.unit}" filterBy="#{entity.unit}" filterMatchMode="contains" headerText="Unit">                
+                                    <h:outputText value="#{entity.unit}" /> 
+                                </p:column>
+                                <f:facet name="footer">
+                                    <p:commandButton update=":cartItems" value="Add to cart" actionListener="#{cartCtrl.addToCart}"/>
+                                </f:facet>
+                            </p:dataTable>
+                        </h:form>
+
+
+                        <h:form prependId="false">
+                            <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+
+
+                        </h:form>
+                        <h3>Add entity</h3>
+                        <h:form>
+                            <h:panelGrid columns="2" class="table">
+                                <h:outputLabel value="Name"/>
+                                <h:inputText value="#{addEntityBB.name}"/> 
+                                <h:outputLabel value="Price" />
+                                <h:inputText value="#{addEntityBB.price}"/>
+                                <h:outputLabel value="Quantity" />
+                                <h:inputText value="#{addEntityBB.quantity}"/>
+                                <h:outputLabel value="Unit" />
+                                <h:inputText value="#{addEntityBB.unit}"/>
+
+                            </h:panelGrid>
+                            <div class="btn-group">
+                                <p:commandButton value="Add entity"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
+                            </div>
+
+                        </h:form>
+                    </p:layoutUnit>
+                    <p:layoutUnit position="east" collapsible="true" size="300" header="Cart" id="cart">
+                        <ui:include src="/partials/product/cart.xhtml"/>
+                    </p:layoutUnit>
+                </p:layout>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -5,6 +5,7 @@
  */
 package se.chalmers.bestwebapp4eva.view;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -19,47 +20,46 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 @Named
 @RequestScoped
 public class CartBB {
-    
-    private List<BasicEntity> cartItems;
-    
-    private BasicEntity item;
-    
+
+    private static List<BasicEntity> cartItems;
+
     @PostConstruct
     public void post() {
-        // Empty
+        if (cartItems == null) {
+            cartItems = new ArrayList<>();
+        }
     }
 
     @PreDestroy
     public void pre() {
         // Empty
     }
-    
+
     public List<BasicEntity> getCartItems() {
-        return cartItems;
+        return CartBB.cartItems;
     }
-    
+
     public void setCartItems(List<BasicEntity> cartItems) {
-        this.cartItems = cartItems;
+        CartBB.cartItems.addAll(cartItems);
     }
-    
-    public BasicEntity getItem() {
-        return item;
+
+    public void add(BasicEntity entity) {
+        CartBB.cartItems.add(entity);
     }
-    
-    public void setItem(BasicEntity item) {
-        this.item = item;
+
+    public void remove(BasicEntity entity) {
+        CartBB.cartItems.remove(entity);
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("CartBB{");
-        for(BasicEntity e : cartItems) {
+        for (BasicEntity e : CartBB.cartItems) {
             sb.append(e.getTitle());
         }
         sb.append("}");
         return sb.toString();
     }
-   
-    
+
 }
