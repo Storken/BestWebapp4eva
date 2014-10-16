@@ -12,23 +12,28 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
-import se.chalmers.bestwebapp4eva.view.AddEntityBB;
+import se.chalmers.bestwebapp4eva.view.EntityBB;
 
 /**
- *
+ * Controller class for entities and their connection to the database
+ * 
  * @author tholene
  */
 @Named
 @RequestScoped
-public class AddEntityCtrl {
+public class EntityCtrl {
 
     @EJB
     private IBasicEntityCollection bec;
     @Inject
-    private AddEntityBB entityBB;
-
+    private EntityBB entityBB;
+    
+    /**
+     * Add a new entity to the database
+     * 
+     * @param actionEvent The received event
+     */
     public void add(ActionEvent actionEvent) {
-        System.out.println("We are here");
         bec.create(new BasicEntity(
                 entityBB.getName(),
                 entityBB.getPrice(),

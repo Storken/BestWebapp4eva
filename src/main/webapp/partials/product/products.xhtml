@@ -20,17 +20,17 @@
                         <h:form>
                             <h:panelGrid columns="2" class="table">
                                 <h:outputLabel value="Name"/>
-                                <h:inputText value="#{addEntityBB.name}"/> 
+                                <h:inputText value="#{entityBB.name}"/> 
                                 <h:outputLabel value="Price" />
-                                <h:inputText value="#{addEntityBB.price}"/>
+                                <h:inputText value="#{entityBB.price}"/>
                                 <h:outputLabel value="Quantity" />
-                                <h:inputText value="#{addEntityBB.quantity}"/>
+                                <h:inputText value="#{entityBB.quantity}"/>
                                 <h:outputLabel value="Unit" />
-                                <h:inputText value="#{addEntityBB.unit}"/>
+                                <h:inputText value="#{entityBB.unit}"/>
 
                             </h:panelGrid>
                             <div class="btn-group">
-                                <p:commandButton value="Add entity"  actionListener="#{addEntityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
+                                <p:commandButton value="Add entity"  actionListener="#{entityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
                             </div>
                         </h:form>
                     </p:layoutUnit>

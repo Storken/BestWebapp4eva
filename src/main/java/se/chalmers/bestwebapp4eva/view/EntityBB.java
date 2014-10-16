@@ -20,7 +20,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
  */
 @Named
 @RequestScoped
-public class AddEntityBB {
+public class EntityBB {
 
     private Long id;
     //@NotNull(message = "Only 2-20 characters allowed")

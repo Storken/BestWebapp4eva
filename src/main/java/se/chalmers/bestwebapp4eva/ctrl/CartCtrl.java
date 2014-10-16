@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.util.List;
@@ -17,6 +12,7 @@ import se.chalmers.bestwebapp4eva.view.BasicView;
 import se.chalmers.bestwebapp4eva.view.CartBB;
 
 /**
+ * Controller for the cart
  *
  * @author tholene
  */
@@ -31,17 +27,16 @@ public class CartCtrl {
     @Inject
     private BasicView entities;
 
-    public void checkout(ActionEvent actionEvent) {
-        List<BasicEntity> items = cart.getCartItems();
-        for (BasicEntity i : items) {
-            bec.update(i);
-        }
-    }
-
-    public void addToCart(ActionEvent actionEvent) {
+    /**
+     * Add all the selected items to the cart
+     *
+     * @param actionEvent The received event
+     */
+    public void addSelectionToCart(ActionEvent actionEvent) {
         List<BasicEntity> items = entities.getSelectedEntities();
         if (items != null) {
             for (BasicEntity i : items) {
+                // Dont add the same item twice
                 if (!cart.getCartItems().contains(i)) {
                     cart.add(i);
                 }
@@ -50,11 +45,24 @@ public class CartCtrl {
 
     }
 
+    /**
+     * Remove an item from the cart
+     *
+     * @param entity The item to be removed
+     */
     public void removeFromCart(BasicEntity entity) {
         cart.remove(entity);
 
     }
 
+    /**
+     * Checkout/commit the current changes in the cart to the database
+     * <br>
+     * If an item hasn't changed it will still be updated in the database but
+     * this won't have any negative impact.
+     *
+     * @param changed All the items that are in the cart
+     */
     public void executeChanges(List<BasicEntity> changed) {
         for (BasicEntity e : changed) {
             bec.update(e);
@@ -62,17 +70,27 @@ public class CartCtrl {
         cart.getCartItems().clear();
 
     }
-    
+
+    //Temporary method
     public void incQuantity(BasicEntity entity) {
-        entity.setQuantity(entity.getQuantity()+1);
-    }
-    
-    public void decQuantity(BasicEntity entity) {
-        entity.setQuantity(entity.getQuantity()-1);
+        entity.setQuantity(entity.getQuantity() + 1);
     }
 
+    //Temporary method
+
+    public void decQuantity(BasicEntity entity) {
+        entity.setQuantity(entity.getQuantity() - 1);
+    }
+
+    /**
+     * If the cart is empty it will not be shown
+     *
+     * @return <code>true</code> if the cart is empty and should not be shown
+     * <br>
+     *
+     * <code>false</code> if the cart is not empty and ∫should be shown
+     */
     public boolean collapseCart() {
         return cart.getCartItems().isEmpty();
-
     }
 }
