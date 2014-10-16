@@ -27,13 +27,8 @@ import se.chalmers.bestwebapp4eva.entity.AbstractEntity;
  * @author hajo
  */
 @Entity
-@Table(name="USER")
-@XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
-    @NamedQuery(name = "User.getById", query = "SELECT u FROM User u WHERE u.id =:id"),
-    @NamedQuery(name = "User.getByUsername", query = "SELECT u FROM User u WHERE u.username =:username")})
-public class User extends AbstractEntity implements Serializable {
+@Table(name="USER_")
+public class User_ extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Column(name="USERNAME")  // unique is implied
@@ -46,16 +41,16 @@ public class User extends AbstractEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     protected List<Groups> groups = new ArrayList<>();
 
-    public User() {
+    public User_() {
     }
     
-    public User(String username, String psswd){
+    public User_(String username, String passwd){
         this.username = username;
         this.passwd = passwd;
         groups.add(Groups.USER);
     }
 
-    public User(String username, String passwd, Groups group) {
+    public User_(String username, String passwd, Groups group) {
         this.username = username;
         this.passwd = passwd;
         groups.add(group);
@@ -104,7 +99,7 @@ public class User extends AbstractEntity implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final User other = (User) obj;
+        final User_ other = (User_) obj;
         return Objects.equals(this.username, other.username);
     }
 

@@ -18,13 +18,13 @@
                 <div id="auth">
                     <h:form>
                         <a class="authText">username:</a>
-                        <h:inputText id="usrname" class="auth" value="#{authBB.username}"/>
+                        <h:inputText id="usrname" class="auth" value="#{authBean.username}"/>
                         <br/>
                         <a class="authText">password:</a>
-                        <h:inputSecret id="passwrd" class="auth" value="#{authBB.password}"/>
+                        <h:inputSecret id="passwrd" class="auth" value="#{authBean.password}"/>
                         <div id="authbuttondiv">
-                            <h:commandButton id="crtauthbtn" action="#{authEntityCtrl.create()}" value="Create new user"/>
-                            <h:commandButton id="authbtn" action="#{authEntityCtrl.login()}" value="Login" />
+                            <h:commandButton id="crtauthbtn" action="#{authBean.create()}" value="Create new user"/>
+                            <h:commandButton id="authbtn" action="#{authBean.login()}" value="Login" />
                         </div>
                     </h:form>
                 </div>

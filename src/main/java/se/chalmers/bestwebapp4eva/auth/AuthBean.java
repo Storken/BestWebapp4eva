@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package se.chalmers.bestwebapp4eva.ctrl;
+package se.chalmers.bestwebapp4eva.auth;
+
+
+import java.io.Serializable;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -16,46 +13,49 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import se.chalmers.bestwebapp4eva.auth.AuthBB;
-import se.chalmers.bestwebapp4eva.auth.IAuthDAO;
-import se.chalmers.bestwebapp4eva.auth.User;
 
 /**
  *
- * @author magnushutu
+ * @author hajo
  */
 @Named
 @RequestScoped
-public class AuthEntityCtrl {
-    @EJB
-    private IAuthDAO ad;
+public class AuthBean implements Serializable{
+
+
+    private String username;
+    private String password;
+    private static final Logger LOG = Logger.getLogger(AuthBean.class.getSimpleName());
+
     @Inject
-    private AuthBB authBB;
+    private AuthDAO ad;
     
-    private static final Logger LOG = Logger.getLogger(AuthEntityCtrl.class.getSimpleName());
+    public AuthBean(){
+        
+    }
     
      public String login() {
-        ad.create(new User("qqq","111"));
+        ad.create(new User_("qqq","111"));
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{authBB.getUsername(), authBB.getPassword()});
+        LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{username, password});
         
         // Really check is there some data in database?
-        User u =  ad.getByUsername("qqq").get(0);
+        User_ u =  ad.getByUsername("qqq").get(0);
         LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPasswd()});
         
         
         try {
             //request.setCharacterEncoding("UTF-8");
-            request.login(authBB.getUsername(), authBB.getPassword());
+            request.login(username, password);
             LOG.log(Level.INFO, "*** Login success");
             LOG.log(Level.INFO, "*** User principal {0}", request.getUserPrincipal());
             LOG.log(Level.INFO, "*** Is role admin {0}", request.isUserInRole("admin"));
             LOG.log(Level.INFO, "*** Is role user {0}", request.isUserInRole("user"));
           
             externalContext.getSessionMap().put("user", u);  // Store User in session
-            return "fail";
+            return "dashboard";
         } catch (ServletException e) {
               LOG.log(Level.INFO, "*** Login fail");
             
@@ -68,11 +68,11 @@ public class AuthEntityCtrl {
             externalContext.getFlash().setKeepMessages(true);
           
         }
-        return "fail";
+        return "index";
     }
     
     public String create(){
-        return "fail";
+        return "dashboard";
     }
     
     public String logout() {
@@ -82,4 +82,23 @@ public class AuthEntityCtrl {
         LOG.log(Level.INFO, "*** Logout success");
         return "success";
     }
+
+    // ------------------------------
+    // Getters & Setters 
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+     
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
 }

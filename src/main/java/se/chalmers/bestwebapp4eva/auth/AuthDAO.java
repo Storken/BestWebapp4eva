@@ -17,14 +17,14 @@ import se.chalmers.bestwebapp4eva.dao.AbstractDAO;
  * @author hajo
  */
 @Stateless
-public class AuthDAO extends AbstractDAO<User, String> {
+public class AuthDAO extends AbstractDAO<User_, String> {
     private static final Logger LOG = Logger.getLogger(AuthDAO.class.getName());
 
     @PersistenceContext//(unitName = "jee_auth_pu")
     protected EntityManager em;
 
     public AuthDAO() {
-        super(User.class);
+        super(User_.class);
     }
 
      @PostConstruct
@@ -37,22 +37,22 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return em;
     }
     
-    public List<User> getById(long id){
-        TypedQuery<User> query;
-        query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.id =:id", User.class)
+    public List<User_> getById(long id){
+        TypedQuery<User_> query;
+        query = em.createQuery("select u from " + User_.class.getSimpleName() + " u WHERE u.id =:id", User_.class)
                 .setParameter("id", id);
         
-        List<User> found = new ArrayList<>();
+        List<User_> found = new ArrayList<>();
         found.addAll(query.getResultList());
         return found;
     }
     
-    public List<User> getByUsername(String username){
-        TypedQuery<User> query;
-        query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.username =:username", User.class)
+    public List<User_> getByUsername(String username){
+        TypedQuery<User_> query;
+        query = em.createQuery("select u from " + User_.class.getSimpleName() + " u WHERE u.username =:username", User_.class)
                 .setParameter("username", username);
         
-        List<User> found = new ArrayList<>();
+        List<User_> found = new ArrayList<>();
         found.addAll(query.getResultList());
         return found;
     }
