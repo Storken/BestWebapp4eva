@@ -20,12 +20,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Named
 @RequestScoped
-public class AuthBean implements Serializable {
+public class AuthBean {
 
     private static final Logger LOG = Logger.getLogger(AuthBean.class.getSimpleName());
     private static final long serialVersionUID = 1L;
 
-    private String id;
+    private String username;
     private String password;
    
 
@@ -36,23 +36,23 @@ public class AuthBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{id, password});
+        LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{username, password});
         
         // Really check is there some data in database?
-        User u =  authDAO.find("qqq");
-        LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getId(), u.getPasswd()});
+        User u =  authDAO.getByUsername("qqq").get(0);
+        LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPasswd()});
         
         
         try {
             //request.setCharacterEncoding("UTF-8");
-            request.login(id, password);
+            request.login(username, password);
             LOG.log(Level.INFO, "*** Login success");
             LOG.log(Level.INFO, "*** User principal {0}", request.getUserPrincipal());
             LOG.log(Level.INFO, "*** Is role admin {0}", request.isUserInRole("admin"));
             LOG.log(Level.INFO, "*** Is role user {0}", request.isUserInRole("user"));
           
             externalContext.getSessionMap().put("user", u);  // Store User in session
-            return "success";
+            return "fail";
         } catch (ServletException e) {
               LOG.log(Level.INFO, "*** Login fail");
             
@@ -68,6 +68,10 @@ public class AuthBean implements Serializable {
         return "fail";
     }
     
+    public String create(){
+        return "fail";
+    }
+    
     public String logout() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().
                 getExternalContext();
@@ -78,12 +82,12 @@ public class AuthBean implements Serializable {
 
     // ------------------------------
     // Getters & Setters 
-    public String getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
      
     public void setPassword(String password) {

@@ -13,7 +13,11 @@ import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlRootElement;
+import se.chalmers.bestwebapp4eva.entity.AbstractEntity;
 
 /**
  * User table in database
@@ -23,26 +27,30 @@ import javax.persistence.Table;
  * @author hajo
  */
 @Entity
-@Table(name="USERS")
-public class User implements Serializable {
+@Table(name="USER")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
+    @NamedQuery(name = "User.getById", query = "SELECT u FROM User u WHERE u.id =:id"),
+    @NamedQuery(name = "User.getByUsername", query = "SELECT u FROM User u WHERE u.username =:username")})
+public class User extends AbstractEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Column(nullable = false)  // unique is implied
-    protected String id;
-    @Column(nullable = false)
+    @Column(name="USERNAME")  // unique is implied
+    protected String username;
+    @Column(name="PASSWORD")
     protected String passwd;
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name = "USERS_GROUPS", 
-            joinColumns = @JoinColumn(name = "id"))
+    @CollectionTable(name = "USER_GROUPS", 
+            joinColumns = @JoinColumn(name = "username"))
     @Enumerated(EnumType.STRING)
     protected List<Groups> groups = new ArrayList<>();
 
     public User() {
     }
 
-    public User(String id, String passwd, Groups group) {
-        this.id = id;
+    public User(String username, String passwd, Groups group) {
+        this.username = username;
         this.passwd = passwd;
         groups.add(group);
     }
@@ -59,12 +67,12 @@ public class User implements Serializable {
         return groups;
     }
 
-    public String getId() {
-        return id;
+    public String getUsername() {
+        return username;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPasswd() {
@@ -78,7 +86,7 @@ public class User implements Serializable {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 59 * hash + Objects.hashCode(this.id);
+        hash = 59 * hash + Objects.hashCode(this.username);
         return hash;
     }
 
@@ -91,7 +99,7 @@ public class User implements Serializable {
             return false;
         }
         final User other = (User) obj;
-        return Objects.equals(this.id, other.id);
+        return Objects.equals(this.username, other.username);
     }
 
 }
