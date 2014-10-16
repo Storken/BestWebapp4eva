@@ -1,10 +1,13 @@
-package se.chalmers.bestwebapp4eva.auth;
-
-
-import java.io.Serializable;
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
@@ -13,39 +16,39 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import se.chalmers.bestwebapp4eva.auth.AuthBB;
+import se.chalmers.bestwebapp4eva.auth.IAuthDAO;
+import se.chalmers.bestwebapp4eva.auth.User;
 
 /**
  *
- * @author hajo
+ * @author magnushutu
  */
 @Named
 @RequestScoped
-public class AuthBean {
-
-    private static final Logger LOG = Logger.getLogger(AuthBean.class.getSimpleName());
-    private static final long serialVersionUID = 1L;
-
-    private String username;
-    private String password;
-   
-
-    @Inject // Bad use setter or constructor injection
-    private AuthDAO authDAO;
-
-    public String login() {
+public class AuthEntityCtrl {
+    @EJB
+    private IAuthDAO ad;
+    @Inject
+    private AuthBB authBB;
+    
+    private static final Logger LOG = Logger.getLogger(AuthEntityCtrl.class.getSimpleName());
+    
+     public String login() {
+        ad.create(new User("qqq","111"));
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{username, password});
+        LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{authBB.getUsername(), authBB.getPassword()});
         
         // Really check is there some data in database?
-        User u =  authDAO.getByUsername("qqq").get(0);
+        User u =  ad.getByUsername("qqq").get(0);
         LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPasswd()});
         
         
         try {
             //request.setCharacterEncoding("UTF-8");
-            request.login(username, password);
+            request.login(authBB.getUsername(), authBB.getPassword());
             LOG.log(Level.INFO, "*** Login success");
             LOG.log(Level.INFO, "*** User principal {0}", request.getUserPrincipal());
             LOG.log(Level.INFO, "*** Is role admin {0}", request.isUserInRole("admin"));
@@ -78,23 +81,5 @@ public class AuthBean {
         externalContext.invalidateSession();
         LOG.log(Level.INFO, "*** Logout success");
         return "success";
-    }
-
-    // ------------------------------
-    // Getters & Setters 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-     
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-        return password;
     }
 }

@@ -29,7 +29,13 @@
 <navigation-rule>
     <from-view-id>/index.html</from-view-id>
     <navigtion-case>
-            <from-action>#{authBean.create}</from-action>
+            <from-action>#{authEntityCtrl.create}</from-action>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>partials/dashboard.xhtml</to-view-id>
+            <redirect/>
+    </navigtion-case>
+    <navigtion-case>
+            <from-action>#{authEntityCtrl.login}</from-action>
             <from-outcome>fail</from-outcome>
             <to-view-id>partials/dashboard.xhtml</to-view-id>
             <redirect/>

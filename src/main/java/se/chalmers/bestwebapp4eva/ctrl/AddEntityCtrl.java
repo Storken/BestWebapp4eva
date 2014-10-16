@@ -10,6 +10,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import se.chalmers.bestwebapp4eva.auth.IAuthDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.IBasicEntityCollection;
 import se.chalmers.bestwebapp4eva.views.AddEntityBB;

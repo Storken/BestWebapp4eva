@@ -48,6 +48,12 @@ public class User extends AbstractEntity implements Serializable {
 
     public User() {
     }
+    
+    public User(String username, String psswd){
+        this.username = username;
+        this.passwd = passwd;
+        groups.add(Groups.USER);
+    }
 
     public User(String username, String passwd, Groups group) {
         this.username = username;
