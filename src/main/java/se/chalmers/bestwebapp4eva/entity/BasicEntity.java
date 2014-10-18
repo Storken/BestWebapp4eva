@@ -1,12 +1,15 @@
 package se.chalmers.bestwebapp4eva.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -42,6 +45,9 @@ public class BasicEntity extends AbstractDBObject {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Unit unit;
+    
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private Category category;
 
     public BasicEntity() {
 
@@ -55,11 +61,12 @@ public class BasicEntity extends AbstractDBObject {
      * @param quantity Quantity of the basic entity.
      * @param unit Unit of the basic entity, like kg, pcs and l.
      */
-    public BasicEntity(String title, double price, double quantity, Unit unit) {
+    public BasicEntity(String title, double price, double quantity, Unit unit, Category category) {
         this.title = title;
         this.price = price;
         this.quantity = quantity;
         this.unit = unit;
+        this.category = category;
     }
 
     /**
@@ -72,12 +79,13 @@ public class BasicEntity extends AbstractDBObject {
      * @param quantity Quantity of the basic entity.
      * @param unit Unit of the basic entity, like kg, pcs and l.
      */
-    public BasicEntity(long id, String title, double price, double quantity, Unit unit) {
+    public BasicEntity(long id, String title, double price, double quantity, Unit unit, Category category) {
         this.id = id;
         this.title = title;
         this.price = price;
         this.quantity = quantity;
         this.unit = unit;
+        this.category = category;
     }
 
     @Override
@@ -125,6 +133,10 @@ public class BasicEntity extends AbstractDBObject {
     public Unit getUnit() {
         return this.unit;
     }
+    
+    public Category getCategory() {
+        return this.category;
+    }
 
     /**
      * Set the title.
@@ -160,9 +172,13 @@ public class BasicEntity extends AbstractDBObject {
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
+    
+    public void setCategory(Category category) {
+        this.category = category;
+    }
 
     @Override
     public String toString() {
-        return "BasicEntity{" + "id=" + getId() + ", title=" + title + ", price=" + price + ", quantity=" + quantity + ", unit=" + unit.toString() + '}';
+        return "BasicEntity{" + "id=" + getId() + ", title=" + title + ", price=" + price + ", quantity=" + quantity + ", unit=" + unit.toString() + ", category=" + category.getName() + '}';
     }
 }

@@ -114,6 +114,8 @@ public class PredicateGenerator {
                 case "unit":
                     path = root.get(BasicEntity_.unit);
                     break;
+                case "category":
+                    path = root.get(BasicEntity_.category);
             }
         }
 

@@ -4,6 +4,7 @@ import java.util.List;
 import javax.ejb.Local;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
+import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
  *
@@ -46,6 +47,8 @@ public interface IBasicEntityCollection extends IDAO<BasicEntity, Long> {
      * @return  A list with the wanted entity(s).
      */
     public List<BasicEntity> getByUnit(Unit unit);
+    
+    public List<BasicEntity> getByCategory(Category category);
 
     /**
      * Temporary method for testing purposes only. To be removed.

@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
+import se.chalmers.bestwebapp4eva.entity.Category;
 import se.chalmers.bestwebapp4eva.view.EntityBB;
 
 /**
@@ -38,7 +39,7 @@ public class EntityCtrl {
                 entityBB.getName(),
                 entityBB.getPrice(),
                 entityBB.getQuantity(),
-                entityBB.getUnit()
+                entityBB.getUnit(), new Category("No category", "Just a default category...")
         ));
     }
 }

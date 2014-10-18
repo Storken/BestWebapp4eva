@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.chalmers.bestwebapp4eva.dao;
 
 import java.util.HashMap;
@@ -21,6 +16,7 @@ import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity_;
+import se.chalmers.bestwebapp4eva.entity.Category;
 import se.chalmers.bestwebapp4eva.utils.PredicateGenerator;
 
 /**
@@ -74,6 +70,13 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
     public List<BasicEntity> getByUnit(BasicEntity.Unit unit) {
         Map<String, Object> filter = new HashMap<>();
         filter.put("unit", unit);
+        return getResultList(-1, -1, null, null, filter);
+    }
+    
+    @Override
+    public List<BasicEntity> getByCategory(Category category) {
+        Map<String, Object> filter = new HashMap<>();
+        filter.put("category", category);
         return getResultList(-1, -1, null, null, filter);
     }
 
@@ -148,6 +151,9 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
                 case "quantity":
                     path = basicEntity.get(BasicEntity_.quantity);
                     break;
+                case "category":
+                    path = basicEntity.get(BasicEntity_.category);
+                    break;
             }
         }
 
@@ -156,31 +162,32 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
 
     @Override
     public void bulkAdd() {
-        create(new BasicEntity("Screw", 25, 100, Unit.pcs));
-        create(new BasicEntity("Muppet", 1, 38, Unit.kg));
-        create(new BasicEntity("Book", 32, 95, Unit.pcs));
-        create(new BasicEntity("Water", 0.1, 5679, Unit.l));
-        create(new BasicEntity("Pepsi", 1, 10, Unit.l));
-        create(new BasicEntity("iPhone 6", 99999, 4, Unit.pcs));
-        create(new BasicEntity("Volvo 740 (red)", 30000, 79, Unit.pcs));
-        create(new BasicEntity("Sakkurugame", 15, 178, Unit.pcs));
-        create(new BasicEntity("Milk", 2, 481, Unit.l));
-        create(new BasicEntity("Oil", 250, 18, Unit.l));
-        create(new BasicEntity("Hamburger meat", 58, 36, Unit.kg));
-        create(new BasicEntity("Teacher", 1, 1, Unit.pcs));
-        create(new BasicEntity("Apocalypse", 193, 670, Unit.pcs));
-        create(new BasicEntity("Keyboard", 58, 475, Unit.pcs));
-        create(new BasicEntity("Rice", 3, 150, Unit.kg));
-        create(new BasicEntity("iPhone 7", 999991, 78, Unit.pcs));
-        create(new BasicEntity("Volvo 240 DL (red)", 50000, 15, Unit.pcs));
-        create(new BasicEntity("Sakkurugame 2", 18, 6, Unit.pcs));
-        create(new BasicEntity("Juice", 4, 53, Unit.l));
-        create(new BasicEntity("Baby Powder", 679, 93, Unit.l));
-        create(new BasicEntity("Hamburger bread", 58, 36, Unit.kg));
-        create(new BasicEntity("Pupil", 1, 1, Unit.pcs));
-        create(new BasicEntity("Thunderstorm", 193, 670, Unit.pcs));
-        create(new BasicEntity("Drums", 58, 475, Unit.pcs));
-        create(new BasicEntity("Sallad", 3, 150, Unit.kg));
+        Category defaultCategory = new Category("No category", "Just a default category...");
+        create(new BasicEntity("Screw", 25, 100, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Muppet", 1, 38, Unit.kg, defaultCategory));
+        create(new BasicEntity("Book", 32, 95, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Water", 0.1, 5679, Unit.l, defaultCategory));
+        create(new BasicEntity("Pepsi", 1, 10, Unit.l, defaultCategory));
+        create(new BasicEntity("iPhone 6", 99999, 4, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Volvo 740 (red)", 30000, 79, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Sakkurugame", 15, 178, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Milk", 2, 481, Unit.l, defaultCategory));
+        create(new BasicEntity("Oil", 250, 18, Unit.l, defaultCategory));
+        create(new BasicEntity("Hamburger meat", 58, 36, Unit.kg, defaultCategory));
+        create(new BasicEntity("Teacher", 1, 1, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Apocalypse", 193, 670, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Keyboard", 58, 475, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Rice", 3, 150, Unit.kg, defaultCategory));
+        create(new BasicEntity("iPhone 7", 999991, 78, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Volvo 240 DL (red)", 50000, 15, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Sakkurugame 2", 18, 6, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Juice", 4, 53, Unit.l, defaultCategory));
+        create(new BasicEntity("Baby Powder", 679, 93, Unit.l, defaultCategory));
+        create(new BasicEntity("Hamburger bread", 58, 36, Unit.kg, defaultCategory));
+        create(new BasicEntity("Pupil", 1, 1, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Thunderstorm", 193, 670, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Drums", 58, 475, Unit.pcs, defaultCategory));
+        create(new BasicEntity("Sallad", 3, 150, Unit.kg, defaultCategory));
     }
 
 }
