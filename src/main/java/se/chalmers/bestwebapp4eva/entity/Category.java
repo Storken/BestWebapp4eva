@@ -67,6 +67,6 @@ public class Category extends AbstractDBObject {
     
     @Override
     public String toString() {
-        return "BasicEntity{" + "id=" + getId() + ", name=" + name + ", description=" + description + '}';
+        return "Category{" + "id=" + getId() + ", name=" + name + ", description=" + description + '}';
     }
 }

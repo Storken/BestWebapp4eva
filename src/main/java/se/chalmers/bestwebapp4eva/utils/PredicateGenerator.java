@@ -2,10 +2,14 @@ package se.chalmers.bestwebapp4eva.utils;
 
 import java.util.Map;
 import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity_;
+import se.chalmers.bestwebapp4eva.entity.Category;
+import se.chalmers.bestwebapp4eva.entity.Category_;
 
 /**
  * Helper class to BasicEntityCollection for 
@@ -25,12 +29,17 @@ public class PredicateGenerator {
     }
 
     public Predicate getPredicate() {
-        // Loop through all filter entries. For each filter, do CriteriaBuilder.and(x,y) to add condition to the filter.
         Predicate filterCondition = cb.conjunction();
+        // Join needed in case a filter on category is applied.
+        Join<BasicEntity, Category> category = root.join("category");
+        
+        // Loop through all filter entries. For each filter, do CriteriaBuilder.and(x,y) to add condition to the filter.
         for (Map.Entry<String, Object> filter : filters.entrySet()) {
             // If current filter value isn't empty
             if (!filter.getValue().equals("")) {
-                Path<String> pathFilter = getStringAttrPath(filter.getKey(), root);
+                Path<String> pathFilter;
+                
+                pathFilter = getStringAttrPath(filter.getKey(), root, category);
 
                 // If the attribute the filter is pointing to is a string (or enum). Filter by using SQL LIKE operator.      
                 if (pathFilter != null) {
@@ -101,7 +110,7 @@ public class PredicateGenerator {
     }
 
     // Method for getting a Path to a String attribute of BasicEntity
-    private Path<String> getStringAttrPath(String field, Root root) {
+    private Path<String> getStringAttrPath(String field, Root root, Join join) {
         Path<String> path = null;
 
         if (field == null) {
@@ -114,8 +123,8 @@ public class PredicateGenerator {
                 case "unit":
                     path = root.get(BasicEntity_.unit);
                     break;
-                case "category":
-                    path = root.get(BasicEntity_.category);
+                case "category.name":
+                    path = join.get(Category_.name);
             }
         }
 

@@ -138,6 +138,10 @@ public class BasicEntity extends AbstractDBObject {
     public Category getCategory() {
         return this.category;
     }
+    
+    public String getCategoryName() {
+        return this.category.getName();
+    }
 
     /**
      * Set the title.

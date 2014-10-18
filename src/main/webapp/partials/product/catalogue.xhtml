@@ -41,6 +41,9 @@
             <p:column sortBy="#{entity.unit}" filterBy="#{entity.unit}" filterMatchMode="contains" headerText="Unit">                
                 <h:outputText value="#{entity.unit}" /> 
             </p:column>
+            <p:column sortBy="#{entity.category.name}" filterBy="#{entity.category.name}" filterMatchMode="contains" headerText="Category">                 
+                <h:outputText value="#{entity.category.name}" /> 
+            </p:column>
             <f:facet name="footer">
                 <p:commandButton update=":layout :cartItems" value="Add to cart" actionListener="#{cartCtrl.addSelectionToCart}"/>
             </f:facet>
