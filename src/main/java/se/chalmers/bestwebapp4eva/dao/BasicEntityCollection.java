@@ -5,7 +5,7 @@
  */
 package se.chalmers.bestwebapp4eva.dao;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
@@ -44,57 +44,37 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
 
     @Override
     public List<BasicEntity> getById(long id) {
-        TypedQuery<BasicEntity> query;
-        query = em.createQuery("select b from " + BasicEntity.class.getSimpleName() + " b WHERE b.id =:id", BasicEntity.class);
-        query.setParameter("id", id);
-
-        List<BasicEntity> found = new ArrayList<>();
-        found.addAll(query.getResultList());
-        return found;
+        Map<String, Object> filter = new HashMap<>();
+        filter.put("id", id);
+        return getResultList(-1, -1, null, null, filter);
     }
 
     @Override
     public List<BasicEntity> getByTitle(String title) {
-        TypedQuery<BasicEntity> query;
-        query = em.createQuery("select b from " + BasicEntity.class.getSimpleName() + " b WHERE b.title =:title", BasicEntity.class);
-        query.setParameter("title", title);
-
-        List<BasicEntity> found = new ArrayList<>();
-        found.addAll(query.getResultList());
-        return found;
+        Map<String, Object> filter = new HashMap<>();
+        filter.put("title", title);
+        return getResultList(-1, -1, null, null, filter);
     }
 
     @Override
     public List<BasicEntity> getByPrice(double price) {
-        TypedQuery<BasicEntity> query;
-        query = em.createQuery("select b from " + BasicEntity.class.getSimpleName() + " b WHERE b.price =:price", BasicEntity.class);
-        query.setParameter("price", price);
-
-        List<BasicEntity> found = new ArrayList<>();
-        found.addAll(query.getResultList());
-        return found;
+        Map<String, Object> filter = new HashMap<>();
+        filter.put("price", price);
+        return getResultList(-1, -1, null, null, filter);
     }
 
     @Override
     public List<BasicEntity> getByQuantity(double quantity) {
-        TypedQuery<BasicEntity> query;
-        query = em.createQuery("select b from " + BasicEntity.class.getSimpleName() + " b WHERE b.quantity =:quantity", BasicEntity.class);
-        query.setParameter("quantity", quantity);
-
-        List<BasicEntity> found = new ArrayList<>();
-        found.addAll(query.getResultList());
-        return found;
+        Map<String, Object> filter = new HashMap<>();
+        filter.put("quantity", quantity);
+        return getResultList(-1, -1, null, null, filter);
     }
 
     @Override
     public List<BasicEntity> getByUnit(BasicEntity.Unit unit) {
-        TypedQuery<BasicEntity> query;
-        query = em.createQuery("select b from " + BasicEntity.class.getSimpleName() + " b WHERE b.unit =:unit", BasicEntity.class);
-        query.setParameter("unit", unit);
-
-        List<BasicEntity> found = new ArrayList<>();
-        found.addAll(query.getResultList());
-        return found;
+        Map<String, Object> filter = new HashMap<>();
+        filter.put("unit", unit);
+        return getResultList(-1, -1, null, null, filter);
     }
 
     @Override
@@ -147,7 +127,8 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
         return tq.getResultList();
     }
 
-    public Path<?> getGeneralAttrPath(String field, Root basicEntity) {
+    // Method for getting path to an attribute of a BasicEntity
+    private Path<?> getGeneralAttrPath(String field, Root basicEntity) {
 
         Path<?> path = null;
 
