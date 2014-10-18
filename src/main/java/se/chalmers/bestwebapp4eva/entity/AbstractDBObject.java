@@ -5,14 +5,14 @@ import java.util.Objects;
 import javax.persistence.MappedSuperclass;
 
 /**
- * Base class for all entities that will be stored in the database
+ * Base class for all objects that will be stored in the database
  *
  * @author simon
  */
 @MappedSuperclass
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractDBObject implements Serializable {
 
-    protected AbstractEntity() {
+    protected AbstractDBObject() {
     }
 
     public abstract Long getId();
@@ -34,7 +34,7 @@ public abstract class AbstractEntity implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final AbstractEntity other = (AbstractEntity) obj;
+        final AbstractDBObject other = (AbstractDBObject) obj;
         return Objects.equals(getId(), other.getId());
     }
 

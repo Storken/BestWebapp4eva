@@ -14,7 +14,7 @@ import javax.persistence.Id;
  * unit attributes).
  */
 @Entity
-public class BasicEntity extends AbstractEntity {
+public class BasicEntity extends AbstractDBObject {
 
     /**
      * Enum for unit types kg, pcs, l.
