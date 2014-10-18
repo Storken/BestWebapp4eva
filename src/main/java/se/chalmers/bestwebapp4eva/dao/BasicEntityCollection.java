@@ -24,7 +24,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity_;
 import se.chalmers.bestwebapp4eva.utils.PredicateGenerator;
 
 /**
- *
+ * A data access object (DAO) for basic entities.
  * @author simon
  */
 @Stateless

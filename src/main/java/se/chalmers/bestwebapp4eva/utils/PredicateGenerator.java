@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.chalmers.bestwebapp4eva.utils;
 
 import java.util.Map;
@@ -13,15 +8,15 @@ import javax.persistence.criteria.Root;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity_;
 
 /**
- *
+ * Helper class to BasicEntityCollection for 
  * @author simon
  */
-public class PredicateGenerator<V> {
+public class PredicateGenerator {
 
     private static final String[] logicalOperators = new String[]{"<", ">", "<=", ">=", "="};
-    private CriteriaBuilder cb;
-    private Map<String, Object> filters;
-    private Root root;
+    private final CriteriaBuilder cb;
+    private final Map<String, Object> filters;
+    private final Root root;
 
     public PredicateGenerator(CriteriaBuilder cb, Map<String, Object> filters, Root root) {
         this.cb = cb;
@@ -42,7 +37,9 @@ public class PredicateGenerator<V> {
                     filterCondition = cb.and(filterCondition, cb.like(cb.lower(pathFilter), "%" + filter.getValue().toString().toLowerCase() + "%"));
                     // If the attribute the filter is pointing to isn't a string...
                 } else {
+                    // Srip out operators and convert the filter value to a long,
                     Long numberValue = Long.parseLong(filter.getValue().toString().replaceAll("\\D+", ""));
+                    
                     Path<Long> pathFilterNonString = getLongAttrPath(filter.getKey(), root);
 
                     String operator = checkForLogicalOperators(filter.getValue().toString());
@@ -77,7 +74,8 @@ public class PredicateGenerator<V> {
         return filterCondition;
     }
 
-    public Path<Long> getLongAttrPath(String field, Root basicEntity) {
+    // Get path to a number (in this case long) attribute.
+    private Path<Long> getLongAttrPath(String field, Root basicEntity) {
         Path<Long> path = null;
 
         if (field == null) {

@@ -11,11 +11,14 @@ import javax.persistence.Id;
 /**
  *
  * Simple class representing a basic entity (with title, price, quantity and
- * unit as attributes).
+ * unit attributes).
  */
 @Entity
 public class BasicEntity extends AbstractEntity {
 
+    /**
+     * Enum for unit types kg, pcs, l.
+     */
     public enum Unit {
 
         kg,
@@ -150,6 +153,10 @@ public class BasicEntity extends AbstractEntity {
         this.price = price;
     }
 
+    /**
+     * Set the unit.
+     * @param unit The new unit.
+     */
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
