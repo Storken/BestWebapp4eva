@@ -16,13 +16,6 @@ import se.chalmers.bestwebapp4eva.entity.Category;
 public interface IBasicEntityCollection extends IDAO<BasicEntity, Long> {
 
     /**
-     * Get a BasicEntity by id.
-     * @param id The id of the wanted entity.
-     * @return A list with the wanted entity.
-     */
-    public List<BasicEntity> getById(long id);
-
-    /**
      * Get BasicEntity(s) by title. 
      * @param title The tile of the wanted entity(s).
      * @return A list with the wanted entitiy(s).
