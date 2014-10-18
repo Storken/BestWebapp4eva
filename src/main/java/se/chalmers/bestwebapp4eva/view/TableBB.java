@@ -21,7 +21,7 @@ import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
  */
 @Named
 @ViewScoped
-public class BasicView implements Serializable {
+public class TableBB implements Serializable {
 
     // Using LazyDataModel in order to do lazy loading of data for the table.
     private LazyDataModel<BasicEntity> entities;
@@ -31,7 +31,7 @@ public class BasicView implements Serializable {
     @EJB
     private IBasicEntityCollection bec;
 
-    public BasicView() {
+    public TableBB() {
 
     }
 

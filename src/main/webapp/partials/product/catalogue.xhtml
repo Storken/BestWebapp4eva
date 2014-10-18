@@ -9,14 +9,14 @@
     <h:form id="tableForm">
         <p:dataTable 
             var="entity" 
-            value="#{basicView.entities}"
+            value="#{tableBB.entities}"
             lazy="true" 
             paginator="true" 
             rows="10"
             sortBy="#{entity.id}"
             emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
             selectionMode="multiple"
-            selection="#{basicView.selectedEntities}"
+            selection="#{tableBB.selectedEntities}"
             rowKey="#{entity.id}"
             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             currentPageReportTemplate="Page {currentPage} of {totalPages}"
