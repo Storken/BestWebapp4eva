@@ -64,4 +64,9 @@ public class Category extends AbstractDBObject {
     public void setDescription(String description) {
         this.description = description;
     }
+    
+    @Override
+    public String toString() {
+        return "BasicEntity{" + "id=" + getId() + ", name=" + name + ", description=" + description + '}';
+    }
 }

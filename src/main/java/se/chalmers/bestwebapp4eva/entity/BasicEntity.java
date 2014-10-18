@@ -78,6 +78,7 @@ public class BasicEntity extends AbstractDBObject {
      * @param price Price of the basic entity.
      * @param quantity Quantity of the basic entity.
      * @param unit Unit of the basic entity, like kg, pcs and l.
+     * @param category The category the basic entity belongs to.
      */
     public BasicEntity(long id, String title, double price, double quantity, Unit unit, Category category) {
         this.id = id;
