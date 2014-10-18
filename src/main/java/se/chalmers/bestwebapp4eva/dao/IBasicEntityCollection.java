@@ -60,6 +60,8 @@ public interface IBasicEntityCollection extends IDAO<BasicEntity, Long> {
      * according to the parameters.
      */
     public List<BasicEntity> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters);
+    
+    public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters);
 
     /**
      * Temporary method for testing purposes only. To be removed.

@@ -28,8 +28,6 @@ public interface IDAO<T, K> {
     public List<T> findRange(int first, int n);
 
     public int count();
-
-    public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters);
     
     /**
      * Get a BasicEntity by id.
