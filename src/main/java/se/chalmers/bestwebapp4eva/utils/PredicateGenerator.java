@@ -12,7 +12,8 @@ import se.chalmers.bestwebapp4eva.entity.Category;
 import se.chalmers.bestwebapp4eva.entity.Category_;
 
 /**
- * Helper class to BasicEntityCollection for 
+ * Helper class to BasicEntityCollection for
+ *
  * @author simon
  */
 public class PredicateGenerator {
@@ -32,23 +33,27 @@ public class PredicateGenerator {
         Predicate filterCondition = cb.conjunction();
         // Join needed in case a filter on category is applied.
         Join<BasicEntity, Category> category = root.join("category");
-        
+
         // Loop through all filter entries. For each filter, do CriteriaBuilder.and(x,y) to add condition to the filter.
         for (Map.Entry<String, Object> filter : filters.entrySet()) {
             // If current filter value isn't empty
             if (!filter.getValue().equals("")) {
                 Path<String> pathFilter;
-                
+
                 pathFilter = getStringAttrPath(filter.getKey(), root, category);
 
                 // If the attribute the filter is pointing to is a string (or enum). Filter by using SQL LIKE operator.      
                 if (pathFilter != null) {
                     filterCondition = cb.and(filterCondition, cb.like(cb.lower(pathFilter), "%" + filter.getValue().toString().toLowerCase() + "%"));
-                    // If the attribute the filter is pointing to isn't a string...
-                } else {
+
+                }
+                // If the attribute the filter is pointing to isn't a string, check if the filter value contains a number value
+                // and proceed with filtering of the numeric attributes.
+                if (!filter.getValue().toString().replaceAll("\\D+", "").equals("")) {
                     // Srip out operators and convert the filter value to a long,
+
                     Long numberValue = Long.parseLong(filter.getValue().toString().replaceAll("\\D+", ""));
-                    
+
                     Path<Long> pathFilterNonString = getLongAttrPath(filter.getKey(), root);
 
                     String operator = checkForLogicalOperators(filter.getValue().toString());
@@ -73,9 +78,9 @@ public class PredicateGenerator {
                                 break;
                         }
                     } else {
-
                         filterCondition = cb.and(filterCondition, cb.equal(pathFilterNonString, filter.getValue()));
                     }
+
                 }
             }
         }
@@ -133,10 +138,10 @@ public class PredicateGenerator {
 
     private String checkForLogicalOperators(String filterValue) {
         String operator = null;
-        for (int i = 0; i < logicalOperators.length; i++) {
+        for (String logicalOperator : logicalOperators) {
             // TODO can't handle double operators, "between logic"
-            if (filterValue.replaceAll("[0-9]", "").trim().equals(logicalOperators[i]) && operator == null) {
-                operator = logicalOperators[i];
+            if (filterValue.replaceAll("[0-9]", "").trim().equals(logicalOperator) && operator == null) {
+                operator = logicalOperator;
             }
         }
 
