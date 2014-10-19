@@ -20,13 +20,13 @@
                         <h:form>
                             <h:panelGrid columns="2" class="table">
                                 <h:outputLabel value="Name"/>
-                                <h:inputText value="#{entityBB.name}"/> 
+                                <h:inputText value="#{newEntityDialogBB.title}"/> 
                                 <h:outputLabel value="Price" />
-                                <h:inputText value="#{entityBB.price}"/>
+                                <h:inputText value="#{newEntityDialogBB.price}"/>
                                 <h:outputLabel value="Quantity" />
-                                <h:inputText value="#{entityBB.quantity}"/>
+                                <h:inputText value="#{newEntityDialogBB.quantity}"/>
                                 <h:outputLabel value="Unit" />
-                                <h:inputText value="#{entityBB.unit}"/>
+                                <h:inputText value="#{newEntityDialogBB.unit}"/>
 
                             </h:panelGrid>
                             <div class="btn-group">
@@ -42,6 +42,9 @@
 
                 <p:dialog header="Manage entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="90%" closeOnEscape="true" draggable="false">
                     <ui:include src="/partials/product/manageEntityPopup.xhtml"/>
+                </p:dialog>
+                <p:dialog header="Create new product" widgetVar="newEntityDialog" modal="true" showEffect="size" hideEffect="size" resizable="true" closeOnEscape="true" draggable="false">
+                    <ui:include src="/partials/product/newEntityDialog.xhtml"/>
                 </p:dialog>
             </ui:define>
         </ui:composition>

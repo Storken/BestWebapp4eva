@@ -3,6 +3,9 @@ package se.chalmers.bestwebapp4eva.dao;
 import java.util.List;
 import java.util.Map;
 import javax.ejb.Stateless;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.FacesConverter;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -41,5 +44,7 @@ public class CategoryCollection extends AbstractDAO<Category, Long> implements I
         TypedQuery<Category> result = em.createQuery(query, Category.class).setParameter("id", id);
         return result.getResultList();
     }
+    
+     
     
 }
