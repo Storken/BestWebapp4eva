@@ -35,7 +35,6 @@ public class AuthBean implements Serializable{
     }
     
      public String login() {
-        ad.create(new User_("qqq","111"));
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
@@ -70,9 +69,10 @@ public class AuthBean implements Serializable{
         }
         return "index";
     }
-    
-    public String create(){
-        return "dashboard";
+     
+    public String createUser(){
+        ad.create(new User_(username, password));
+        return login();
     }
     
     public String logout() {
