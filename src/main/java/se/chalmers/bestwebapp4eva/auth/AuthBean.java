@@ -41,8 +41,9 @@ public class AuthBean implements Serializable{
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{username, password});
         
         // Really check is there some data in database?
-        User_ u =  ad.getByUsername("qqq").get(0);
+        User_ u =  ad.getByUsername(username).get(0);
         LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPasswd()});
+
         
         
         try {
@@ -55,6 +56,7 @@ public class AuthBean implements Serializable{
           
             externalContext.getSessionMap().put("user", u);  // Store User in session
             return "dashboard";
+            
         } catch (ServletException e) {
               LOG.log(Level.INFO, "*** Login fail");
             
@@ -72,6 +74,7 @@ public class AuthBean implements Serializable{
      
     public String createUser(){
         ad.create(new User_(username, password));
+        LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{username, password});
         return login();
     }
     

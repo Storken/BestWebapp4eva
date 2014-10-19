@@ -78,21 +78,18 @@ body {
     height: 60px;
 }
 
-#authbtn {
-    position: absolute;
-    right: 0px;
-}
-
-#crtauthbtn {
-    position: absolute;
-    left: 0px;
-}
-
 #authbuttondiv {
     position: absolute;
     bottom: 0px;
     right: 0px;
     left: 0px;
     margin: auto;
+    height: 20px;
+    border-width: thin;
+}
+
+.smallbutton {
+    font-size: 11px;
+    width: 98px;
     height: 20px;
 }
