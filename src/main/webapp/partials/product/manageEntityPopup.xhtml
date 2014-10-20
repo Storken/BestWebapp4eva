@@ -7,7 +7,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <p:outputPanel id="multiEntityDetail" style="text-align:center;">
+    <p:outputPanel id="multiEntityDetail" style="text-align:center">
         <h1 align="center">Lagerhantera your lager</h1>
         <h4 align="center">...the way YOU want to</h4>
 
@@ -15,13 +15,21 @@
 
 
 
-        <h:form id="form1" >
-
-            <table>
+        <h:form>
+            <table align="center" cellspacing="20">
+                <thead>
+                    <td><b><u>Id</u></b></td>
+                    <td><b><u>Title</u></b></td>
+                    <td><b><u>Price</u></b></td>
+                    <td><b><u>Quantity</u></b></td>
+                </thead>
                 <ui:repeat value="#{cartBB.cartItems}" var="entity">
-                    <td><h:outputText styleClass="neh"  value="#{entity.id}" /></td>
-                    <td><h:outputText value="#{entity.title}" /></td>
-                    <td><p:spinner value="#{entity.quantity}" suffix=" #{entity.unit}"/></td>
+                    <tr>
+                        <td><h:outputText value="#{entity.id}" /></td>
+                        <td><h:outputText value="#{entity.title}" /></td>
+                        <td><p:spinner value="#{entity.price}" prefix="$"/></td>
+                        <td><p:spinner value="#{entity.quantity}" suffix=" #{entity.unit}"/></td>
+                    </tr>
                 </ui:repeat>
             </table>
             <br></br>
