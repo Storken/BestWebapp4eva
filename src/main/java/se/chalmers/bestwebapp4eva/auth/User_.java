@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import javax.annotation.Generated;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -11,9 +12,12 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-import se.chalmers.bestwebapp4eva.entity.AbstractEntity;
+import se.chalmers.bestwebapp4eva.entity.AbstractDBObject;
 
 /**
  * User table in database
@@ -24,9 +28,12 @@ import se.chalmers.bestwebapp4eva.entity.AbstractEntity;
  */
 @Entity
 @Table(name="USER_")
-public class User_ extends AbstractEntity implements Serializable {
+public class User_ extends AbstractDBObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    protected long id;
     @Column(name="USERNAME")  // unique is implied
     protected String username;
     @Column(name="PASSWORD")
@@ -97,6 +104,16 @@ public class User_ extends AbstractEntity implements Serializable {
         }
         final User_ other = (User_) obj;
         return Objects.equals(this.username, other.username);
+    }
+
+    @Override
+    public Long getId() {
+        return id;
+    }
+
+    @Override
+    public void setId(long id) {
+        this.id = id;
     }
 
 }
