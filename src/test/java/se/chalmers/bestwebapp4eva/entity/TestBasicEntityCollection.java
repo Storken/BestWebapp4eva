@@ -1,5 +1,8 @@
+package se.chalmers.bestwebapp4eva.entity;
+
 import java.util.List;
-import javax.inject.Inject;
+import javax.annotation.Resource;
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
@@ -14,7 +17,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
-import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 
 /*
@@ -30,17 +32,17 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 public class TestBasicEntityCollection {
 
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
-    @Inject
-    UserTransaction utx;
+    @Resource
+    private UserTransaction utx;
 
-    @Inject
-    IBasicEntityCollection bec;
+    @EJB
+    private IBasicEntityCollection basicEntityCollection;
 
     @Deployment
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class)
                 .addPackage("se.chalmers.bestwebapp4eva.entity")
                 .addPackage("se.chalmers.bestwebapp4eva.dao")
                 .addPackage("se.chalmers.bestwebapp4eva.utils")
@@ -55,7 +57,7 @@ public class TestBasicEntityCollection {
 
     @After
     public void commitTransaction() throws Exception {
-        utx.commit();
+        //utx.commit();
     }
 
     private void clearData() throws Exception {
@@ -67,9 +69,11 @@ public class TestBasicEntityCollection {
     
     @Test
     public void testPersistBasicEntity() throws Exception {
+        utx.begin();
         BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg);
-        bec.create(be);
-        List<BasicEntity> list = bec.findAll();
+        basicEntityCollection.create(be);
+        List<BasicEntity> list = basicEntityCollection.findAll();
         assertTrue(list.size() == 1);
+        utx.commit();
     }
 }
