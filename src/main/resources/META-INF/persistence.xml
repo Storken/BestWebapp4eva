@@ -3,6 +3,7 @@
   <persistence-unit name="se.chalmers_Bestwebapp4eva_war_1.0-SNAPSHOTPU" transaction-type="JTA">
     <jta-data-source>jdbc/maindb</jta-data-source>
     <class>se.chalmers.bestwebapp4eva.entity.BasicEntity</class>
+    <class>se.chalmers.bestwebapp4eva.auth.User_</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

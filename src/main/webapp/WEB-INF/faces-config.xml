@@ -10,21 +10,37 @@
      <from-view-id>*</from-view-id>
     <navigation-case>
         <from-outcome>home</from-outcome>
-        <to-view-id>index.xhtml</to-view-id>
+        <to-view-id>/index.xhtml</to-view-id>
     </navigation-case>
+     <from-view-id>*</from-view-id>
     <navigation-case>
         <from-outcome>products</from-outcome>
-        <to-view-id>partials/products.xhtml</to-view-id>
+        <to-view-id>/partials/products.xhtml</to-view-id>
     </navigation-case>
     <navigation-case>
         <from-outcome>dashboard</from-outcome>
-        <to-view-id>partials/dashboard.xhtml</to-view-id>
+        <to-view-id>/partials/dashboard.xhtml</to-view-id>
     </navigation-case>
     <navigation-case>
         <from-outcome>profile</from-outcome>
-        <to-view-id>partials/profile.xhtml</to-view-id>
+        <to-view-id>/partials/profile.xhtml</to-view-id>
     </navigation-case>
-</navigation-rule>       
+</navigation-rule>
+<navigation-rule>
+    <from-view-id>index.xhtml</from-view-id>
+    <navigation-case>
+        <from-action>#{authBean.login}</from-action>
+        <from-outcome>success</from-outcome>
+        <to-view-id>partials/dashboard.xhtml</to-view-id>
+        <redirect/>
+    </navigation-case>
+    <navigation-case>
+        <from-action>#{authBean.login}</from-action>
+        <from-outcome>fail</from-outcome>
+        <to-view-id>index.html</to-view-id>
+        <redirect/>
+    </navigation-case>
+</navigation-rule>
     
 
 

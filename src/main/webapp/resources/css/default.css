@@ -16,8 +16,8 @@ body {
     position: absolute;
     left: 0px;
     right: 0px;
-    top: 300px;
-    height: 100px;
+    top: 80px;
+    height: 300px;
     width: 600px;
     margin: auto;
 }
@@ -25,15 +25,13 @@ body {
 #headerindx {
     position: absolute;
     left: 20px;
-    top: 0%;
+    bottom: 20px;
 }
 
-#indxsearch {
+#theguy {
     position: absolute;
-    bottom: 0%;
-    width:100%;
-    box-sizing:border-box;
-    -moz-box-sizing:border-box;
+    top: 0px;
+    left: 50px;
 }
 
 #headimg {
@@ -52,4 +50,46 @@ body {
     left: 0px;
     right: 0px;
     margin: auto;
+}
+
+#usrname {
+    
+}
+
+#passwrd {
+    
+}
+
+.auth {
+    position: absolute;
+    right: 0px;
+}
+
+.authText {
+    position: absolute;
+    left: 0px;
+}
+
+#auth {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 200px;
+    height: 60px;
+}
+
+#authbuttondiv {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    left: 0px;
+    margin: auto;
+    height: 20px;
+    border-width: thin;
+}
+
+.smallbutton {
+    font-size: 11px;
+    width: 98px;
+    height: 20px;
 }
