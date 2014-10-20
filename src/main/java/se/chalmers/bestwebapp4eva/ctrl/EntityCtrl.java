@@ -15,8 +15,8 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
-import se.chalmers.bestwebapp4eva.dao.ICategoryCollection;
+import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
+import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.Category;
 import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
 
@@ -30,10 +30,10 @@ import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
 public class EntityCtrl {
 
     @EJB
-    private IBasicEntityCollection bec;
+    private IBasicEntityDAO bec;
 
     @EJB
-    private ICategoryCollection cc;
+    private ICategoryDAO cc;
 
     @Inject
     private NewEntityDialogBB bb;

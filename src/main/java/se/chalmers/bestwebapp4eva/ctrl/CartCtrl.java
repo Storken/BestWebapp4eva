@@ -6,7 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
+import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.view.TableBB;
 import se.chalmers.bestwebapp4eva.view.CartBB;
@@ -21,7 +21,7 @@ import se.chalmers.bestwebapp4eva.view.CartBB;
 public class CartCtrl {
 
     @EJB
-    private IBasicEntityCollection bec;
+    private IBasicEntityDAO bec;
     @Inject
     private CartBB cart;
     @Inject

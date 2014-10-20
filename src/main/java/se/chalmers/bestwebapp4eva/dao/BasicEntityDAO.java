@@ -25,21 +25,21 @@ import se.chalmers.bestwebapp4eva.utils.PredicateGenerator;
  * @author simon
  */
 @Stateless
-public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implements IBasicEntityCollection {
+public class BasicEntityDAO extends AbstractDAO<BasicEntity, Long> implements IBasicEntityDAO {
 
     @PersistenceContext
     private EntityManager em;
     
     // TODO Ugly to have another collection referenced here!!!
     @EJB
-    private ICategoryCollection cc;
+    private ICategoryDAO cc;
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
 
-    public BasicEntityCollection() {
+    public BasicEntityDAO() {
         super(BasicEntity.class);
     }
 

@@ -7,7 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.dao.ICategoryCollection;
+import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.entity.Category;
@@ -32,7 +32,7 @@ public class NewEntityDialogBB {
     private List<Category> categories;
     
     @EJB
-    ICategoryCollection cc;
+    ICategoryDAO cc;
 
     @PostConstruct
     public void init() {

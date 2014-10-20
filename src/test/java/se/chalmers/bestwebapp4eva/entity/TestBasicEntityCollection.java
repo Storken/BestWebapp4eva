@@ -16,7 +16,8 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
+import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
+import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 
 /*
@@ -38,7 +39,10 @@ public class TestBasicEntityCollection {
     private UserTransaction utx;
 
     @EJB
-    private IBasicEntityCollection basicEntityCollection;
+    private IBasicEntityDAO basicEntityCollection;
+    
+    @EJB
+    private ICategoryDAO categoryCollection;
 
     @Deployment
     public static WebArchive createDeployment() {
@@ -70,7 +74,7 @@ public class TestBasicEntityCollection {
     @Test
     public void testPersistBasicEntity() throws Exception {
         utx.begin();
-        BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg);
+        BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg, categoryCollection.getByName("No category").get(0));
         basicEntityCollection.create(be);
         List<BasicEntity> list = basicEntityCollection.findAll();
         assertTrue(list.size() == 1);

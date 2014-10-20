@@ -12,7 +12,7 @@ import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
+import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 
 /**
  * A backing bean for the table view of basic entities.
@@ -29,11 +29,7 @@ public class TableBB implements Serializable {
     private List<BasicEntity> selectedEntities;
 
     @EJB
-    private IBasicEntityCollection bec;
-
-    public TableBB() {
-
-    }
+    private IBasicEntityDAO bec;
 
     @PostConstruct
     public void init() {

@@ -13,7 +13,7 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  * @author simon
  */
 @Local
-public interface IBasicEntityCollection extends IDAO<BasicEntity, Long> {
+public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
 
     /**
      * Get BasicEntity(s) by title. 
