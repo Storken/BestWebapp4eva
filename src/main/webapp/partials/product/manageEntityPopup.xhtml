@@ -11,22 +11,21 @@
         <h1 align="center">Lagerhantera your lager</h1>
         <h4 align="center">...the way YOU want to</h4>
 
-        
-           
 
-           
-                <h:form>
-                    <p:dataList value="#{cartBB.cartItems}" var="entity">
-                        <h:outputText value="#{entity.id}" /><br/>
-                        <h:outputText value="#{entity.title}" /><br/>
-                        <p:spinner id="qspinner" value="#{entity.quantity}"><br/>
-                        <p:ajax event="change" listener="#{cartCtrl.refreshQuantity(entity)}" /><br/>
-                        
-                        </p:spinner>
-                    </p:dataList>
-                </h:form>
-          
-        <br></br>
-        <p:commandButton value="Commit changes"  update="cartItems :layout" actionListener="#{cartCtrl.executeChanges(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" styleClass="btn btn-default"/>
+
+
+
+        <h:form id="form1" >
+
+            <table>
+                <ui:repeat value="#{cartBB.cartItems}" var="entity">
+                    <td><h:outputText styleClass="neh"  value="#{entity.id}" /></td>
+                    <td><h:outputText value="#{entity.title}" /></td>
+                    <td><p:spinner value="#{entity.quantity}" suffix=" #{entity.unit}"/></td>
+                </ui:repeat>
+            </table>
+            <br></br>
+            <p:commandButton value="Commit changes"  update=":cartItems :layout" actionListener="#{cartCtrl.executeChanges(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" styleClass="btn btn-default"/>
+        </h:form>
     </p:outputPanel>
 </ui:composition>

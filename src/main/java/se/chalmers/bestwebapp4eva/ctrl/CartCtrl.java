@@ -70,18 +70,7 @@ public class CartCtrl {
         cart.getCartItems().clear();
 
     }
-
-    //Temporary method
-    public void incQuantity(BasicEntity entity) {
-        entity.setQuantity(entity.getQuantity() + 1);
-    }
-
-    //Temporary method
-
-    public void decQuantity(BasicEntity entity) {
-        entity.setQuantity(entity.getQuantity() - 1);
-    }
-
+    
     /**
      * If the cart is empty it will not be shown
      *
@@ -93,8 +82,4 @@ public class CartCtrl {
     public boolean collapseCart() {
         return cart.getCartItems().isEmpty();
     }
-    
-    public void refreshQuantity(BasicEntity entity) {
-        System.out.println(entity.getQuantity());
-    }
-}
+}   
