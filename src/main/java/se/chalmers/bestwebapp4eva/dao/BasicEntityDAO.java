@@ -164,38 +164,5 @@ public class BasicEntityDAO extends AbstractDAO<BasicEntity, Long> implements IB
 
         return path;
     }
-
-    @Override
-    public void bulkAdd() {
-        Category defaultCategory = new Category("No category", "Just a default category...");
-        Category testCategory = new Category("Test Category", "Just a default category...");
-        cc.create(defaultCategory);
-        cc.create(testCategory);
-        create(new BasicEntity("Screw", 25, 100, Unit.pcs, defaultCategory));
-        create(new BasicEntity("Muppet", 1, 38, Unit.kg, defaultCategory));
-        create(new BasicEntity("Book", 32, 95, Unit.pcs, testCategory));
-        create(new BasicEntity("Water", 0.1, 5679, Unit.l, defaultCategory));
-        create(new BasicEntity("Pepsi", 1, 10, Unit.l, defaultCategory));
-        create(new BasicEntity("iPhone 6", 99999, 4, Unit.pcs, defaultCategory));
-        create(new BasicEntity("Volvo 740 (red)", 30000, 79, Unit.pcs, defaultCategory));
-        create(new BasicEntity("Sakkurugame", 15, 178, Unit.pcs, testCategory));
-        create(new BasicEntity("Milk", 2, 481, Unit.l, defaultCategory));
-        create(new BasicEntity("Oil", 250, 18, Unit.l, defaultCategory));
-        create(new BasicEntity("Hamburger meat", 58, 36, Unit.kg, defaultCategory));
-        create(new BasicEntity("Teacher", 1, 1, Unit.pcs, defaultCategory));
-        create(new BasicEntity("Apocalypse", 193, 670, Unit.pcs, defaultCategory));
-        create(new BasicEntity("Keyboard", 58, 475, Unit.pcs, defaultCategory));
-        create(new BasicEntity("Rice", 3, 150, Unit.kg, defaultCategory));
-        create(new BasicEntity("iPhone 7", 999991, 78, Unit.pcs, defaultCategory));
-        create(new BasicEntity("Volvo 240 DL (red)", 50000, 15, Unit.pcs, testCategory));
-        create(new BasicEntity("Sakkurugame 2", 18, 6, Unit.pcs, testCategory));
-        create(new BasicEntity("Juice", 4, 53, Unit.l, defaultCategory));
-        create(new BasicEntity("Baby Powder", 679, 93, Unit.l, testCategory));
-        create(new BasicEntity("Hamburger bread", 58, 36, Unit.kg, testCategory));
-        create(new BasicEntity("Pupil", 1, 1, Unit.pcs, defaultCategory));
-        create(new BasicEntity("Thunderstorm", 193, 670, Unit.pcs, testCategory));
-        create(new BasicEntity("Drums", 58, 475, Unit.pcs, testCategory));
-        create(new BasicEntity("Sallad", 3, 150, Unit.kg, testCategory));
-    }
-
+    
 }

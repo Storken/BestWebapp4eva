@@ -63,9 +63,4 @@ public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
     
     public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters);
 
-    /**
-     * Temporary method for testing purposes only. To be removed.
-     */
-    public void bulkAdd();
-
 }

@@ -44,10 +44,6 @@ public class TableBB implements Serializable {
                 return result;
             }
         };
-        
-        if (bec.findAll().isEmpty()) 
-            bec.bulkAdd();
-        
     }
 
     public LazyDataModel<BasicEntity> getEntities() {

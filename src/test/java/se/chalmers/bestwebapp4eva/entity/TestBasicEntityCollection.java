@@ -57,27 +57,35 @@ public class TestBasicEntityCollection {
     @Before
     public void prepareTest() throws Exception {
         clearData();
+        addDefaultCategory();
+        utx.begin();
     }
 
     @After
     public void commitTransaction() throws Exception {
-        //utx.commit();
+        utx.commit();
+        clearData();
     }
 
     private void clearData() throws Exception {
         utx.begin();
         em.joinTransaction();
         em.createQuery("DELETE FROM BasicEntity").executeUpdate();
+        em.createQuery("DELETE FROM Category").executeUpdate();
+        utx.commit();
+    }
+    
+    private void addDefaultCategory() throws Exception{
+        utx.begin();
+        categoryCollection.create(new Category("Default", "Description..."));
         utx.commit();
     }
     
     @Test
     public void testPersistBasicEntity() throws Exception {
-        utx.begin();
-        BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg, categoryCollection.getByName("No category").get(0));
+        BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg, categoryCollection.getByName("Default").get(0));
         basicEntityCollection.create(be);
         List<BasicEntity> list = basicEntityCollection.findAll();
         assertTrue(list.size() == 1);
-        utx.commit();
     }
 }
