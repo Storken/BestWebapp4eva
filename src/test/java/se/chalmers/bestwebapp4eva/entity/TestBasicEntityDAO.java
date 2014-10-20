@@ -30,7 +30,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
  * @author simon
  */
 @RunWith(Arquillian.class)
-public class TestBasicEntityCollection {
+public class TestBasicEntityDAO {
 
     @PersistenceContext
     private EntityManager em;
