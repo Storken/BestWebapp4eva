@@ -6,24 +6,24 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-    <p:accordionPanel id="cartItems" value="#{cartBB.cartItems}" var="entity" multiple="true" activeIndex="null">
-        <p:tab title="#{entity.title}" id="item">
-            <p:commandButton value="Remove from cart" actionListener="#{cartCtrl.removeFromCart(entity)}" update=":layout"/> 
-            <br>
-            </br>
-            <h:panelGrid columns="2">
-                <h:outputLabel value="ID:"  />
-                <h:outputLabel value="#{entity.id}" style="font-weight: bold"/>
+    <table width="100%">
+        <ui:repeat id="cartItems" value="#{cartBB.cartItems}" var="entity">
+            <tr>
+                <td align="right">
+                    <h:outputText value=" #{entity.id} - "/>
+                </td>
+                <td align="left">
+                    <h:outputText value="#{entity.title}, "/>
+                    <h:outputText value="#{entity.quantity} "/>
+                    <h:outputText value="#{entity.unit}"/>
+                </td>
+                <td align="right">
+                    <p:commandLink title="Remove from cart" actionListener="#{cartCtrl.removeFromCart(entity)}" styleClass="ui-icon ui-icon-closethick" update=":layout"/> 
+                </td>
+            </tr>
+        </ui:repeat>
+    </table>
 
-                <h:outputText value="Price:"/>
-                <h:outputText value="$#{entity.price}" />
-
-                <h:outputText value="Quantity:"/>
-                <h:outputText value="#{entity.quantity} #{entity.unit}"/>
-            </h:panelGrid>
-            <br/>
-        </p:tab>
-    </p:accordionPanel>
     <hr/>
-    <p:commandButton id="manageButton" value="Manage these products" update="multiEntityDetail" oncomplete="PF('multiEntityDialog').show()"/>
+    <p:commandButton id="manageButton" value="Manage" update="multiEntityDetail" oncomplete="PF('multiEntityDialog').show()"/>
 </ui:composition>

@@ -1,6 +1,7 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
@@ -70,7 +71,7 @@ public class CartCtrl {
         cart.getCartItems().clear();
 
     }
-    
+
     /**
      * If the cart is empty it will not be shown
      *
@@ -82,4 +83,4 @@ public class CartCtrl {
     public boolean collapseCart() {
         return cart.getCartItems().isEmpty();
     }
-}   
+}
