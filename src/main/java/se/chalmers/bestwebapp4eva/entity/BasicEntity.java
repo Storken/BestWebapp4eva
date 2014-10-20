@@ -46,7 +46,7 @@ public class BasicEntity extends AbstractDBObject {
     @Enumerated(EnumType.STRING)
     private Unit unit;
     
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private Category category;
 
     public BasicEntity() {
