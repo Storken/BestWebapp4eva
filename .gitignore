@@ -21,3 +21,4 @@ target/*
 *.swp
 *.DS_Store
 *.lock
+/target/
