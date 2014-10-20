@@ -6,9 +6,9 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
-<f:metadata>
-    <f:viewParam name="page" value="#{page}" />
-</f:metadata>
+    <f:metadata>
+        <f:viewParam name="page" value="#{page}" />
+    </f:metadata>
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -17,13 +17,13 @@
     </h:head>
 
     <h:body>
-     
+
         <p:breadCrumb styleClass="navbarz" >
             <p:menuitem  url="#">Home</p:menuitem>
             <p:menuitem url="#">Link</p:menuitem>
             <p:menuitem url="#">Link2</p:menuitem>
         </p:breadCrumb>
-            
+
         <header>
             <c:if test="#{page != 'home'}">
                 <div id="headerdiv">
@@ -45,7 +45,7 @@
                 <f:param name="page" value="profile" />
             </h:link> 
         </nav>
-       
+
         <div id="content">
             <ui:insert name="content">Content</ui:insert>
         </div>
