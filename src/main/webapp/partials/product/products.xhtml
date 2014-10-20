@@ -16,23 +16,7 @@
                 <p:layout id="layout">
                     <p:layoutUnit position="center">      
                         <ui:include src="/partials/product/catalogue.xhtml"/>
-                        <h3>Add entity</h3>
-                        <h:form>
-                            <h:panelGrid columns="2" class="table">
-                                <h:outputLabel value="Name"/>
-                                <h:inputText value="#{newEntityDialogBB.title}"/> 
-                                <h:outputLabel value="Price" />
-                                <h:inputText value="#{newEntityDialogBB.price}"/>
-                                <h:outputLabel value="Quantity" />
-                                <h:inputText value="#{newEntityDialogBB.quantity}"/>
-                                <h:outputLabel value="Unit" />
-                                <h:inputText value="#{newEntityDialogBB.unit}"/>
-
-                            </h:panelGrid>
-                            <div class="btn-group">
-                                <p:commandButton value="Add entity"  actionListener="#{entityCtrl.add}" update="@(.ui-datatable)" styleClass="btn btn-default"/>
-                            </div>
-                        </h:form>
+                        
                     </p:layoutUnit>
 
                     <p:layoutUnit position="east" size="300" header="Cart" id="cart" effect="slide" collapsed="#{cartCtrl.collapseCart()}">
