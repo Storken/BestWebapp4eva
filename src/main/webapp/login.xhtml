@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/template.xhtml">
+            <ui:define name="content"> 
+                <div id="indxdiv">
+                    <h:graphicImage id="headerindx" library="img" name="header.png"/>
+                    <h:graphicImage id="theguy" library="img" name="theguy.png"/>
+                    <div id="auth">
+                        <h:form>
+                            <a class="authText">username:</a>
+                            <h:inputText id="usrname" class="auth" value="#{authBean.username}"/>
+                            <br/>
+                            <a class="authText">password:</a>
+                            <h:inputSecret id="passwrd" class="auth" value="#{authBean.password}"/>
+                            <div id="authbuttondiv">
+                                <h:commandButton action="#{authBean.login}" value="Login" class="smallbutton"/>
+                                <p:commandButton value="Create User" onclick="PF('dlg').show()" class="smallbutton" />
+                            </div>
+                        </h:form>
+                    </div>
+                </div> 
+                <p:dialog header="Create a new user" widgetVar="dlg" id="dialogue">
+                    <h:form>
+                        <h:outputText value="Username: "/>
+                        <br/>
+                        <h:inputText value="#{authBean.username}"/>
+                        <br/>
+                        <h:outputText value="Password: "/>
+                        <br/>
+                        <h:inputText value="#{authBean.password}"/>
+                        <br/>
+                        <h:commandButton value="Create" action="#{authBean.createUser}"/>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>

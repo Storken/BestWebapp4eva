@@ -80,5 +80,9 @@
             <form-login-page>/login.xhtml</form-login-page>
             <form-error-page>/login.xhtml</form-error-page>
         </form-login-config>
-    </login-config>
+    </login-config>    
+    <security-role>
+        <description/>
+        <role-name>users</role-name>
+    </security-role>
 </web-app>

@@ -39,8 +39,12 @@ public class AuthBean implements Serializable {
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{username, password});
 
         // Really check is there some data in database?
-        User_ u = ad.getByUsername(username).get(0);
-        LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPasswd()});
+        if(ad.getByUsername(username).size() < 1){
+            LOG.log(Level.INFO, "*** Login fail");
+            return "fail";
+        }
+        User u = ad.getByUsername(username).get(0);
+        LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPassword()});
 
         try {
             //request.setCharacterEncoding("UTF-8");
@@ -51,7 +55,7 @@ public class AuthBean implements Serializable {
             LOG.log(Level.INFO, "*** Is role user {0}", request.isUserInRole("user"));
 
             externalContext.getSessionMap().put("user", u);  // Store User in session
-            return "dashboard";
+            return "success";
 
         } catch (ServletException e) {
             LOG.log(Level.INFO, "*** Login fail");
@@ -65,11 +69,11 @@ public class AuthBean implements Serializable {
             externalContext.getFlash().setKeepMessages(true);
 
         }
-        return "index";
+        return "fail";
     }
 
     public String createUser() {
-        ad.create(new User_(username, password));
+        ad.createUserAndGroup(username, password, "adminGroup");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{username, password});
         return login();
     }
