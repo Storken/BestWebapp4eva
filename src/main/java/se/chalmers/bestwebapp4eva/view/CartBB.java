@@ -23,6 +23,7 @@ public class CartBB {
 
     /* The items currently in the cart */
     private static List<BasicEntity> cartItems;
+    private double quantity;
 
     @PostConstruct
     public void post() {
@@ -82,5 +83,13 @@ public class CartBB {
         sb.append("}");
         return sb.toString();
     }
-
+    
+    public double getQuantity() {
+        return this.quantity;
+    }
+    
+    public void setQuantity(double quantity) {
+        System.out.println("New quantity: " + quantity);
+        this.quantity = quantity;
+    }
 }

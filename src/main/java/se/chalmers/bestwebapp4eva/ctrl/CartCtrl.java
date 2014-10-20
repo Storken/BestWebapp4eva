@@ -93,4 +93,8 @@ public class CartCtrl {
     public boolean collapseCart() {
         return cart.getCartItems().isEmpty();
     }
+    
+    public void refreshQuantity(BasicEntity entity) {
+        System.out.println(entity.getQuantity());
+    }
 }

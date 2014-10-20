@@ -11,23 +11,21 @@
         <h1 align="center">Lagerhantera your lager</h1>
         <h4 align="center">...the way YOU want to</h4>
 
-        <table class="table" align="center" cellspacing="15">
-            <thead>
-                <td><b>Id</b><hr/></td>
-                <td><b>Title</b><hr/></td>
-                <td><b>Quantity</b><hr/></td>
-            </thead>
+        
+           
 
-            <ui:repeat value="#{cartBB.cartItems}" var="entity">
-                <tr>
-                    <td><h:outputText value="#{entity.id}" /></td>
-                    <td><h:outputText value="#{entity.title}" /></td>
-                    <td><h:outputText value="#{entity.quantity}" /></td>
-                    <td><p:commandButton update=":multiEntityDetail" value="+" actionListener="#{cartCtrl.incQuantity(entity)}"/></td>
-                    <td><p:commandButton update=":multiEntityDetail" value="-" actionListener="#{cartCtrl.decQuantity(entity)}"/></td>
-                </tr>
-            </ui:repeat>
-        </table>
+           
+                <h:form>
+                    <p:dataList value="#{cartBB.cartItems}" var="entity">
+                        <h:outputText value="#{entity.id}" /><br/>
+                        <h:outputText value="#{entity.title}" /><br/>
+                        <p:spinner id="qspinner" value="#{entity.quantity}"><br/>
+                        <p:ajax event="change" listener="#{cartCtrl.refreshQuantity(entity)}" /><br/>
+                        
+                        </p:spinner>
+                    </p:dataList>
+                </h:form>
+          
         <br></br>
         <p:commandButton value="Commit changes"  update="cartItems :layout" actionListener="#{cartCtrl.executeChanges(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" styleClass="btn btn-default"/>
     </p:outputPanel>
