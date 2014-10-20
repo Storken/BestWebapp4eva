@@ -3,6 +3,7 @@ package se.chalmers.bestwebapp4eva.dao;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,6 +29,10 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
 
     @PersistenceContext
     private EntityManager em;
+    
+    // TODO Ugly to have another collection referenced here!!!
+    @EJB
+    private ICategoryCollection cc;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -164,6 +169,8 @@ public class BasicEntityCollection extends AbstractDAO<BasicEntity, Long> implem
     public void bulkAdd() {
         Category defaultCategory = new Category("No category", "Just a default category...");
         Category testCategory = new Category("Test Category", "Just a default category...");
+        cc.create(defaultCategory);
+        cc.create(testCategory);
         create(new BasicEntity("Screw", 25, 100, Unit.pcs, defaultCategory));
         create(new BasicEntity("Muppet", 1, 38, Unit.kg, defaultCategory));
         create(new BasicEntity("Book", 32, 95, Unit.pcs, testCategory));

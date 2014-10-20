@@ -46,7 +46,7 @@ public class BasicEntity extends AbstractDBObject {
     @Enumerated(EnumType.STRING)
     private Unit unit;
     
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     private Category category;
 
     public BasicEntity() {
