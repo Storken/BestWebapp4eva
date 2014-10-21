@@ -86,7 +86,7 @@ public class CartBB implements Serializable {
      */
     public void setOrderQuantity(double orderQuantity) {
         this.orderQuantity = orderQuantity;
-        entityOrders.replace(entity, this.orderQuantity);
+        entityOrders.put(entity, this.orderQuantity);
     }
     
     public void setEntity(BasicEntity entity) {

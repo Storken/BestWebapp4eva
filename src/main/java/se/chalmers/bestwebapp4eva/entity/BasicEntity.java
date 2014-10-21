@@ -158,7 +158,6 @@ public class BasicEntity extends AbstractDBObject {
      * @param quantity The new quantity.
      */
     public void setQuantity(double quantity) {
-        System.out.println("New q:" + quantity);
         this.quantity = quantity;
     }
 
