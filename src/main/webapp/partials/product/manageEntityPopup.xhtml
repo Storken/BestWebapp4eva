@@ -29,13 +29,16 @@
                         <td><h:outputText value="#{entity.title}" /></td>
                         <td><h:outputText id="q" value="#{entity.quantity - cartBB.orderQuantity} #{entity.unit}"/></td>
                         <td>
-                            <p:spinner id="s" value="#{cartBB.orderQuantity}" valueChangeListener="#{cartBB.setEntity(entity)}" suffix=" #{entity.unit}" max="#{entity.quantity}" min="0">
+                            <p:spinner id="s" value="#{cartBB.orderQuantity}"  onfocus="#{cartBB.setEntity(entity)}" suffix=" #{entity.unit}" max="#{entity.quantity}" min="0" validator="#{cartCtrl.validateOrder}">
                                 <p:ajax update="q s" event="change" />
                                 <p:ajax update="q s" event="keyup" />
                             </p:spinner>
+                            
                         </td>
+                        <td><h:message for="s" styleClass="tooltip"/></td>
                     </tr>
                 </ui:repeat>
+                
             </table>
             <br></br>
             <p:commandButton value="Place order"  update=":cartItems :layout" actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" icon="ui-icon ui-icon-check"/>

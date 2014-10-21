@@ -29,7 +29,7 @@ public class CartBB implements Serializable {
 
     private Map<BasicEntity, Double> entityOrders;
     private double orderQuantity;
-    private BasicEntity entity;
+    private BasicEntity currentEntity;
 
     @PostConstruct
     public void post() {
@@ -67,7 +67,7 @@ public class CartBB implements Serializable {
     /**
      * Get the order quantity for the current order item
      *
-     * @param entity The entity to get the order quantity for
+     * @param entity The currentEntity to get the order quantity for
      * @return The order quantity for the current item
      */
     public double getOrderQuantity(BasicEntity entity) {
@@ -86,11 +86,16 @@ public class CartBB implements Serializable {
      */
     public void setOrderQuantity(double orderQuantity) {
         this.orderQuantity = orderQuantity;
-        entityOrders.put(entity, this.orderQuantity);
+        entityOrders.put(currentEntity, this.orderQuantity);
     }
     
     public void setEntity(BasicEntity entity) {
-        this.entity = entity;
+        this.currentEntity = entity;
+    }
+    
+    public BasicEntity getEntity() {
+        System.out.println(currentEntity.getTitle());
+        return currentEntity;
     }
     /**
      * Add a new item to the cart

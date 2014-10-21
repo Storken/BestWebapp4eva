@@ -6,7 +6,11 @@ import java.util.Random;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
@@ -57,7 +61,7 @@ public class CartCtrl implements Serializable {
         cartBB.remove(entity);
 
     }
-    
+
     /**
      * Checkout/commit the current changes in the cart to the database
      * <br>
@@ -74,6 +78,20 @@ public class CartCtrl implements Serializable {
             cartBB.setOrderQuantity(0);
         }
         cartBB.getCartItems().clear();
+        cartBB.getEntityOrders().clear();
+
+    }
+
+    public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException{ 
+        double ordered = ((Double)value).doubleValue();
+        // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
+        double available = basicEntityCollection.getById(cartBB.getEntity().getId()).get(0).getQuantity();
+        
+        if(ordered > available || ordered < 0) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Order exceeds current stock of " + available + " " + cartBB.getEntity().getUnit() + "!", "");
+            throw new ValidatorException(message);
+        }
+        
         
     }
 
