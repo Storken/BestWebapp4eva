@@ -68,11 +68,13 @@ public class CartCtrl implements Serializable {
      */
     public void placeOrder(List<BasicEntity> order) {
         for (BasicEntity e : order) {
+            e.setQuantity(e.getQuantity() - cartBB.getOrderQuantity(e));
             basicEntityCollection.update(e);
+            cartBB.setEntity(e);
+            cartBB.setOrderQuantity(0);
         }
         cartBB.getCartItems().clear();
-        cartBB.getEntityOrders().clear();
-
+        
     }
 
     /**

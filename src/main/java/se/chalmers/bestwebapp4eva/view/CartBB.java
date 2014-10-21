@@ -82,7 +82,6 @@ public class CartBB implements Serializable {
     /**
      * Set the order quantity for the current order item
      *
-     * @param entity The entity to be ordered
      * @param orderQuantity The new order quantity
      */
     public void setOrderQuantity(double orderQuantity) {
