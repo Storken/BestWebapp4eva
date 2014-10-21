@@ -73,7 +73,7 @@ public class AuthBean implements Serializable {
     }
 
     public String createUser() {
-        ad.createUserAndGroup(username, password, "adminGroup");
+        ad.createUserAndGroup(username, password, "user");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{username, password});
         return login();
     }
