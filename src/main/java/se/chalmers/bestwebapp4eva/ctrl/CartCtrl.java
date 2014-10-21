@@ -57,7 +57,7 @@ public class CartCtrl implements Serializable {
         cartBB.remove(entity);
 
     }
-
+    
     /**
      * Checkout/commit the current changes in the cart to the database
      * <br>
@@ -71,6 +71,7 @@ public class CartCtrl implements Serializable {
             basicEntityCollection.update(e);
         }
         cartBB.getCartItems().clear();
+        cartBB.getEntityOrders().clear();
 
     }
 

@@ -20,15 +20,19 @@
                 <thead>
                     <td><b><u>Id</u></b></td>
                     <td><b><u>Title</u></b></td>
-                    <td><b><u>Price</u></b></td>
-                    <td><b><u>Quantity</u></b></td>
+                    <td><b><u>Available</u></b></td>
+                    <td><b><u>In order</u></b></td>
                 </thead>
                 <ui:repeat value="#{cartBB.cartItems}" var="entity">
                     <tr>
                         <td><h:outputText value="#{entity.id}" /></td>
                         <td><h:outputText value="#{entity.title}" /></td>
-                        <td><p:spinner value="#{entity.price}" prefix="$"/></td>
-                        <td><p:spinner value="#{entity.quantity}" suffix=" #{entity.unit}"/></td>
+                        <td><h:outputText id="q" value="#{entity.quantity - cartBB.orderQuantity} #{entity.unit}"/></td>
+                        <td>
+                            <p:spinner id="s" value="#{cartBB.orderQuantity}" valueChangeListener="#{cartBB.setEntity(entity)}" suffix=" #{entity.unit}">
+                                <p:ajax event="change" update="q"/>
+                            </p:spinner>
+                        </td>
                     </tr>
                 </ui:repeat>
             </table>
