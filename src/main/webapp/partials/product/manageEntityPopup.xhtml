@@ -16,7 +16,7 @@
 
 
         <h:form>
-            <table align="center" cellspacing="20">
+            <table align="center" cellspacing="5">
                 <thead>
                     <td><b><u>Id</u></b></td>
                     <td><b><u>Title</u></b></td>
@@ -33,7 +33,7 @@
                 </ui:repeat>
             </table>
             <br></br>
-            <p:commandButton value="Commit changes"  update=":cartItems :layout" actionListener="#{cartCtrl.executeChanges(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" styleClass="btn btn-default"/>
+            <p:commandButton value="Place order"  update=":cartItems :layout" actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" styleClass="btn btn-default"/>
         </h:form>
     </p:outputPanel>
 </ui:composition>

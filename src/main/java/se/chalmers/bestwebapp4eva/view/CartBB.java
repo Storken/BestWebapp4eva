@@ -5,11 +5,12 @@
  */
 package se.chalmers.bestwebapp4eva.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 
@@ -18,11 +19,11 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
  * @author tholene
  */
 @Named
-@RequestScoped
-public class CartBB {
+@SessionScoped
+public class CartBB implements Serializable{
 
     /* The items currently in the cart */
-    private static List<BasicEntity> cartItems;
+    private List<BasicEntity> cartItems;
 
     @PostConstruct
     public void post() {
@@ -42,7 +43,7 @@ public class CartBB {
      * @return A list of all the items in the cart
      */
     public List<BasicEntity> getCartItems() {
-        return CartBB.cartItems;
+        return cartItems;
     }
 
     /**
@@ -51,7 +52,7 @@ public class CartBB {
      * @param cartItems The new list of items in the cart
      */
     public void setCartItems(List<BasicEntity> cartItems) {
-        CartBB.cartItems.addAll(cartItems);
+        cartItems.addAll(cartItems);
     }
 
     /**
@@ -60,7 +61,7 @@ public class CartBB {
      * @param entity The item to be added
      */
     public void add(BasicEntity entity) {
-        CartBB.cartItems.add(entity);
+        cartItems.add(entity);
     }
 
     /**
@@ -69,14 +70,14 @@ public class CartBB {
      * @param entity The item to be removed
      */
     public void remove(BasicEntity entity) {
-        CartBB.cartItems.remove(entity);
+        cartItems.remove(entity);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("CartBB{");
-        for (BasicEntity e : CartBB.cartItems) {
+        for (BasicEntity e : cartItems) {
             sb.append(e.getTitle());
         }
         sb.append("}");

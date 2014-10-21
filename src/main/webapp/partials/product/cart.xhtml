@@ -7,17 +7,18 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
     <table width="100%">
+        <br/>
         <ui:repeat id="cartItems" value="#{cartBB.cartItems}" var="entity">
             <tr>
-                <td align="right">
-                    <h:outputText value=" #{entity.id} - "/>
+                <td align="right" style="padding-bottom: 1em">
+                    <h:outputText value="#{entity.id} -"/>
                 </td>
-                <td align="left">
+                <td align="left" style="padding-bottom: 1em">
                     <h:outputText value="#{entity.title}, "/>
                     <h:outputText value="#{entity.quantity} "/>
                     <h:outputText value="#{entity.unit}"/>
                 </td>
-                <td align="right">
+                <td align="right" style="padding-bottom: 1em">
                     <p:commandLink title="Remove from cart" actionListener="#{cartCtrl.removeFromCart(entity)}" styleClass="ui-icon ui-icon-closethick" update=":layout"/> 
                 </td>
             </tr>
@@ -25,5 +26,5 @@
     </table>
 
     <hr/>
-    <p:commandButton id="manageButton" value="Manage" update="multiEntityDetail" oncomplete="PF('multiEntityDialog').show()"/>
+    <p:commandButton id="manageButton" value="Proceed to order" update="multiEntityDetail" oncomplete="PF('multiEntityDialog').show()"/>
 </ui:composition>

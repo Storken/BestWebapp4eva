@@ -1,16 +1,18 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.view.TableBB;
 import se.chalmers.bestwebapp4eva.view.CartBB;
+import se.chalmers.bestwebapp4eva.view.TableBB;
 
 /**
  * Controller for the cart
@@ -18,15 +20,15 @@ import se.chalmers.bestwebapp4eva.view.CartBB;
  * @author tholene
  */
 @Named
-@RequestScoped
-public class CartCtrl {
+@SessionScoped
+public class CartCtrl implements Serializable {
 
     @EJB
-    private IBasicEntityCollection bec;
+    private IBasicEntityCollection basicEntityCollection;
     @Inject
-    private CartBB cart;
+    private CartBB cartBB;
     @Inject
-    private TableBB entities;
+    private TableBB tableBB;
 
     /**
      * Add all the selected items to the cart
@@ -34,12 +36,12 @@ public class CartCtrl {
      * @param actionEvent The received event
      */
     public void addSelectionToCart(ActionEvent actionEvent) {
-        List<BasicEntity> items = entities.getSelectedEntities();
+        List<BasicEntity> items = tableBB.getSelectedEntities();
         if (items != null) {
             for (BasicEntity i : items) {
                 // Dont add the same item twice
-                if (!cart.getCartItems().contains(i)) {
-                    cart.add(i);
+                if (!cartBB.getCartItems().contains(i)) {
+                    cartBB.add(i);
                 }
             }
         }
@@ -52,7 +54,7 @@ public class CartCtrl {
      * @param entity The item to be removed
      */
     public void removeFromCart(BasicEntity entity) {
-        cart.remove(entity);
+        cartBB.remove(entity);
 
     }
 
@@ -62,13 +64,13 @@ public class CartCtrl {
      * If an item hasn't changed it will still be updated in the database but
      * this won't have any negative impact.
      *
-     * @param changed All the items that are in the cart
+     * @param order All the items that are in the cart
      */
-    public void executeChanges(List<BasicEntity> changed) {
-        for (BasicEntity e : changed) {
-            bec.update(e);
+    public void placeOrder(List<BasicEntity> order) {
+        for (BasicEntity e : order) {
+            basicEntityCollection.update(e);
         }
-        cart.getCartItems().clear();
+        cartBB.getCartItems().clear();
 
     }
 
@@ -81,6 +83,6 @@ public class CartCtrl {
      * <code>false</code> if the cart is not empty and ∫should be shown
      */
     public boolean collapseCart() {
-        return cart.getCartItems().isEmpty();
+        return cartBB.getCartItems().isEmpty();
     }
 }
