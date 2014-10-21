@@ -8,7 +8,7 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <p:outputPanel id="multiEntityDetail" style="text-align:center">
-        <h1 align="center">Lagerhantera your lager</h1>
+        <h1 align="center">Put a beställning from your lager</h1>
         <h4 align="center">...the way YOU want to</h4>
 
 
@@ -33,7 +33,7 @@
                 </ui:repeat>
             </table>
             <br></br>
-            <p:commandButton value="Place order"  update=":cartItems :layout" actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" styleClass="btn btn-default"/>
+            <p:commandButton value="Place order"  update=":cartItems :layout" actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" icon="ui-icon ui-icon-check/"/>
         </h:form>
     </p:outputPanel>
 </ui:composition>
