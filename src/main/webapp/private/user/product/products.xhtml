@@ -20,15 +20,15 @@
                     </p:layoutUnit>
 
                     <p:layoutUnit position="east" size="300" header="Cart" id="cart" effect="slide" collapsed="#{cartCtrl.collapseCart()}">
-                        <ui:include src="/partials/product/cart.xhtml"/>
+                        <ui:include src="/private/product/cart.xhtml"/>
                     </p:layoutUnit>
                 </p:layout>
 
                 <p:dialog header="Manage entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="90%" closeOnEscape="true" draggable="false">
-                    <ui:include src="/partials/product/manageEntityPopup.xhtml"/>
+                    <ui:include src="/private/product/manageEntityPopup.xhtml"/>
                 </p:dialog>
                 <p:dialog header="Create new product" widgetVar="newEntityDialog" modal="true" showEffect="size" hideEffect="size" resizable="true" closeOnEscape="true" draggable="false">
-                    <ui:include src="/partials/product/newEntityDialog.xhtml"/>
+                    <ui:include src="/private/product/newEntityDialog.xhtml"/>
                 </p:dialog>
             </ui:define>
         </ui:composition>
