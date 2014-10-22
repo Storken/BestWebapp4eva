@@ -15,7 +15,6 @@
             rows="10"
             sortBy="#{entity.id}"
             emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
-            selectionMode="multiple"
             selection="#{catalogueBB.selectedEntities}"
             rowKey="#{entity.id}"
             editable="true"
@@ -29,6 +28,7 @@
             </f:facet>
             <p:ajax event="rowEdit" listener="#{editEntityCtrl.onRowEdit}"/>
             <p:ajax event="rowEditCancel" listener="#{editEntityCtrl.onRowCancel}"/>
+            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
             <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">    
                 <h:outputText value="#{entity.id}" />
             </p:column>
