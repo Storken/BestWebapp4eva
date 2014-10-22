@@ -47,7 +47,7 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
-            <from-action>#{authBean.createUser}</from-action>
+            <from-action>#{authBean.createAccount}</from-action>
             <from-outcome>success</from-outcome>
             <to-view-id>/private/user/dashboard.xhtml</to-view-id>
             <redirect/>

@@ -39,7 +39,10 @@
                         <br/>
                         <h:inputText value="#{authBean.password}"/>
                         <br/>
-                        <h:commandButton value="Create" action="#{authBean.createUser}"/>
+                        <h:outputText value="Check if admin: "/>
+                        <h:selectBooleanCheckbox value="#{authBean.isAdmin}" />
+                        <br/>
+                        <h:commandButton value="Create" action="#{authBean.createAccount}"/>
                     </h:form>
                 </p:dialog>
             </ui:define>

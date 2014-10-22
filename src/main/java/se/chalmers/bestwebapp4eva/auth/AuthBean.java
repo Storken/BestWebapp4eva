@@ -23,6 +23,7 @@ public class AuthBean implements Serializable {
 
     private String username;
     private String password;
+    private boolean isAdmin;
     private static final Logger LOG = Logger.getLogger(AuthBean.class.getSimpleName());
 
     @Inject
@@ -60,19 +61,27 @@ public class AuthBean implements Serializable {
         } catch (ServletException e) {
             LOG.log(Level.INFO, "*** Login failed");
 
-            FacesContext.getCurrentInstance().
-                    addMessage(null,
-                            new FacesMessage(FacesMessage.SEVERITY_WARN,
-                                    "Login Failed", null));
-            // Must set this (use the Flash-scope) else message
-            // wan't survive the redirect (see faces-config.xml)
-            externalContext.getFlash().setKeepMessages(true);
-
         }
+        return "fail";
+    }
+    
+    public String createAccount(){
+        if(ad.getByUsername(username).size() == 0){
+            if(isAdmin)
+                return createAdmin();
+            return createUser();
+        }
+        LOG.log(Level.INFO, "*** This username already exists");
         return "fail";
     }
 
     public String createUser() {
+        ad.createUserAndGroup(username, password, "user");
+        LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{username, password});
+        return login();
+    }
+    
+    public String createAdmin() {
         ad.createUserAndGroup(username, password, "admin");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{username, password});
         return login();
@@ -103,5 +112,14 @@ public class AuthBean implements Serializable {
     public String getPassword() {
         return password;
     }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+    
 
 }
