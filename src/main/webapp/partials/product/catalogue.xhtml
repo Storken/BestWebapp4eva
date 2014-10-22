@@ -27,22 +27,54 @@
                 Entities
             </f:facet>
             <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">                 
-                <h:outputText value="#{entity.id}" /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.id}" /> </f:facet>
+                    <f:facet name="input"><p:inputText value="#{entity.id}" /> </f:facet>
+                </p:cellEditor>
             </p:column>
             <p:column sortBy="#{entity.title}" filterBy="#{entity.title}" filterMatchMode="contains" headerText="Title">                 
-                <h:outputText value="#{entity.title}" /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.title}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{entity.title}"/></f:facet>
+                </p:cellEditor>
             </p:column>
             <p:column sortBy="#{entity.price}" filterBy="#{entity.price}" filterMatchMode="contains" headerText="Price">                 
-                <h:outputText value="#{entity.price}" /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.price}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{entity.price}"/></f:facet>
+                </p:cellEditor>
+
             </p:column>
             <p:column sortBy="#{entity.quantity}" filterBy="#{entity.quantity}" filterMatchMode="contains" headerText="Quantity">                 
-                <h:outputText value="#{entity.quantity} " /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.quantity} "/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{entity.quantity}"/></f:facet>
+                </p:cellEditor>
             </p:column>
             <p:column sortBy="#{entity.unit}" filterBy="#{entity.unit}" filterMatchMode="contains" headerText="Unit">                
-                <h:outputText value="#{entity.unit}" /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.unit}"/></f:facet>
+                    <f:facet name="input">
+                        <h:selectOneMenu value="#{entity.unit}">
+                            <f:selectItems value="#{tableBB.units}" var="unit" itemLabel="#{unit}" itemValue="#{unit}"/>
+                        </h:selectOneMenu>
+                    </f:facet>
+                </p:cellEditor>
+
             </p:column>
             <p:column sortBy="#{entity.category.name}" filterBy="#{entity.category.name}" filterMatchMode="contains" headerText="Category">                 
-                <h:outputText value="#{entity.category.name}" /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.category.name}"/></f:facet>
+                    <f:facet name="input">
+                        <h:selectOneMenu value="#{entity.category.name}">
+                            <f:selectItems value="#{tableBB.categories}" var="category" itemLabel="#{category.name}" itemValue="#{category.name}"/>
+                        </h:selectOneMenu>
+                    </f:facet>
+                </p:cellEditor>
+
+            </p:column>
+            <p:column style="width:32px">
+                <p:rowEditor />
             </p:column>
             <f:facet name="footer">
                 <p:commandButton update=":layout :cartItems" value="Add to cart" actionListener="#{cartCtrl.addSelectionToCart}"/>
