@@ -40,6 +40,18 @@
             <to-view-id>login.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
+        <navigation-case>
+            <from-action>#{authBean.createUser}</from-action>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>login.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{authBean.createUser}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/private/user/dashboard.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
     
 

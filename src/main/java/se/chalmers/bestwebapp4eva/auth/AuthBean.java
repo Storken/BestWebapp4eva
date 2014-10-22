@@ -40,7 +40,7 @@ public class AuthBean implements Serializable {
 
         // Really check is there some data in database?
         if(ad.getByUsername(username).size() < 1){
-            LOG.log(Level.INFO, "*** Login fail");
+            LOG.log(Level.INFO, "*** No such username: {0}", new Object[]{username});
             return "fail";
         }
         User u = ad.getByUsername(username).get(0);
@@ -58,7 +58,7 @@ public class AuthBean implements Serializable {
             return "success";
 
         } catch (ServletException e) {
-            LOG.log(Level.INFO, "*** Login fail");
+            LOG.log(Level.INFO, "*** Login failed");
 
             FacesContext.getCurrentInstance().
                     addMessage(null,
@@ -73,7 +73,7 @@ public class AuthBean implements Serializable {
     }
 
     public String createUser() {
-        ad.createUserAndGroup(username, password, "user");
+        ad.createUserAndGroup(username, password, "admin");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{username, password});
         return login();
     }
