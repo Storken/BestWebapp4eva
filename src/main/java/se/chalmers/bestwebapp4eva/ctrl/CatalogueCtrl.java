@@ -27,7 +27,7 @@ import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
  */
 @Named
 @RequestScoped
-public class EntityCtrl {
+public class CatalogueCtrl {
 
     @EJB
     private IBasicEntityDAO bec;
