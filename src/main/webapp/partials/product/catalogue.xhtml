@@ -27,8 +27,10 @@
             <f:facet name="header">
                 Entities
             </f:facet>
+            <p:ajax event="rowEdit" listener="#{cartCtrl.onRowEdit}" update=":form:msgs" />
+            <p:ajax event="rowEditCancel" listener="#{cartCtrl.onRowCancel}" update=":form:msgs" />
             <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">    
-                    <h:outputText value="#{entity.id}" />
+                <h:outputText value="#{entity.id}" />
             </p:column>
             <p:column sortBy="#{entity.title}" filterBy="#{entity.title}" filterMatchMode="contains" headerText="Title">                 
                 <p:cellEditor>
