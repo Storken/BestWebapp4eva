@@ -18,6 +18,7 @@
             selectionMode="multiple"
             selection="#{tableBB.selectedEntities}"
             rowKey="#{entity.id}"
+            editable="true"
             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             currentPageReportTemplate="Page {currentPage} of {totalPages}"
             rowsPerPageTemplate="10,50,100"
@@ -26,11 +27,8 @@
             <f:facet name="header">
                 Entities
             </f:facet>
-            <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">                 
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{entity.id}" /> </f:facet>
-                    <f:facet name="input"><p:inputText value="#{entity.id}" /> </f:facet>
-                </p:cellEditor>
+            <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">    
+                    <h:outputText value="#{entity.id}" />
             </p:column>
             <p:column sortBy="#{entity.title}" filterBy="#{entity.title}" filterMatchMode="contains" headerText="Title">                 
                 <p:cellEditor>
