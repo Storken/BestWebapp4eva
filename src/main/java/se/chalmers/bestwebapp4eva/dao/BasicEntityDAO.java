@@ -151,6 +151,6 @@ public class BasicEntityDAO extends AbstractDAO<BasicEntity, Long> implements IB
             }
         }
 
-        return criteria.getResultList();
+        return criteria.setFirstResult(first).setMaxResults(first).getResultList();
     }
 }
