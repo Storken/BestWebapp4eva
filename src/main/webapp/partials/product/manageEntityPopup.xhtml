@@ -15,7 +15,7 @@
 
 
 
-        <h:form>
+        <h:form id="f">
             <table align="center" cellspacing="5">
                 <thead>
                     <td><b><u>Id</u></b></td>
@@ -30,18 +30,18 @@
                         <td><h:outputText id="q" value="#{entity.quantity - cartBB.orderQuantity} #{entity.unit}"/></td>
                         <td>
                             <p:spinner id="s" value="#{cartBB.orderQuantity}"  onfocus="#{cartBB.setEntity(entity)}" suffix=" #{entity.unit}" max="#{entity.quantity}" min="0" validator="#{cartCtrl.validateOrder}">
-                                <p:ajax update="q s" event="change" />
-                                <p:ajax update="q s" event="keyup" />
+                                <p:ajax update="q s :f:order" event="change"/>
+                                <p:ajax update="q :f:order" event="keyup" />
                             </p:spinner>
                             
                         </td>
-                        <td><h:message for="s" styleClass="tooltip"/></td>
+                        <td><h:message for="s" styleClass="error"/></td>
                     </tr>
                 </ui:repeat>
                 
             </table>
             <br></br>
-            <p:commandButton value="Place order"  update=":cartItems :layout" actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" icon="ui-icon ui-icon-check"/>
+            <p:commandButton id="order" value="Place order" update=":cartItems :layout" actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" icon="ui-icon ui-icon-check" disabled="#{cartCtrl.orderDisabled}"/>
         </h:form>
     </p:outputPanel>
 </ui:composition>

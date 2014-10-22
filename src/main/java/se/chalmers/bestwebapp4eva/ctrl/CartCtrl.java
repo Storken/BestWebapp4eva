@@ -33,6 +33,16 @@ public class CartCtrl implements Serializable {
     private CartBB cartBB;
     @Inject
     private TableBB tableBB;
+    
+    private boolean orderDisabled;
+    
+    public boolean isOrderDisabled() {
+        return orderDisabled;
+    }
+    
+    public void setOrderDisabled(boolean orderDisabled) {
+        this.orderDisabled = orderDisabled;
+    }
 
     /**
      * Add all the selected items to the cart
@@ -83,14 +93,16 @@ public class CartCtrl implements Serializable {
     }
 
     public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException{ 
-        double ordered = ((Double)value).doubleValue();
+        double ordered = (Double)value;
         // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
         double available = basicEntityCollection.getById(cartBB.getEntity().getId()).get(0).getQuantity();
         
         if(ordered > available || ordered < 0) {
+            orderDisabled = true;
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Order exceeds current stock of " + available + " " + cartBB.getEntity().getUnit() + "!", "");
             throw new ValidatorException(message);
-        }
+        } else 
+            orderDisabled = false;
         
         
     }
