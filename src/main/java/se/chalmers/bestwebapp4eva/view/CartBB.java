@@ -94,7 +94,6 @@ public class CartBB implements Serializable {
     }
     
     public BasicEntity getEntity() {
-        System.out.println(currentEntity.getTitle());
         return currentEntity;
     }
     /**

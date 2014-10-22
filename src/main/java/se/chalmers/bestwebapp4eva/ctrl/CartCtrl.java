@@ -33,15 +33,38 @@ public class CartCtrl implements Serializable {
     private CartBB cartBB;
     @Inject
     private TableBB tableBB;
-    
+
     private boolean orderDisabled;
-    
+
+    private double totalStock = 0.0;
+    private double totalOrdered = 0.0;
+
     public boolean isOrderDisabled() {
+        if(totalOrdered == 0.0) orderDisabled = true;
         return orderDisabled;
     }
-    
+
+    public void updateOrderStatus() {
+        totalStock = 0.0;
+        BasicEntity entityDBWrapper;
+        for (BasicEntity e : cartBB.getCartItems()) {
+            // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
+            entityDBWrapper = basicEntityCollection.getById(e.getId()).get(0);
+            totalStock += entityDBWrapper.getQuantity();
+            
+           
+            System.out.println("Order q for " + e.getTitle() + ": " + cartBB.getEntityOrders().get(e));
+        }
+        System.out.println("Total stock: " + totalStock + "\nTotal ordered: " + totalOrdered);      
+        orderDisabled = totalOrdered == 0.0 || totalStock == 0.0;
+    }
+
     public void setOrderDisabled(boolean orderDisabled) {
         this.orderDisabled = orderDisabled;
+    }
+
+    public boolean isSpinnerDisabled(BasicEntity entity) {
+        return entity.getQuantity() == 0.0;
     }
 
     /**
@@ -89,22 +112,46 @@ public class CartCtrl implements Serializable {
         }
         cartBB.getCartItems().clear();
         cartBB.getEntityOrders().clear();
+        totalOrdered = 0.0;
+        totalStock = 0.0;
 
     }
 
-    public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException{ 
-        double ordered = (Double)value;
+    public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException {
+        totalOrdered = 0.0;
+        double ordered = (Double) value;
+        totalOrdered += ordered;
         // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
         double available = basicEntityCollection.getById(cartBB.getEntity().getId()).get(0).getQuantity();
-        
-        if(ordered > available || ordered < 0) {
+
+        if (ordered > available) {
             orderDisabled = true;
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Order exceeds current stock of " + available + " " + cartBB.getEntity().getUnit() + "!", "");
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Order exceeds current stock of " + available + " " + cartBB.getEntity().getUnit() + "!", null);
             throw new ValidatorException(message);
-        } else 
+        } else if (ordered < 0.0) {
+            orderDisabled = true;
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nothing to order", null);
+            throw new ValidatorException(message);
+        } else {
             orderDisabled = false;
-        
-        
+        }
+
+    }
+
+    public String getOrderButtonMessage() {
+        if (orderDisabled) {
+            return "Cannot place order";
+        } else {
+            return "Place order";
+        }
+    }
+
+    public String getOrderButtonIcon() {
+        if (orderDisabled) {
+            return "ui-icon ui-icon-notice";
+        } else {
+            return "ui-icon ui-icon-check";
+        }
     }
 
     /**

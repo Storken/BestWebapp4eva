@@ -29,19 +29,19 @@
                         <td><h:outputText value="#{entity.title}" /></td>
                         <td><h:outputText id="q" value="#{entity.quantity - cartBB.orderQuantity} #{entity.unit}"/></td>
                         <td>
-                            <p:spinner id="s" value="#{cartBB.orderQuantity}"  onfocus="#{cartBB.setEntity(entity)}" suffix=" #{entity.unit}" max="#{entity.quantity}" min="0" validator="#{cartCtrl.validateOrder}">
-                                <p:ajax update="q s :f:order" event="change"/>
-                                <p:ajax update="q :f:order" event="keyup" />
+                            <p:spinner id="s" value="#{cartBB.orderQuantity}" onfocus="#{cartBB.setEntity(entity)}" suffix=" #{entity.unit}" max="#{entity.quantity}" min="0" validator="#{cartCtrl.validateOrder}" rendered="#{!cartCtrl.isSpinnerDisabled(entity)}">
+                                <p:ajax update="q :f:order" event="change" listener="#{cartCtrl.updateOrderStatus}"/>
+                                <p:ajax update="q :f:order" event="keyup" listener="#{cartCtrl.updateOrderStatus}"/>
                             </p:spinner>
-                            
+                            <h:outputText value="Out of stock" rendered="#{cartCtrl.isSpinnerDisabled(entity)}"/>
                         </td>
-                        <td><h:message for="s" styleClass="error"/></td>
+                       <h:message for="s" styleClass="error"/>
                     </tr>
                 </ui:repeat>
                 
             </table>
             <br></br>
-            <p:commandButton id="order" value="Place order" update=":cartItems :layout" actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" icon="ui-icon ui-icon-check" disabled="#{cartCtrl.orderDisabled}"/>
+            <p:commandButton id="order" value="#{cartCtrl.orderButtonMessage}" update=":cartItems :layout" actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" icon="#{cartCtrl.orderButtonIcon}" disabled="#{cartCtrl.orderDisabled}"/>
         </h:form>
     </p:outputPanel>
 </ui:composition>
