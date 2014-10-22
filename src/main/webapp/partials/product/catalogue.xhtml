@@ -27,8 +27,8 @@
             <f:facet name="header">
                 Entities
             </f:facet>
-            <p:ajax event="rowEdit" listener="#{cartCtrl.onRowEdit}" update=":form:msgs" />
-            <p:ajax event="rowEditCancel" listener="#{cartCtrl.onRowCancel}" update=":form:msgs" />
+            <p:ajax event="rowEdit" listener="#{editEntityCtrl.onRowEdit}"/>
+            <p:ajax event="rowEditCancel" listener="#{editEntityCtrl.onRowCancel}"/>
             <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">    
                 <h:outputText value="#{entity.id}" />
             </p:column>
@@ -64,10 +64,10 @@
             </p:column>
             <p:column sortBy="#{entity.category.name}" filterBy="#{entity.category.name}" filterMatchMode="contains" headerText="Category">                 
                 <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{entity.category.name}"/></f:facet>
+                    <f:facet name="output"><h:outputText value="#{entity.category.name}" /></f:facet>
                     <f:facet name="input">
-                        <h:selectOneMenu value="#{entity.category.name}">
-                            <f:selectItems value="#{catalogueBB.categories}" var="category" itemLabel="#{category.name}" itemValue="#{category.name}"/>
+                        <h:selectOneMenu value="#{entity.category}" converter="#{categoryConverter}">
+                            <f:selectItems value="#{catalogueBB.categories}" var="category" itemLabel="#{category.name}" itemValue="#{category}"/>
                         </h:selectOneMenu>
                     </f:facet>
                 </p:cellEditor>
