@@ -25,7 +25,7 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  */
 @Named
 @ViewScoped
-public class TableBB implements Serializable {
+public class CatalogueBB implements Serializable {
 
     // Using LazyDataModel in order to do lazy loading of data for the table.
     private LazyDataModel<BasicEntity> entities;

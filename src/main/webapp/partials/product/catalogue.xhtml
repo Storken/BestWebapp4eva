@@ -9,14 +9,14 @@
     <h:form id="tableForm">
         <p:dataTable 
             var="entity" 
-            value="#{tableBB.entities}"
+            value="#{catalogueBB.entities}"
             lazy="true" 
             paginator="true" 
             rows="10"
             sortBy="#{entity.id}"
             emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
             selectionMode="multiple"
-            selection="#{tableBB.selectedEntities}"
+            selection="#{catalogueBB.selectedEntities}"
             rowKey="#{entity.id}"
             editable="true"
             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
@@ -56,7 +56,7 @@
                     <f:facet name="output"><h:outputText value="#{entity.unit}"/></f:facet>
                     <f:facet name="input">
                         <h:selectOneMenu value="#{entity.unit}">
-                            <f:selectItems value="#{tableBB.units}" var="unit" itemLabel="#{unit}" itemValue="#{unit}"/>
+                            <f:selectItems value="#{catalogueBB.units}" var="unit" itemLabel="#{unit}" itemValue="#{unit}"/>
                         </h:selectOneMenu>
                     </f:facet>
                 </p:cellEditor>
@@ -67,7 +67,7 @@
                     <f:facet name="output"><h:outputText value="#{entity.category.name}"/></f:facet>
                     <f:facet name="input">
                         <h:selectOneMenu value="#{entity.category.name}">
-                            <f:selectItems value="#{tableBB.categories}" var="category" itemLabel="#{category.name}" itemValue="#{category.name}"/>
+                            <f:selectItems value="#{catalogueBB.categories}" var="category" itemLabel="#{category.name}" itemValue="#{category.name}"/>
                         </h:selectOneMenu>
                     </f:facet>
                 </p:cellEditor>
