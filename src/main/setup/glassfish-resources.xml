@@ -15,7 +15,7 @@
         datasource-classname="org.apache.derby.jdbc.ClientDataSource" 
         fail-all-connections="false" 
         idle-timeout-in-seconds="500" 
-        is-connection-validation-required="false" 
+        is-connection-validation-required="true" 
         is-isolation-level-guaranteed="true" 
         lazy-connection-association="false" 
         lazy-connection-enlistment="false" 
@@ -30,8 +30,7 @@
         statement-timeout-in-seconds="-1" 
         steady-pool-size="8" 
         validate-atmost-once-period-in-seconds="0" 
-        wrap-jdbc-objects="false"
-        is-connection-validation-required="true">
+        wrap-jdbc-objects="false">
         
         <property name="URL" value="jdbc:derby://localhost:1527/maindb"/>
         <property name="serverName" value="localhost"/>

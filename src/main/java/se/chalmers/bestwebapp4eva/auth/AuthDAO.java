@@ -44,22 +44,12 @@ public class AuthDAO extends AbstractDAO<User, String> {
     public void createUserAndGroup(String username, String password, String groupname) {
         User user = new User();
         user.setUsername(username);
+        user.setPassword(password);
         em.persist(user);
         
-        Group group = new Group();
+        Groups group = new Groups();
         group.setGroupname(groupname);
         group.setUsername(username);
-        
-        try{
-            user.setPassword(getSHA256(password));
-        } catch (NoSuchAlgorithmException e){
-            LOG.log(Level.INFO, "*** Something went wrong in encryption");
-            LOG.log(Level.INFO, "*** Trying without encryption");
-        } catch (UnsupportedEncodingException e) {
-            LOG.log(Level.INFO, "*** Something went wrong in encryption");
-            LOG.log(Level.INFO, "*** Trying without encryption");
-        }
-        user.setPassword(password);
         em.persist(group);
     }
 
@@ -81,18 +71,6 @@ public class AuthDAO extends AbstractDAO<User, String> {
         List<User> found = new ArrayList<>();
         found.addAll(query.getResultList());
         return found;
-    }
-    
-    // If using default digest algorithm 
-    //  (also put Hex and UTF-8 in realm configuration
-    private String getSHA256(String passwd) throws NoSuchAlgorithmException,
-            UnsupportedEncodingException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        String text = passwd;
-        md.update(text.getBytes("UTF-8")); // Change this to "UTF-16" if needed
-        byte[] digest = md.digest();
-        BigInteger bigInt = new BigInteger(1, digest);
-        return bigInt.toString(16);
     }
 
 }

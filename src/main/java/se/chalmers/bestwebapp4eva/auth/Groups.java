@@ -19,7 +19,7 @@ import se.chalmers.bestwebapp4eva.entity.AbstractDBObject;
  */
 @Entity
 @Table(name="USER_GROUPS")
-public class Group extends AbstractDBObject implements Serializable {
+public class Groups extends AbstractDBObject implements Serializable {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

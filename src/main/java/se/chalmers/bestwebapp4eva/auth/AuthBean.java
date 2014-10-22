@@ -59,14 +59,15 @@ public class AuthBean implements Serializable {
             return "success";
 
         } catch (ServletException e) {
-            LOG.log(Level.INFO, "*** Login failed");
+           
+            LOG.log(Level.INFO, e.getMessage());
 
         }
         return "fail";
     }
     
     public String createAccount(){
-        if(ad.getByUsername(username).size() == 0){
+        if(ad.getByUsername(username).isEmpty()){
             if(isAdmin)
                 return createAdmin();
             return createUser();
