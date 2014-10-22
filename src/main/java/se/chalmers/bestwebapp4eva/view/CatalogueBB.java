@@ -1,6 +1,7 @@
 package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
@@ -13,6 +14,9 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
+import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
+import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
+import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
  * A backing bean for the table view of basic entities.
@@ -21,13 +25,20 @@ import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
  */
 @Named
 @ViewScoped
-public class TableBB implements Serializable {
+public class CatalogueBB implements Serializable {
 
     // Using LazyDataModel in order to do lazy loading of data for the table.
     private LazyDataModel<BasicEntity> entities;
 
     private List<BasicEntity> selectedEntities;
+    
+    private List<Category> categories;
+    
+    private List<Unit> units;
 
+    @EJB
+    private ICategoryDAO categoryDAO;
+    
     @EJB
     private IBasicEntityDAO bec;
 
@@ -44,6 +55,9 @@ public class TableBB implements Serializable {
                 return result;
             }
         };
+        
+        categories = categoryDAO.findAll();
+        units = Arrays.asList(BasicEntity.Unit.values());
     }
 
     public LazyDataModel<BasicEntity> getEntities() {
@@ -72,5 +86,13 @@ public class TableBB implements Serializable {
         }
 
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Found", message));
+    }
+    
+    public List<Category> getCategories() {
+        return this.categories;
+    }
+    
+    public List<Unit> getUnits() {
+        return this.units;
     }
 }

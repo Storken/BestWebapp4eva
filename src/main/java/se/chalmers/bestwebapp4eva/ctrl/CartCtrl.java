@@ -8,7 +8,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.view.TableBB;
+import se.chalmers.bestwebapp4eva.view.CatalogueBB;
 import se.chalmers.bestwebapp4eva.view.CartBB;
 
 /**
@@ -25,7 +25,7 @@ public class CartCtrl {
     @Inject
     private CartBB cart;
     @Inject
-    private TableBB entities;
+    private CatalogueBB entities;
 
     /**
      * Add all the selected items to the cart

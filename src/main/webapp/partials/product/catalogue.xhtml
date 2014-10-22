@@ -9,15 +9,16 @@
     <h:form id="tableForm">
         <p:dataTable 
             var="entity" 
-            value="#{tableBB.entities}"
+            value="#{catalogueBB.entities}"
             lazy="true" 
             paginator="true" 
             rows="10"
             sortBy="#{entity.id}"
             emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
             selectionMode="multiple"
-            selection="#{tableBB.selectedEntities}"
+            selection="#{catalogueBB.selectedEntities}"
             rowKey="#{entity.id}"
+            editable="true"
             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             currentPageReportTemplate="Page {currentPage} of {totalPages}"
             rowsPerPageTemplate="10,50,100"
@@ -26,23 +27,54 @@
             <f:facet name="header">
                 Entities
             </f:facet>
-            <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">                 
-                <h:outputText value="#{entity.id}" /> 
+            <p:ajax event="rowEdit" listener="#{editEntityCtrl.onRowEdit}"/>
+            <p:ajax event="rowEditCancel" listener="#{editEntityCtrl.onRowCancel}"/>
+            <p:column sortBy="#{entity.id}" filterBy="#{entity.id}" filterMatchMode="contains" headerText="ID">    
+                <h:outputText value="#{entity.id}" />
             </p:column>
             <p:column sortBy="#{entity.title}" filterBy="#{entity.title}" filterMatchMode="contains" headerText="Title">                 
-                <h:outputText value="#{entity.title}" /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.title}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{entity.title}"/></f:facet>
+                </p:cellEditor>
             </p:column>
             <p:column sortBy="#{entity.price}" filterBy="#{entity.price}" filterMatchMode="contains" headerText="Price">                 
-                <h:outputText value="#{entity.price}" /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.price}"/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{entity.price}"/></f:facet>
+                </p:cellEditor>
+
             </p:column>
             <p:column sortBy="#{entity.quantity}" filterBy="#{entity.quantity}" filterMatchMode="contains" headerText="Quantity">                 
-                <h:outputText value="#{entity.quantity} " /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.quantity} "/></f:facet>
+                    <f:facet name="input"><p:inputText value="#{entity.quantity}"/></f:facet>
+                </p:cellEditor>
             </p:column>
             <p:column sortBy="#{entity.unit}" filterBy="#{entity.unit}" filterMatchMode="contains" headerText="Unit">                
-                <h:outputText value="#{entity.unit}" /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.unit}"/></f:facet>
+                    <f:facet name="input">
+                        <h:selectOneMenu value="#{entity.unit}">
+                            <f:selectItems value="#{catalogueBB.units}" var="unit" itemLabel="#{unit}" itemValue="#{unit}"/>
+                        </h:selectOneMenu>
+                    </f:facet>
+                </p:cellEditor>
+
             </p:column>
             <p:column sortBy="#{entity.category.name}" filterBy="#{entity.category.name}" filterMatchMode="contains" headerText="Category">                 
-                <h:outputText value="#{entity.category.name}" /> 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{entity.category.name}" /></f:facet>
+                    <f:facet name="input">
+                        <h:selectOneMenu value="#{entity.category}" converter="#{categoryConverter}">
+                            <f:selectItems value="#{catalogueBB.categories}" var="category" itemLabel="#{category.name}" itemValue="#{category}"/>
+                        </h:selectOneMenu>
+                    </f:facet>
+                </p:cellEditor>
+
+            </p:column>
+            <p:column style="width:32px">
+                <p:rowEditor />
             </p:column>
             <f:facet name="footer">
                 <p:commandButton update=":layout :cartItems" value="Add to cart" actionListener="#{cartCtrl.addSelectionToCart}"/>
