@@ -17,6 +17,7 @@ import org.primefaces.model.LazyDataModel;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
+import se.chalmers.bestwebapp4eva.entity.Category;
 import se.chalmers.bestwebapp4eva.view.CatalogueBB;
 import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
 
@@ -26,11 +27,14 @@ import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
  * @author tholene
  */
 @Named
-@ViewScoped
+@RequestScoped
 public class NewEntityCtrl implements Serializable {
 
     @EJB
     private IBasicEntityDAO basicEntityDAO;
+    
+    @EJB
+    private ICategoryDAO categoryDAO;
 
     @Inject
     private NewEntityDialogBB newEntityDialogBB;
@@ -41,11 +45,29 @@ public class NewEntityCtrl implements Serializable {
      * @param actionEvent The received event
      */
     public void add(ActionEvent actionEvent) {
+        
+        Category tmp;
+        
+        if(!newEntityDialogBB.getNewCatName().isEmpty() && !newEntityDialogBB.getNewCatDescription().isEmpty()) {
+            tmp = new Category(newEntityDialogBB.getNewCatName(), newEntityDialogBB.getNewCatDescription());
+            categoryDAO.create(tmp);
+        }else{
+            tmp = newEntityDialogBB.getCategory();
+        }
+        
         basicEntityDAO.create(new BasicEntity(
                 newEntityDialogBB.getTitle(),
                 newEntityDialogBB.getPrice(),
                 newEntityDialogBB.getQuantity(),
-                newEntityDialogBB.getUnit(), newEntityDialogBB.getCategory()
+                newEntityDialogBB.getUnit(), tmp
         ));
+        
+        newEntityDialogBB.clearFields();
+    }
+    
+    public void togglePanel() {
+        boolean oldValue = newEntityDialogBB.getNewCatPanelVisible();
+        boolean newValue = !oldValue;
+        newEntityDialogBB.setNewCatPanelVisible(newValue);
     }
 }

@@ -1,11 +1,13 @@
 package se.chalmers.bestwebapp4eva.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
@@ -18,8 +20,8 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  * @author simon
  */
 @Named
-@RequestScoped
-public class NewEntityDialogBB {
+@ViewScoped
+public class NewEntityDialogBB implements Serializable{
 
     private Long id;
     private String title;
@@ -31,6 +33,11 @@ public class NewEntityDialogBB {
     private Category category;
     private List<Category> categories;
     
+    private String newCatName;
+    private String newCatDescription;
+    
+    private boolean newCatPanelVisible;
+    
     @EJB
     ICategoryDAO cc;
 
@@ -40,6 +47,17 @@ public class NewEntityDialogBB {
         units = new ArrayList<>();
         units.addAll(Arrays.asList(BasicEntity.Unit.values()));
     }
+    
+    public void clearFields() {
+        this.id = (long)0;
+        this.title = null;
+        this.price = 0;
+        this.quantity = 0;
+        this.category = null;
+        newCatPanelVisible = false;
+        
+    }
+    
     public Long getId() {
         return id;
     }
@@ -102,6 +120,30 @@ public class NewEntityDialogBB {
     
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+    
+    public String getNewCatName() {
+        return newCatName;
+    }
+    
+    public void setNewCatName(String newCatName) {
+        this.newCatName = newCatName;
+    }
+    
+    public String getNewCatDescription() {
+        return newCatDescription;
+    }
+    
+    public void setNewCatDescription(String newCatDescription) {
+        this.newCatDescription = newCatDescription;
+    }
+    
+    public boolean getNewCatPanelVisible() {
+        return newCatPanelVisible;
+    }
+    
+    public void setNewCatPanelVisible(boolean newCatPanelVisible) {
+        this.newCatPanelVisible = newCatPanelVisible;
     }
 
     @Override
