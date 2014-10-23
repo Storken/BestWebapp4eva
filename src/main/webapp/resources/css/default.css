@@ -8,8 +8,79 @@ and open the template in the editor.
     Author     : Bosch
 */
 
+root { 
+    display: block;
+}
+
 body {
-    background-color: #3399ff;
+    margin: auto;
+    
+}
+
+.ui-tabs{
+    height: 750px;
+    margin-top: 5px;
+   
+}
+
+.ui-datatable{
+    margin-top: 11px;
+    
+}
+
+#gridContainer{
+    width: 400px;
+    margin-left: 10px;
+}
+#panelHeader > h3{
+    margin-left: 10px;
+}
+.top-nav {
+    padding: 0 15px;
+}
+/**/
+
+/*Navigation bar background*/
+.navbar-inverse{
+    background: #22313F;
+    margin:0;
+}
+/* Navigation bar branding text color(BestWebapp4eva) */
+.navbar-header .navbar-brand{
+    color: #EEEEEE;
+    
+}
+
+#homeLink{
+   size: 20px;
+    
+}
+
+.navbar-header .navbar-brand > h2{
+    color: #EEEEEE;
+    size: 8px;
+    margin: 0;
+}
+
+/*Color of list elements in navigation bar*/
+.navbar-inverse .navbar-nav > li > a {
+  color: #EEEEEE;
+}
+.navbar-fixed-top {
+    margin-bottom: 0;
+    border: 0;
+}
+aside{
+    margin-top: 10px;
+    float: left;
+    width: 200px;
+    height: 750px;
+    background: #22313F;
+    
+}
+aside > h2{
+    color: #FFFFFF;
+    margin-left: 50px;
 }
 
 #indxdiv {
