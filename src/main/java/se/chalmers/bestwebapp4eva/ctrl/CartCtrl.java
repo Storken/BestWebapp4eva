@@ -1,6 +1,7 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,9 +15,11 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
+import se.chalmers.bestwebapp4eva.dao.IOrderDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.view.CatalogueBB;
 import se.chalmers.bestwebapp4eva.entity.BasicOrderEntity;
+import se.chalmers.bestwebapp4eva.entity.Order;
 import se.chalmers.bestwebapp4eva.view.CartBB;
 
 
@@ -31,6 +34,9 @@ public class CartCtrl implements Serializable {
 
     @EJB
     private IBasicEntityDAO basicEntityDAO;
+    
+    @EJB
+    private IOrderDAO orderDAO;
     
     @Inject
     private CartBB cartBB;
@@ -111,6 +117,7 @@ public class CartCtrl implements Serializable {
             BasicEntity wrapper = new BasicEntity(e.getId(), e.getTitle(), e.getPrice(), e.getQuantity(), e.getUnit(), e.getCategory());
             basicEntityDAO.update(wrapper);
         }
+        orderDAO.create(new Order(new Date(System.currentTimeMillis()), order));
         cartBB.getCartItems().clear();
         totalOrdered = 0.0;
         totalStock = 0.0;
