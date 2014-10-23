@@ -3,6 +3,7 @@ package se.chalmers.bestwebapp4eva.entity;
 import java.sql.Date;
 import java.util.List;
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,7 +15,8 @@ import javax.persistence.TemporalType;
  *
  * @author tholene
  */
-public class Order extends AbstractDBObject{
+@Entity
+public class EntityOrder extends AbstractDBObject{
     
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -22,25 +24,25 @@ public class Order extends AbstractDBObject{
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private Date date;
+    private Date orderDate;
     
     @Column(nullable = false) 
     @OneToMany
     private List<BasicOrderEntity> items;
     
     
-    public Order() {
+    public EntityOrder() {
     }
     
-    public Order(Date date, List<BasicOrderEntity> items) {
-        this.date = date;
+    public EntityOrder(Date date, List<BasicOrderEntity> items) {
+        this.orderDate = date;
         this.items = items;
     }
     
         
-    public Order(long id, Date date, List<BasicOrderEntity> items) {
+    public EntityOrder(long id, Date orderDate, List<BasicOrderEntity> items) {
         this.id = id;
-        this.date = date;
+        this.orderDate = orderDate;
         this.items = items;
     }
     @Override
@@ -49,7 +51,7 @@ public class Order extends AbstractDBObject{
     }
     
     public Date getDate() {
-        return date;
+        return orderDate;
     }
     
     public List<BasicOrderEntity> getItems() {
@@ -61,8 +63,8 @@ public class Order extends AbstractDBObject{
         this.id = id;
     }
   
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDate(Date orderDate) {
+        this.orderDate = orderDate;
     }
     
     public void setItems(List<BasicOrderEntity> items) {
@@ -72,7 +74,7 @@ public class Order extends AbstractDBObject{
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Order no. ").append(id).append("(").append(date.toString()).append("):");
+        sb.append("Order no. ").append(id).append("(").append(orderDate.toString()).append("):");
         for(BasicOrderEntity e: items) {
             sb.append("\n").append(e.getTitle()).append(", ").append(e.getOrderQuantity()).append(" ").append(e.getUnit()).append(" ");
         }

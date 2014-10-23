@@ -6,20 +6,20 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import se.chalmers.bestwebapp4eva.entity.Order;
+import se.chalmers.bestwebapp4eva.entity.EntityOrder;
 
 /**
  *
  * @author erik
  */
 @Stateless
-public class OrderDAO extends AbstractDAO<Order, Long> implements IOrderDAO {
+public class EntityOrderDAO extends AbstractDAO<EntityOrder, Long> implements IEntityOrderDAO {
 
     @PersistenceContext
     private EntityManager em;
 
-    public OrderDAO() {
-        super(Order.class);
+    public EntityOrderDAO() {
+        super(EntityOrder.class);
     }
 
     @Override
@@ -28,16 +28,16 @@ public class OrderDAO extends AbstractDAO<Order, Long> implements IOrderDAO {
     }
 
     @Override
-    public List<Order> getById(long id) {
+    public List<EntityOrder> getById(long id) {
         String query = "SELECT o FROM Order o WHERE o.id = :id";
-        TypedQuery<Order> result = em.createQuery(query, Order.class).setParameter("id", id);
+        TypedQuery<EntityOrder> result = em.createQuery(query, EntityOrder.class).setParameter("id", id);
         return result.getResultList();
     }
 
     @Override
-    public List<Order> getByDate(Date date) {
+    public List<EntityOrder> getByDate(Date date) {
         String query = "SELECT o FROM Order o WHERE o.date = :date";
-        TypedQuery<Order> result = em.createQuery(query, Order.class).setParameter("date", date);
+        TypedQuery<EntityOrder> result = em.createQuery(query, EntityOrder.class).setParameter("date", date);
         return result.getResultList();
     }
 }
