@@ -6,7 +6,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.dao.ICategoryCollection;
+import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
@@ -18,8 +18,8 @@ import se.chalmers.bestwebapp4eva.entity.Category;
 public class CategoryConverter implements Converter {
 
     @EJB
-    ICategoryCollection cc;
-
+    ICategoryDAO cc;
+    
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && value.trim().length() > 0) {

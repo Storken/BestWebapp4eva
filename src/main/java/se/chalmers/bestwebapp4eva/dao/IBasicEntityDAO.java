@@ -13,7 +13,7 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  * @author simon
  */
 @Local
-public interface IBasicEntityCollection extends IDAO<BasicEntity, Long> {
+public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
 
     /**
      * Get BasicEntity(s) by title.
@@ -65,11 +65,7 @@ public interface IBasicEntityCollection extends IDAO<BasicEntity, Long> {
      */
     public List<BasicEntity> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters);
 
-    public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters);
 
-    /**
-     * Temporary method for testing purposes only. To be removed.
-     */
-    public void bulkAdd();
+    public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters);
 
 }

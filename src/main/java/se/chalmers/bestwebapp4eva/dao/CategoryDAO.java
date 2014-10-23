@@ -17,12 +17,12 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  * @author simon
  */
 @Stateless
-public class CategoryCollection extends AbstractDAO<Category, Long> implements ICategoryCollection {
+public class CategoryDAO extends AbstractDAO<Category, Long> implements ICategoryDAO {
 
     @PersistenceContext
     private EntityManager em;
 
-    public CategoryCollection() {
+    public CategoryDAO() {
         super(Category.class);
     }
 

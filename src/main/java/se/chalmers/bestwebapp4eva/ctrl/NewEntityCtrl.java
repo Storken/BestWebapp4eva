@@ -5,19 +5,19 @@
  */
 package se.chalmers.bestwebapp4eva.ctrl;
 
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.Converter;
-import javax.faces.convert.FacesConverter;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.RowEditEvent;
+import org.primefaces.model.LazyDataModel;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
-import se.chalmers.bestwebapp4eva.dao.ICategoryCollection;
-import se.chalmers.bestwebapp4eva.entity.Category;
+import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
+import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
+import se.chalmers.bestwebapp4eva.view.CatalogueBB;
 import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
 
 /**
@@ -26,17 +26,14 @@ import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
  * @author tholene
  */
 @Named
-@RequestScoped
-public class EntityCtrl {
+@ViewScoped
+public class NewEntityCtrl implements Serializable {
 
     @EJB
-    private IBasicEntityCollection bec;
-
-    @EJB
-    private ICategoryCollection cc;
+    private IBasicEntityDAO basicEntityDAO;
 
     @Inject
-    private NewEntityDialogBB bb;
+    private NewEntityDialogBB newEntityDialogBB;
 
     /**
      * Add a new entity to the database
@@ -44,12 +41,11 @@ public class EntityCtrl {
      * @param actionEvent The received event
      */
     public void add(ActionEvent actionEvent) {
-        bec.create(new BasicEntity(
-                bb.getTitle(),
-                bb.getPrice(),
-                bb.getQuantity(),
-                bb.getUnit(), bb.getCategory()
+        basicEntityDAO.create(new BasicEntity(
+                newEntityDialogBB.getTitle(),
+                newEntityDialogBB.getPrice(),
+                newEntityDialogBB.getQuantity(),
+                newEntityDialogBB.getUnit(), newEntityDialogBB.getCategory()
         ));
     }
-
 }
