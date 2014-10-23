@@ -63,12 +63,22 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return found;
     }
 
-    public List<User> getByUsername(String username) {
+    public List<User> getUserByUsername(String username) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.username =:username", User.class)
                 .setParameter("username", username);
 
         List<User> found = new ArrayList<>();
+        found.addAll(query.getResultList());
+        return found;
+    }
+    
+    public List<Groups> getGroupByUsername(String username) {
+        TypedQuery<Groups> query;
+        query = em.createQuery("select g from " + Groups.class.getSimpleName() + " g WHERE g.username =:username", Groups.class)
+                .setParameter("username", username);
+
+        List<Groups> found = new ArrayList<>();
         found.addAll(query.getResultList());
         return found;
     }

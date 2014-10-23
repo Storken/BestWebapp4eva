@@ -31,7 +31,7 @@
         <navigation-case>
             <from-action>#{authBean.login}</from-action>
             <from-outcome>success</from-outcome>
-            <to-view-id>/private/users/dashboard.xhtml</to-view-id>
+            <to-view-id>/private/user/dashboard.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>

@@ -17,14 +17,11 @@
                     <h:graphicImage id="theguy" library="img" name="theguy.png"/>
                     <div id="auth">
                         <h:form>
-                            <h:messages/>
                             <a class="authText">username:</a>
                             <h:inputText id="usrname" class="auth" value="#{authBean.username}"/>
-                            <h:message for="usrname"/>
                             <br/>
                             <a class="authText">password:</a>
                             <h:inputSecret id="passwrd" class="auth" value="#{authBean.password}"/>
-                            <h:message for="passwrd"/>
                             <div id="authbuttondiv">
                                 <h:commandButton action="#{authBean.login}" value="Login" class="smallbutton"/>
                                 <p:commandButton value="Create User" onclick="PF('dlg').show()" class="smallbutton" />

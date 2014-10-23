@@ -40,11 +40,11 @@ public class AuthBean implements Serializable {
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{username, password});
 
         // Really check is there some data in database?
-        if(ad.getByUsername(username).size() < 1){
+        if(ad.getUserByUsername(username).size() < 1){
             LOG.log(Level.INFO, "*** No such username: {0}", new Object[]{username});
             return "fail";
         }
-        User u = ad.getByUsername(username).get(0);
+        User u = ad.getUserByUsername(username).get(0);
         LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPassword()});
 
         try {
@@ -67,7 +67,7 @@ public class AuthBean implements Serializable {
     }
     
     public String createAccount(){
-        if(ad.getByUsername(username).isEmpty()){
+        if(ad.getUserByUsername(username).isEmpty()){
             if(isAdmin)
                 return createAdmin();
             return createUser();
