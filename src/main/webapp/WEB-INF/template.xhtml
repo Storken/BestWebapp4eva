@@ -14,9 +14,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="bootstrap.css"   />
         <h:outputStylesheet library="css" name="default.css"/>
-        <h:outputStylesheet name="bootstrap/css/bootstrap.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
-        <h:outputScript name="bootstrap/js/bootstrap.js" />
+        <h:outputScript library="js" name="bootstrap.js" />
         
         <title>BestWebapp4eva</title>
     </h:head>
@@ -53,9 +52,7 @@
         <ul class="nav navbar-nav pull-right">
             
             <li>
-                <h:link value="Admin" outcome="dashboard" >
-                    <!--<f:param> goes here -->
-                </h:link>
+                <h:link value="${session.getAttribute('username')}" outcome="profile" />
             </li>
             
             
