@@ -16,7 +16,8 @@ import se.chalmers.bestwebapp4eva.entity.Category;
 public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
 
     /**
-     * Get BasicEntity(s) by title. 
+     * Get BasicEntity(s) by title.
+     *
      * @param title The tile of the wanted entity(s).
      * @return A list with the wanted entitiy(s).
      */
@@ -24,6 +25,7 @@ public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
 
     /**
      * Get BasicEntity(s) by price
+     *
      * @param price The price of the wanted entities
      * @return A list with the wanted entity(s).
      */
@@ -31,6 +33,7 @@ public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
 
     /**
      * Get BasicEntity(s) by quantity.
+     *
      * @param quantity The quantity of the wanted entities.
      * @return A list with the wanted entity(s).
      */
@@ -38,13 +41,14 @@ public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
 
     /**
      * Get BasicEntity(s) by unit.
+     *
      * @param unit The unit of the wanted entities.
-     * @return  A list with the wanted entity(s).
+     * @return A list with the wanted entity(s).
      */
     public List<BasicEntity> getByUnit(Unit unit);
-    
+
     public List<BasicEntity> getByCategory(Category category);
-    
+
     /**
      * Method for getting a specific list of entities from the db. The list
      * might be sorted and filtered.
@@ -60,7 +64,7 @@ public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
      * according to the parameters.
      */
     public List<BasicEntity> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters);
-    
+
     public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters);
 
 }

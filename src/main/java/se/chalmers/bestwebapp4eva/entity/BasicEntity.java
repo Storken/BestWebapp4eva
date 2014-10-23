@@ -45,7 +45,7 @@ public class BasicEntity extends AbstractDBObject {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Unit unit;
-    
+
     @ManyToOne
     private Category category;
 
@@ -134,11 +134,11 @@ public class BasicEntity extends AbstractDBObject {
     public Unit getUnit() {
         return this.unit;
     }
-    
+
     public Category getCategory() {
         return this.category;
     }
-    
+
     public String getCategoryName() {
         return this.category.getName();
     }
@@ -172,12 +172,13 @@ public class BasicEntity extends AbstractDBObject {
 
     /**
      * Set the unit.
+     *
      * @param unit The new unit.
      */
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
-    
+
     public void setCategory(Category category) {
         this.category = category;
     }

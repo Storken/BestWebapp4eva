@@ -17,40 +17,27 @@
     </h:head>
 
     <h:body>
-
-        <p:breadCrumb styleClass="navbarz" >
-            <p:menuitem  url="#">Home</p:menuitem>
-            <p:menuitem url="#">Link</p:menuitem>
-            <p:menuitem url="#">Link2</p:menuitem>
-        </p:breadCrumb>
-
+        
         <header>
-            <c:if test="#{page != 'home'}">
-                <div id="headerdiv">
-                    <h:graphicImage id="headimg" library="img" name="logoex1.png"/>
-                </div>
-            </c:if>
+            <div id="headerdiv">
+                <h:graphicImage id="headimg" library="img" name="header.png"/>
+            </div>
         </header>
+        
         <nav align="left" class="navbar navbar-default" role="navigation">
-            <h:link value="Home" class="navbar-brand" outcome="home"  >
-                <f:param name="page" value="home" />
-            </h:link>
-            <h:link value="Products" class="navbar-brand" outcome="products" >
-                <f:param name="page" value="products" />
-            </h:link>
-            <h:link value="Dashboard" class="navbar-brand" outcome="dashboard" >
-                <f:param name="page" value="dashboard" />
-            </h:link>
-            <h:link value="Profile" class="navbar-brand" outcome="profile">
-                <f:param name="page" value="profile" />
-            </h:link> 
+            <h:link value="Products" class="navbar-brand" outcome="products" />
+            <h:link value="Dashboard" class="navbar-brand" outcome="dashboard" />
+            <h:link value="Profile" class="navbar-brand" outcome="profile"/>
         </nav>
-
+        
+        
         <div id="content">
             <ui:insert name="content">Content</ui:insert>
         </div>
+        
         <footer>
         </footer>
+        
     </h:body>
 
 </html>

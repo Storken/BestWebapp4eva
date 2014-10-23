@@ -19,23 +19,24 @@ public class CategoryConverter implements Converter {
 
     @EJB
     ICategoryDAO cc;
+    
     @Override
-        public Object getAsObject(FacesContext context, UIComponent component, String value) {
-            if (value != null && value.trim().length() > 0) {
-                long id = Long.parseLong(value);
-                return cc.getById(id).get(0);
-            }
+    public Object getAsObject(FacesContext context, UIComponent component, String value) {
+        if (value != null && value.trim().length() > 0) {
+            long id = Long.parseLong(value);
+            return cc.getById(id).get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public String getAsString(FacesContext context, UIComponent component, Object object) {
+        if (object != null) {
+            return String.valueOf(((Category) object).getId());
+        } else {
             return null;
         }
 
-        @Override
-        public String getAsString(FacesContext context, UIComponent component, Object object) {
-            if (object != null) {
-                return String.valueOf(((Category) object).getId());
-            } else {
-                return null;
-            }
+    }
 
-        }
-    
 }

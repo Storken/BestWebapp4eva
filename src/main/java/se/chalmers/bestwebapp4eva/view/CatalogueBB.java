@@ -20,6 +20,7 @@ import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
  * A backing bean for the table view of basic entities.
+ *
  * @author simon
  * @author erik
  */

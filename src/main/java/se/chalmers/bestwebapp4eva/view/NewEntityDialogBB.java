@@ -30,7 +30,7 @@ public class NewEntityDialogBB {
     private List<Unit> units;
     private Category category;
     private List<Category> categories;
-    
+
     @EJB
     ICategoryDAO cc;
 
@@ -40,6 +40,7 @@ public class NewEntityDialogBB {
         units = new ArrayList<>();
         units.addAll(Arrays.asList(BasicEntity.Unit.values()));
     }
+
     public Long getId() {
         return id;
     }
@@ -79,27 +80,27 @@ public class NewEntityDialogBB {
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
-    
+
     public List<Unit> getUnits() {
         return this.units;
     }
-    
+
     public void setUnits(List<Unit> units) {
         this.units = units;
     }
-    
+
     public Category getCategory() {
         return this.category;
     }
-    
+
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
     public List<Category> getCategories() {
         return this.categories;
     }
-    
+
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }

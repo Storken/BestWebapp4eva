@@ -28,9 +28,10 @@ public interface IDAO<T, K> {
     public List<T> findRange(int first, int n);
 
     public int count();
-    
+
     /**
      * Get a BasicEntity by id.
+     *
      * @param id The id of the wanted entity.
      * @return A list with the wanted entity.
      */

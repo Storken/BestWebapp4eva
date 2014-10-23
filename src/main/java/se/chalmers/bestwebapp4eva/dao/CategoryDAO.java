@@ -20,17 +20,17 @@ import se.chalmers.bestwebapp4eva.entity.Category;
 public class CategoryDAO extends AbstractDAO<Category, Long> implements ICategoryDAO {
 
     @PersistenceContext
-    private EntityManager em ;
+    private EntityManager em;
 
     public CategoryDAO() {
         super(Category.class);
     }
-    
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
     }
+
     @Override
     public List<Category> getByName(String name) {
         String query = "SELECT c FROM Category c WHERE c.name = :name";
@@ -44,7 +44,5 @@ public class CategoryDAO extends AbstractDAO<Category, Long> implements ICategor
         TypedQuery<Category> result = em.createQuery(query, Category.class).setParameter("id", id);
         return result.getResultList();
     }
-    
-     
-    
+
 }

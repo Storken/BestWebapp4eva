@@ -77,7 +77,6 @@ public class CartCtrl {
     }
 
     //Temporary method
-
     public void decQuantity(BasicEntity entity) {
         entity.setQuantity(entity.getQuantity() - 1);
     }

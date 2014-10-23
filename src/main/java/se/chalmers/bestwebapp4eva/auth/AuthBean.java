@@ -1,11 +1,10 @@
 package se.chalmers.bestwebapp4eva.auth;
 
-
 import java.io.Serializable;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -19,33 +18,35 @@ import javax.servlet.http.HttpServletRequest;
  * @author hajo
  */
 @Named
-@RequestScoped
-public class AuthBean implements Serializable{
-
+@SessionScoped
+public class AuthBean implements Serializable {
 
     private String username;
     private String password;
+    private boolean isAdmin;
     private static final Logger LOG = Logger.getLogger(AuthBean.class.getSimpleName());
 
     @Inject
     private AuthDAO ad;
-    
-    public AuthBean(){
-        
+
+    public AuthBean() {
+
     }
-    
-     public String login() {
+
+    public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{username, password});
-        
-        // Really check is there some data in database?
-        User_ u =  ad.getByUsername(username).get(0);
-        LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPasswd()});
 
-        
-        
+        // Really check is there some data in database?
+        if(ad.getByUsername(username).size() < 1){
+            LOG.log(Level.INFO, "*** No such username: {0}", new Object[]{username});
+            return "fail";
+        }
+        User u = ad.getByUsername(username).get(0);
+        LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPassword()});
+
         try {
             //request.setCharacterEncoding("UTF-8");
             request.login(username, password);
@@ -53,31 +54,40 @@ public class AuthBean implements Serializable{
             LOG.log(Level.INFO, "*** User principal {0}", request.getUserPrincipal());
             LOG.log(Level.INFO, "*** Is role admin {0}", request.isUserInRole("admin"));
             LOG.log(Level.INFO, "*** Is role user {0}", request.isUserInRole("user"));
-          
+
             externalContext.getSessionMap().put("user", u);  // Store User in session
-            return "dashboard";
-            
+            return "success";
+
         } catch (ServletException e) {
-              LOG.log(Level.INFO, "*** Login fail");
-            
-            FacesContext.getCurrentInstance().
-                    addMessage(null, 
-                            new FacesMessage(FacesMessage.SEVERITY_WARN,
-                                    "Login Failed", null));
-            // Must set this (use the Flash-scope) else message
-            // wan't survive the redirect (see faces-config.xml)
-            externalContext.getFlash().setKeepMessages(true);
-          
+           
+            LOG.log(Level.INFO, e.getMessage());
+
         }
-        return "index";
+        return "fail";
     }
-     
-    public String createUser(){
-        ad.create(new User_(username, password));
+    
+    public String createAccount(){
+        if(ad.getByUsername(username).isEmpty()){
+            if(isAdmin)
+                return createAdmin();
+            return createUser();
+        }
+        LOG.log(Level.INFO, "*** This username already exists");
+        return "fail";
+    }
+
+    public String createUser() {
+        ad.createUserAndGroup(username, password, "user");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{username, password});
         return login();
     }
     
+    public String createAdmin() {
+        ad.createUserAndGroup(username, password, "admin");
+        LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{username, password});
+        return login();
+    }
+
     public String logout() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().
                 getExternalContext();
@@ -95,7 +105,7 @@ public class AuthBean implements Serializable{
     public void setUsername(String username) {
         this.username = username;
     }
-     
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -103,5 +113,14 @@ public class AuthBean implements Serializable{
     public String getPassword() {
         return password;
     }
+
+    public boolean isIsAdmin() {
+        return isAdmin;
+    }
+
+    public void setIsAdmin(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+    
 
 }
