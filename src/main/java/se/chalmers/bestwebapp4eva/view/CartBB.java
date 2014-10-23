@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 
 /**
@@ -26,6 +28,9 @@ public class CartBB implements Serializable {
 
     /* The items currently in the cart */
     private List<BasicEntity> cartItems;
+    
+    @EJB
+    private IBasicEntityCollection basicEntityCollection;
 
     private Map<BasicEntity, Double> entityOrders;
     private double orderQuantity;
@@ -71,8 +76,7 @@ public class CartBB implements Serializable {
      * @return The order quantity for the current item
      */
     public double getOrderQuantity(BasicEntity entity) {
-        this.orderQuantity = entityOrders.get(entity);
-        return orderQuantity;
+        return entityOrders.get(entity);
     }
     
     public double getOrderQuantity() {
@@ -86,11 +90,12 @@ public class CartBB implements Serializable {
      */
     public void setOrderQuantity(double orderQuantity) {
         this.orderQuantity = orderQuantity;
-        entityOrders.put(currentEntity, this.orderQuantity);
+        entityOrders.put(currentEntity, orderQuantity);
     }
     
-    public void setEntity(BasicEntity entity) {
-        this.currentEntity = entity;
+    public void setEntity(long id) {
+        this.currentEntity = basicEntityCollection.getById(id).get(0);        
+        orderQuantity = 0;
     }
     
     public BasicEntity getEntity() {
@@ -114,6 +119,7 @@ public class CartBB implements Serializable {
     public void remove(BasicEntity entity) {
         cartItems.remove(entity);
         entityOrders.remove(entity);
+        orderQuantity = 0;
     }
     
     public Map<BasicEntity, Double> getEntityOrders() {

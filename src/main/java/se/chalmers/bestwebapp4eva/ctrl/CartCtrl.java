@@ -1,6 +1,7 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.EJB;
@@ -40,22 +41,22 @@ public class CartCtrl implements Serializable {
     private double totalOrdered = 0.0;
 
     public boolean isOrderDisabled() {
-        if(totalOrdered == 0.0) orderDisabled = true;
         return orderDisabled;
     }
 
     public void updateOrderStatus() {
         totalStock = 0.0;
+        totalOrdered = 0.0;
         BasicEntity entityDBWrapper;
         for (BasicEntity e : cartBB.getCartItems()) {
             // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
             entityDBWrapper = basicEntityCollection.getById(e.getId()).get(0);
             totalStock += entityDBWrapper.getQuantity();
-            
-           
-            System.out.println("Order q for " + e.getTitle() + ": " + cartBB.getEntityOrders().get(e));
         }
-        System.out.println("Total stock: " + totalStock + "\nTotal ordered: " + totalOrdered);      
+        Collection<Double> orders = cartBB.getEntityOrders().values();
+        for (double d : orders) {
+            totalOrdered += d;
+        }
         orderDisabled = totalOrdered == 0.0 || totalStock == 0.0;
     }
 
@@ -107,8 +108,6 @@ public class CartCtrl implements Serializable {
         for (BasicEntity e : order) {
             e.setQuantity(e.getQuantity() - cartBB.getOrderQuantity(e));
             basicEntityCollection.update(e);
-            cartBB.setEntity(e);
-            cartBB.setOrderQuantity(0);
         }
         cartBB.getCartItems().clear();
         cartBB.getEntityOrders().clear();
@@ -118,9 +117,7 @@ public class CartCtrl implements Serializable {
     }
 
     public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException {
-        totalOrdered = 0.0;
         double ordered = (Double) value;
-        totalOrdered += ordered;
         // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
         double available = basicEntityCollection.getById(cartBB.getEntity().getId()).get(0).getQuantity();
 
