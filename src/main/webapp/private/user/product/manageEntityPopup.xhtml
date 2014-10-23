@@ -7,28 +7,60 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <p:outputPanel id="multiEntityDetail" style="text-align:center;">
-        <h1 align="center">Lagerhantera your lager</h1>
+    <p:outputPanel id="multiEntityDetail" style="text-align:center">
+        <h1 align="center">Put a beställning from your lager</h1>
         <h4 align="center">...the way YOU want to</h4>
 
-        <table class="table" align="center" cellspacing="15">
-            <thead>
-                <td><b>Id</b><hr/></td>
-                <td><b>Title</b><hr/></td>
-                <td><b>Quantity</b><hr/></td>
-            </thead>
 
-            <ui:repeat value="#{cartBB.cartItems}" var="entity">
-                <tr>
-                    <td><h:outputText value="#{entity.id}" /></td>
-                    <td><h:outputText value="#{entity.title}" /></td>
-                    <td><h:outputText value="#{entity.quantity}" /></td>
-                    <td><p:commandButton update=":multiEntityDetail" value="+" actionListener="#{cartCtrl.incQuantity(entity)}"/></td>
-                    <td><p:commandButton update=":multiEntityDetail" value="-" actionListener="#{cartCtrl.decQuantity(entity)}"/></td>
-                </tr>
-            </ui:repeat>
-        </table>
-        <br></br>
-        <p:commandButton value="Commit changes"  update="cartItems :layout" actionListener="#{cartCtrl.executeChanges(cartBB.cartItems)}" onclick="PF('multiEntityDialog').hide()" styleClass="btn btn-default"/>
+
+
+
+        <h:form id="f">
+            <table align="center" cellspacing="5">
+                <thead>
+                    <td><b><u>Id</u></b></td>
+                    <td><b><u>Title</u></b></td>
+                    <td><b><u>Available</u></b></td>
+                    <td><b><u>In order</u></b></td>
+                </thead>
+                <ui:repeat value="#{cartBB.cartItems}" var="entity">
+                    <tr>
+                        <td><h:outputText value="#{entity.id}" /></td>
+                        <td><h:outputText value="#{entity.title}" /></td>
+                        <td>
+                            <h:outputText id="q" 
+                                          value="#{entity.quantity - entity.orderQuantity} #{entity.unit}"/></td>
+                        <td>
+                            <p:spinner id="s" 
+                                       value="#{entity.orderQuantity}"
+                                       suffix=" #{entity.unit}" 
+                                       max="#{entity.quantity}" 
+                                       min="0" 
+                                       validator="#{cartCtrl.validateOrder}" 
+                                       rendered="#{!cartCtrl.isSpinnerDisabled(entity)}">
+                                <p:ajax update="q :f:order" 
+                                        event="change" 
+                                        listener="#{cartCtrl.updateOrderStatus}"/>
+                                <p:ajax update="q :f:order" 
+                                        event="keyup" 
+                                        listener="#{cartCtrl.updateOrderStatus}"/>
+                            </p:spinner>
+                            <h:outputText value="Out of stock" 
+                                          rendered="#{cartCtrl.isSpinnerDisabled(entity)}"/>
+                        </td>
+                        <h:message for="s" styleClass="error"/>
+                    </tr>
+                </ui:repeat>
+
+            </table>
+            <br></br>
+            <p:commandButton id="order" 
+                             value="#{cartCtrl.orderButtonMessage}" 
+                             update=":cartItems :layout" 
+                             actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" 
+                             onclick="PF('multiEntityDialog').hide()" 
+                             icon="#{cartCtrl.orderButtonIcon}" 
+                             disabled="#{cartCtrl.orderDisabled}"/>
+        </h:form>
     </p:outputPanel>
 </ui:composition>

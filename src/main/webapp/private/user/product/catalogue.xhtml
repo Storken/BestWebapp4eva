@@ -77,7 +77,7 @@
                 <p:rowEditor />
             </p:column>
             <f:facet name="footer">
-                <p:commandButton update=":layout :cartItems" value="Add to cart" actionListener="#{cartCtrl.addSelectionToCart}"/>
+                <p:commandButton update=":layout :cartItems" value="Add to cart" actionListener="#{cartCtrl.addSelectionToCart}" icon="ui-icon ui-icon-arrowthick-1-e"/>
                 <p:commandButton value="New entity" onclick="PF('newEntityDialog').show();" actionListener="#"/>
             </f:facet>
         </p:dataTable>
