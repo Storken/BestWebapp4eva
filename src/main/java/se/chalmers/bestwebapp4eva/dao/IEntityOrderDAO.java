@@ -1,6 +1,6 @@
 package se.chalmers.bestwebapp4eva.dao;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import se.chalmers.bestwebapp4eva.entity.EntityOrder;
 

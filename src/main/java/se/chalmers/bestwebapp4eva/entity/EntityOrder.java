@@ -1,6 +1,6 @@
 package se.chalmers.bestwebapp4eva.entity;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 /**
  *
@@ -26,9 +27,9 @@ public class EntityOrder extends AbstractDBObject{
     @Temporal(TemporalType.DATE)
     private Date orderDate;
     
-    @Column(nullable = false) 
+    @Transient
     @OneToMany
-    private List<BasicOrderEntity> items;
+    private transient List<BasicOrderEntity> items;
     
     
     public EntityOrder() {
