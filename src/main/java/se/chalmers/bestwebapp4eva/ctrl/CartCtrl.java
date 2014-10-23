@@ -1,7 +1,7 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -14,6 +14,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
+import se.chalmers.bestwebapp4eva.auth.AuthDAO;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.IEntityOrderDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
@@ -37,6 +38,9 @@ public class CartCtrl implements Serializable {
     
     @EJB
     private IEntityOrderDAO orderDAO;
+    
+    @EJB
+    private AuthDAO authDAO;
     
     @Inject
     private CartBB cartBB;
@@ -100,7 +104,7 @@ public class CartCtrl implements Serializable {
      * @param entity The item to be removed
      */
     public void removeFromCart(BasicOrderEntity entity) {
-        cartBB.remove(entity);
+        cartBB.remove(entity);   
     }
 
     /**
@@ -117,10 +121,11 @@ public class CartCtrl implements Serializable {
             BasicEntity wrapper = new BasicEntity(e.getId(), e.getTitle(), e.getPrice(), e.getQuantity(), e.getUnit(), e.getCategory());
             basicEntityDAO.update(wrapper);
         }
-        orderDAO.create(new EntityOrder(new Date(System.currentTimeMillis()), order));
+        EntityOrder dbOrder = new EntityOrder(new Date(System.currentTimeMillis()), order, authDAO.getByUsername("erik").get(0));
+        orderDAO.create(dbOrder);
         cartBB.getCartItems().clear();
         totalOrdered = 0.0;
-        totalStock = 0.0;
+        totalStock = 0.0;     
     }
 
     public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException {

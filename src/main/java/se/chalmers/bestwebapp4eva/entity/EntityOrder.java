@@ -1,5 +1,6 @@
 package se.chalmers.bestwebapp4eva.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -7,10 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
+import se.chalmers.bestwebapp4eva.auth.User;
 
 /**
  *
@@ -28,24 +32,42 @@ public class EntityOrder extends AbstractDBObject{
     private Date orderDate;
     
     @Transient
-    @OneToMany
-    private transient List<BasicOrderEntity> items;
+    private List<BasicOrderEntity> orderItems;
     
+    @OneToMany
+    private List<BasicEntity> items;
+    
+    @JoinColumn(nullable = false)
+    @ManyToOne
+    private User currentUser;
     
     public EntityOrder() {
     }
     
-    public EntityOrder(Date date, List<BasicOrderEntity> items) {
+    public EntityOrder(Date date, List<BasicOrderEntity> items, User currentUser) {
         this.orderDate = date;
-        this.items = items;
+        this.orderItems = items;
+        this.currentUser = currentUser;
+        this.items = convertToBasicEntity(items);
     }
     
         
-    public EntityOrder(long id, Date orderDate, List<BasicOrderEntity> items) {
+    public EntityOrder(long id, Date orderDate, List<BasicOrderEntity> items, User currentUser) {
         this.id = id;
         this.orderDate = orderDate;
-        this.items = items;
+        this.orderItems = items;
+        this.currentUser = currentUser;
+        this.items = convertToBasicEntity(items);    
     }
+    
+    private List<BasicEntity> convertToBasicEntity(List<BasicOrderEntity> items) {
+        List<BasicEntity> tmp = new ArrayList<>();
+        for(BasicOrderEntity e: items) {
+            tmp.add(e.getEntity(e));
+        }
+        return tmp;
+    }
+    
     @Override
     public Long getId() {
         return id;
@@ -56,7 +78,11 @@ public class EntityOrder extends AbstractDBObject{
     }
     
     public List<BasicOrderEntity> getItems() {
-        return items;
+        return orderItems;
+    }
+    
+    public User getUser() {
+        return currentUser;
     }
 
     @Override
@@ -69,16 +95,21 @@ public class EntityOrder extends AbstractDBObject{
     }
     
     public void setItems(List<BasicOrderEntity> items) {
-        this.items = items;
+        this.orderItems = items;
+    }
+    
+    public void setUser(User currentUser) {
+        this.currentUser = currentUser;
     }
     
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Order no. ").append(id).append("(").append(orderDate.toString()).append("):");
-        for(BasicOrderEntity e: items) {
+        sb.append("Order no. ").append(id).append(":");
+        for(BasicOrderEntity e: orderItems) {
             sb.append("\n").append(e.getTitle()).append(", ").append(e.getOrderQuantity()).append(" ").append(e.getUnit()).append(" ");
         }
+        sb.append("\nPlaced by ").append(currentUser.getUsername()).append(" at ").append(orderDate.toString()).append(".");
         return sb.toString();
     }
     
