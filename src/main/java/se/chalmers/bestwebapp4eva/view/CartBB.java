@@ -7,9 +7,7 @@ package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.ejb.EJB;
@@ -17,6 +15,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
+import se.chalmers.bestwebapp4eva.entity.BasicOrderEntity;
 
 /**
  *
@@ -27,22 +26,15 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 public class CartBB implements Serializable {
 
     /* The items currently in the cart */
-    private List<BasicEntity> cartItems;
-    
+    private List<BasicOrderEntity> cartItems;
+
     @EJB
     private IBasicEntityCollection basicEntityCollection;
-
-    private Map<BasicEntity, Double> entityOrders;
-    private double orderQuantity;
-    private BasicEntity currentEntity;
 
     @PostConstruct
     public void post() {
         if (cartItems == null) {
             cartItems = new ArrayList<>();
-        }
-        if (entityOrders == null) {
-            entityOrders = new HashMap<>();
         }
     }
 
@@ -56,7 +48,7 @@ public class CartBB implements Serializable {
      *
      * @return A list of all the items in the cart
      */
-    public List<BasicEntity> getCartItems() {
+    public List<BasicOrderEntity> getCartItems() {
         return cartItems;
     }
 
@@ -69,46 +61,22 @@ public class CartBB implements Serializable {
         cartItems.addAll(cartItems);
     }
 
-    /**
-     * Get the order quantity for the current order item
-     *
-     * @param entity The currentEntity to get the order quantity for
-     * @return The order quantity for the current item
-     */
-    public double getOrderQuantity(BasicEntity entity) {
-        return entityOrders.get(entity);
-    }
-    
-    public double getOrderQuantity() {
-        return orderQuantity;
+    public BasicEntity findCartItemById(long id) {
+        for (BasicEntity e : cartItems) {
+            if (e.getId() == id) {
+                return e;
+            }
+        }
+        return null;
     }
 
-    /**
-     * Set the order quantity for the current order item
-     *
-     * @param orderQuantity The new order quantity
-     */
-    public void setOrderQuantity(double orderQuantity) {
-        this.orderQuantity = orderQuantity;
-        entityOrders.put(currentEntity, orderQuantity);
-    }
-    
-    public void setEntity(long id) {
-        this.currentEntity = basicEntityCollection.getById(id).get(0);        
-        orderQuantity = 0;
-    }
-    
-    public BasicEntity getEntity() {
-        return currentEntity;
-    }
     /**
      * Add a new item to the cart
      *
      * @param entity The item to be added
      */
     public void add(BasicEntity entity) {
-        cartItems.add(entity);
-        entityOrders.put(entity, 0.0);
+        cartItems.add(new BasicOrderEntity(entity));
     }
 
     /**
@@ -116,14 +84,17 @@ public class CartBB implements Serializable {
      *
      * @param entity The item to be removed
      */
-    public void remove(BasicEntity entity) {
+    public void remove(BasicOrderEntity entity) {
         cartItems.remove(entity);
-        entityOrders.remove(entity);
-        orderQuantity = 0;
     }
-    
-    public Map<BasicEntity, Double> getEntityOrders() {
-        return entityOrders;
+
+    public BasicOrderEntity getEntity(BasicEntity entity) {
+        for (BasicOrderEntity e : cartItems) {
+            if (!e.getId().equals(entity.getId())) {
+                return e;
+            }
+        }
+        return null;
     }
 
     @Override

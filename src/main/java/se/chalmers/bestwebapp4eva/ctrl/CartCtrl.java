@@ -1,11 +1,10 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Random;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
@@ -16,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
+import se.chalmers.bestwebapp4eva.entity.BasicOrderEntity;
 import se.chalmers.bestwebapp4eva.view.CartBB;
 import se.chalmers.bestwebapp4eva.view.TableBB;
 
@@ -35,10 +35,11 @@ public class CartCtrl implements Serializable {
     @Inject
     private TableBB tableBB;
 
-    private boolean orderDisabled;
+    private boolean orderDisabled = true;
 
     private double totalStock = 0.0;
     private double totalOrdered = 0.0;
+    private Collection<Double> orders;
 
     public boolean isOrderDisabled() {
         return orderDisabled;
@@ -47,15 +48,11 @@ public class CartCtrl implements Serializable {
     public void updateOrderStatus() {
         totalStock = 0.0;
         totalOrdered = 0.0;
-        BasicEntity entityDBWrapper;
-        for (BasicEntity e : cartBB.getCartItems()) {
+        for (BasicOrderEntity e : cartBB.getCartItems()) {
             // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
-            entityDBWrapper = basicEntityCollection.getById(e.getId()).get(0);
-            totalStock += entityDBWrapper.getQuantity();
-        }
-        Collection<Double> orders = cartBB.getEntityOrders().values();
-        for (double d : orders) {
-            totalOrdered += d;
+            BasicEntity be = basicEntityCollection.getById(e.getId()).get(0);
+            totalStock += be.getQuantity();
+            totalOrdered += e.getOrderQuantity();
         }
         orderDisabled = totalOrdered == 0.0 || totalStock == 0.0;
     }
@@ -64,7 +61,7 @@ public class CartCtrl implements Serializable {
         this.orderDisabled = orderDisabled;
     }
 
-    public boolean isSpinnerDisabled(BasicEntity entity) {
+    public boolean isSpinnerDisabled(BasicOrderEntity entity) {
         return entity.getQuantity() == 0.0;
     }
 
@@ -75,12 +72,14 @@ public class CartCtrl implements Serializable {
      */
     public void addSelectionToCart(ActionEvent actionEvent) {
         List<BasicEntity> items = tableBB.getSelectedEntities();
-        if (items != null) {
-            for (BasicEntity i : items) {
-                // Dont add the same item twice
-                if (!cartBB.getCartItems().contains(i)) {
-                    cartBB.add(i);
-                }
+        List<BasicOrderEntity> orderItems = new ArrayList<>();
+        for (BasicEntity be : items) {
+            orderItems.add(new BasicOrderEntity(be));
+        }
+        for (BasicOrderEntity boe : orderItems) {
+            // Dont add the same item twice
+            if (!cartBB.getCartItems().contains(boe)) {
+                cartBB.add(boe);
             }
         }
 
@@ -91,9 +90,8 @@ public class CartCtrl implements Serializable {
      *
      * @param entity The item to be removed
      */
-    public void removeFromCart(BasicEntity entity) {
+    public void removeFromCart(BasicOrderEntity entity) {
         cartBB.remove(entity);
-
     }
 
     /**
@@ -104,28 +102,21 @@ public class CartCtrl implements Serializable {
      *
      * @param order All the items that are in the cart
      */
-    public void placeOrder(List<BasicEntity> order) {
-        for (BasicEntity e : order) {
-            e.setQuantity(e.getQuantity() - cartBB.getOrderQuantity(e));
-            basicEntityCollection.update(e);
+    public void placeOrder(List<BasicOrderEntity> order) {
+        for (BasicOrderEntity e : order) {
+            e.setQuantity(e.getQuantity() - e.getOrderQuantity());
+            BasicEntity wrapper = new BasicEntity(e.getId(), e.getTitle(), e.getPrice(), e.getQuantity(), e.getUnit(), e.getCategory());
+            basicEntityCollection.update(wrapper);
         }
         cartBB.getCartItems().clear();
-        cartBB.getEntityOrders().clear();
         totalOrdered = 0.0;
         totalStock = 0.0;
-
     }
 
     public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException {
         double ordered = (Double) value;
         // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
-        double available = basicEntityCollection.getById(cartBB.getEntity().getId()).get(0).getQuantity();
-
-        if (ordered > available) {
-            orderDisabled = true;
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Order exceeds current stock of " + available + " " + cartBB.getEntity().getUnit() + "!", null);
-            throw new ValidatorException(message);
-        } else if (ordered < 0.0) {
+        if (ordered < 0.0) {
             orderDisabled = true;
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nothing to order", null);
             throw new ValidatorException(message);
