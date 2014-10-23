@@ -21,7 +21,7 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  */
 @Named
 @ViewScoped
-public class NewEntityDialogBB implements Serializable{
+public class NewEntityDialogBB implements Serializable {
 
     private Long id;
     private String title;
@@ -32,12 +32,12 @@ public class NewEntityDialogBB implements Serializable{
     private List<Unit> units;
     private Category category;
     private List<Category> categories;
-    
+
     private String newCatName;
     private String newCatDescription;
-    
+
     private boolean newCatPanelVisible;
-    
+
     @EJB
     ICategoryDAO cc;
 
@@ -47,17 +47,20 @@ public class NewEntityDialogBB implements Serializable{
         units = new ArrayList<>();
         units.addAll(Arrays.asList(BasicEntity.Unit.values()));
     }
-    
+
+    // For the toggling of the custom category panel to work this BB needs to be viewscoped. 
+    // Since the bean is viewscoped, we need a method for manually clearing all fields in 
+    // the "newEntityDialog".
     public void clearFields() {
-        this.id = (long)0;
+        this.id = (long) 0;
         this.title = null;
         this.price = 0;
         this.quantity = 0;
         this.category = null;
         newCatPanelVisible = false;
-        
+
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -97,51 +100,51 @@ public class NewEntityDialogBB implements Serializable{
     public void setUnit(Unit unit) {
         this.unit = unit;
     }
-    
+
     public List<Unit> getUnits() {
         return this.units;
     }
-    
+
     public void setUnits(List<Unit> units) {
         this.units = units;
     }
-    
+
     public Category getCategory() {
         return this.category;
     }
-    
+
     public void setCategory(Category category) {
         this.category = category;
     }
-    
+
     public List<Category> getCategories() {
         return this.categories;
     }
-    
+
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
-    
+
     public String getNewCatName() {
         return newCatName;
     }
-    
+
     public void setNewCatName(String newCatName) {
         this.newCatName = newCatName;
     }
-    
+
     public String getNewCatDescription() {
         return newCatDescription;
     }
-    
+
     public void setNewCatDescription(String newCatDescription) {
         this.newCatDescription = newCatDescription;
     }
-    
+
     public boolean getNewCatPanelVisible() {
         return newCatPanelVisible;
     }
-    
+
     public void setNewCatPanelVisible(boolean newCatPanelVisible) {
         this.newCatPanelVisible = newCatPanelVisible;
     }
