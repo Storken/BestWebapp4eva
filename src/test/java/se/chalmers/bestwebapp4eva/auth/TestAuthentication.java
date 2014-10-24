@@ -48,14 +48,14 @@ public class TestAuthentication {
  
     @Before
     public void prepareTest() throws Exception {
-        clearData();
+        //clearData();
         utx.begin();
     }
  
     @After
     public void commitTransaction() throws Exception {
         utx.commit();
-        clearData();
+        //clearData();
     }
  
     private void clearData() throws Exception {
