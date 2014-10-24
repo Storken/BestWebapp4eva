@@ -22,6 +22,8 @@ public class CategoryBB implements Serializable{
     
     private List<Category> categories;
     
+    private List<Category> selectedCategories;
+    
     @PostConstruct
     public void init() {
         categories = categoryDAO.findAll();
@@ -33,5 +35,13 @@ public class CategoryBB implements Serializable{
     
     public void setCategories(List<Category> categories) {
         this.categories = categories;
+    }
+    
+    public List<Category> getSelectedCategories() {
+        return selectedCategories;
+    }
+    
+    public void setSelectedCategories(List<Category> selectedCategories) {
+        this.selectedCategories = selectedCategories;
     }
 }

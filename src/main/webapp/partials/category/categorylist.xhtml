@@ -7,18 +7,18 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
 
-    
-    <h:form id="category" style="width: 500px" >
+
+    <h:form id="category" >
         <p:dataTable 
             var="category" 
-            value="#{categoryBB.entities}"
+            value="#{categoryBB.categories}"
             lazy="true" 
             paginator="true" 
             rows="10"
             sortBy="#{category.id}"
             emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
             selection="#{categoryBB.selectedCategories}"
-            rowKey="#{entity.id}"
+            rowKey="#{category.id}"
             editable="true"
             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             currentPageReportTemplate="Page {currentPage} of {totalPages}"
@@ -30,7 +30,7 @@
             </f:facet>
             <p:ajax event="rowEdit" listener="#{editCategoryCtrl.onRowEdit}"/>
             <p:ajax event="rowEditCancel" listener="#{editCategoryCtrl.onRowCancel}"/>
-            <p:column selectionMode="multiple" style="width:16px;text-align:center"/>
+            <p:column selectionMode="multiple" style="width:48px;text-align:center"/>
             <p:column sortBy="#{category.id}" filterBy="#{category.id}" filterMatchMode="contains" headerText="ID">    
                 <h:outputText value="#{category.id}" />
             </p:column>
@@ -45,7 +45,7 @@
                     <f:facet name="output"><h:outputText value="#{category.description}"/></f:facet>
                     <f:facet name="input"><p:inputText value="#{category.description}"/></f:facet>
                 </p:cellEditor>
-
+            </p:column>
             <p:column style="width:32px">
                 <p:rowEditor />
             </p:column>
@@ -53,7 +53,7 @@
                 <p:commandButton value="New category" onclick="PF('newCategoryDialog').show();" actionListener="#"/>
             </f:facet>
         </p:dataTable>
-        </h:form>
-        
+    </h:form>
+
 
 </ui:composition>
