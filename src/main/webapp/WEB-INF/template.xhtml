@@ -11,7 +11,6 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
         <h:outputStylesheet library="css" name="bootstrap.css"   />
         <h:outputStylesheet library="css" name="default.css"/>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" />
         <h:outputScript library="js" name="bootstrap.js" />
         
         <title>BestWebapp4eva</title>
@@ -28,17 +27,19 @@
       
        <!-- Brand logo -->
        <div class="navbar-header">
-            <h:link id="homeLink" value="BestWebapp4eva" class="navbar-brand" outcome="home" />
+            <h:link id="homeLink" value="BestWebapp4eva" class="navbar-brand" />
        </div>
             
        <ui class="nav navbar-nav pull-left">
            <li>
                
             <li>
-                <h:link value="Dashboard" outcome="dashboard" />
+                <h:link value="Dashboard" 
+                        outcome="#{authBean.isAdmin? 'admindashboard' : 'dashboard'}" />
             </li>
                <li>
-                <h:link value="Products" outcome="products" />
+                <h:link value="Products" 
+                        outcome="#{authBean.isAdmin? 'adminproducts' : 'products'}" />
             </li>
            </li>
        </ui>
@@ -47,15 +48,53 @@
         <ul class="nav navbar-nav pull-right">
             
             <li>
-                <h:link value="${session.getAttribute('username')}" outcome="profile" />
+                
+                <h:link value="#{authBean.isLoggedIn? authBean.username : ''}" 
+                        outcome="#{authBean.isAdmin? 'adminprofile' : 'profile'}" />
             </li>
-            
             
             <li>
-                <h:form>
-                    <h:commandLink class="pull-right" value="Log out" action="#{authBean.logout}" />
-                </h:form>
+                <p:commandLink value="#{authBean.isLoggedIn? '' : 'Log in'}" onclick="PF('dlg1').show()"  />
             </li>
+     
+            
+                <p:dialog header="Log in" widgetVar="dlg1" id="dialogue1">
+                    <h:form>
+                        <h:outputText value="Username: "/>
+                        <br/>
+                        <h:inputText value="#{authBean.username}"/>
+                        <br/>
+                        <h:outputText value="Password: "/>
+                        <br/>
+                        <h:inputText value="#{authBean.password}"/>
+                        <br/>
+                        <p:commandButton value="Log in" action="#{authBean.login}"/>
+                        <p:commandButton value="Create" onclick="PF('dlg2').show(); PF('dlg1').hide()"/>
+                    </h:form>
+                </p:dialog>
+     
+            
+            <p:dialog header="Create a new user" widgetVar="dlg2" id="dialogue2">
+                    <h:form>
+                        <h:outputText value="Username: "/>
+                        <br/>
+                        <h:inputText value="#{authBean.username}"/>
+                        <br/>
+                        <h:outputText value="Password: "/>
+                        <br/>
+                        <h:inputText value="#{authBean.password}"/>
+                        <br/>
+                        <h:outputText value="Check if admin: "/>
+                        <h:selectBooleanCheckbox value="#{authBean.isAdmin}" />
+                        <br/>
+                        <h:commandButton value="Create" action="#{authBean.createAccount}"/>
+                    </h:form>
+                </p:dialog>
+  
+            <li>
+                <p:commandLink value="#{authBean.isLoggedIn? 'Log out' : ''}" action="#{authBean.logout()}"/>
+            </li>
+            
         </ul>
   
    </nav>
@@ -67,7 +106,6 @@
             <ui:insert name="content"></ui:insert>
             
      </div>
-  
    <footer>
    </footer>
    

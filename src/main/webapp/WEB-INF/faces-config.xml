@@ -10,7 +10,7 @@
         <from-view-id>*</from-view-id>
         <navigation-case>
             <from-outcome>home</from-outcome>
-            <to-view-id>/login.xhtml</to-view-id>
+            <to-view-id>/index.xhtml</to-view-id>
         </navigation-case>
         <from-view-id>*</from-view-id>
         <navigation-case>
@@ -25,9 +25,21 @@
             <from-outcome>profile</from-outcome>
             <to-view-id>/private/user/profile.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>adminproducts</from-outcome>
+            <to-view-id>/private/admin/product/products.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>admindashboard</from-outcome>
+            <to-view-id>/private/admin/dashboard.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>adminprofile</from-outcome>
+            <to-view-id>/private/admin/profile.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
     <navigation-rule>
-        <from-view-id>/login.xhtml</from-view-id>
+        <from-view-id>*</from-view-id>
         <navigation-case>
             <from-action>#{authBean.login}</from-action>
             <from-outcome>success</from-outcome>
@@ -36,8 +48,14 @@
         </navigation-case>
         <navigation-case>
             <from-action>#{authBean.login}</from-action>
+            <from-outcome>adminsuccess</from-outcome>
+            <to-view-id>/private/admin/dashboard.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
+            <from-action>#{authBean.login}</from-action>
             <from-outcome>fail</from-outcome>
-            <to-view-id>/login.xhtml</to-view-id>
+            <to-view-id>/index.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
         <navigation-case>
@@ -47,9 +65,15 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-action>#{authBean.createAccount}</from-action>
+            <from-outcome>adminsuccess</from-outcome>
+            <to-view-id>/private/admin/dashboard.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-action>#{authBean.logout}</from-action>
             <from-outcome>success</from-outcome>
-            <to-view-id>login.xhtml</to-view-id>
+            <to-view-id>index.xhtml</to-view-id>
             <redirect/>
         </navigation-case>
     </navigation-rule>

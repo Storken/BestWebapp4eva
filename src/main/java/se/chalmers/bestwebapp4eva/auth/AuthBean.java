@@ -24,13 +24,14 @@ public class AuthBean implements Serializable {
     private String username;
     private String password;
     private boolean isAdmin;
+    private boolean isLoggedIn;
     private static final Logger LOG = Logger.getLogger(AuthBean.class.getSimpleName());
 
     @Inject
     private AuthDAO ad;
 
     public AuthBean() {
-
+        isAdmin = false;
     }
 
     /**
@@ -61,8 +62,11 @@ public class AuthBean implements Serializable {
             LOG.log(Level.INFO, "*** Is role user {0}", request.isUserInRole("user"));
 
             externalContext.getSessionMap().put("user", u);  // Store User in session
-            return "success";
-
+            isLoggedIn = true;
+            isAdmin = request.isUserInRole("admin");
+            if(!isAdmin)
+                return "success";
+            return "dashboard";
         } catch (ServletException e) {
            
             LOG.log(Level.INFO, e.getMessage());
@@ -102,6 +106,7 @@ public class AuthBean implements Serializable {
                 getExternalContext();
         externalContext.invalidateSession();
         LOG.log(Level.INFO, "*** Logout success");
+        isLoggedIn = false;
         return "success";
     }
 
@@ -130,6 +135,13 @@ public class AuthBean implements Serializable {
     public void setIsAdmin(boolean isAdmin) {
         this.isAdmin = isAdmin;
     }
-    
 
+    public boolean isIsLoggedIn() {
+        return isLoggedIn;
+    }
+
+    public void setIsLoggedIn(boolean isLoggedIn) {
+        this.isLoggedIn = isLoggedIn;
+    }
+    
 }
