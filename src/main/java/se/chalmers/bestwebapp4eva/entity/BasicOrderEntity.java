@@ -5,6 +5,7 @@
  */
 package se.chalmers.bestwebapp4eva.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 
 /**
@@ -14,6 +15,7 @@ import javax.persistence.Entity;
 @Entity
 public class BasicOrderEntity extends BasicEntity{
     
+    @Column
     private double orderQuantity;
     
     public BasicOrderEntity() {

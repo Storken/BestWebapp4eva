@@ -31,11 +31,8 @@ public class EntityOrder extends AbstractDBObject{
     @Temporal(TemporalType.DATE)
     private Date orderDate;
     
-    @Transient
-    private List<BasicOrderEntity> orderItems;
-    
     @OneToMany
-    private List<BasicEntity> items;
+    private List<BasicOrderEntity> orderItems;
     
     @JoinColumn(nullable = false)
     @ManyToOne
@@ -48,7 +45,6 @@ public class EntityOrder extends AbstractDBObject{
         this.orderDate = date;
         this.orderItems = items;
         this.currentUser = currentUser;
-        this.items = convertToBasicEntity(items);
     }
     
         
@@ -56,16 +52,7 @@ public class EntityOrder extends AbstractDBObject{
         this.id = id;
         this.orderDate = orderDate;
         this.orderItems = items;
-        this.currentUser = currentUser;
-        this.items = convertToBasicEntity(items);    
-    }
-    
-    private List<BasicEntity> convertToBasicEntity(List<BasicOrderEntity> items) {
-        List<BasicEntity> tmp = new ArrayList<>();
-        for(BasicOrderEntity e: items) {
-            tmp.add(e.getEntity(e));
-        }
-        return tmp;
+        this.currentUser = currentUser; 
     }
     
     @Override
