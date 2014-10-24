@@ -7,8 +7,8 @@
     <class>se.chalmers.bestwebapp4eva.entity.Category</class>
     <class>se.chalmers.bestwebapp4eva.auth.User</class>
     <class>se.chalmers.bestwebapp4eva.auth.Groups</class>
-    <class>se.chalmers.bestwebapp4eva.entity.EntityOrder</class>
-    <class>se.chalmers.bestwebapp4eva.entity.BasicOrderItem</class>
+    <class>se.chalmers.bestwebapp4eva.entity.Order</class>
+    <class>se.chalmers.bestwebapp4eva.entity.OrderItem</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="create"/>

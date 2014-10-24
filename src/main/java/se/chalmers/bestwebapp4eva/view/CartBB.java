@@ -13,7 +13,7 @@ import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.entity.BasicOrderItem;
+import se.chalmers.bestwebapp4eva.entity.OrderItem;
 
 /**
  *
@@ -24,7 +24,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicOrderItem;
 public class CartBB implements Serializable {
 
     /* The items currently in the cart */
-    private List<BasicOrderItem> cartItems;
+    private List<OrderItem> cartItems;
 
     @PostConstruct
     public void post() {
@@ -43,7 +43,7 @@ public class CartBB implements Serializable {
      *
      * @return A list of all the items in the cart
      */
-    public List<BasicOrderItem> getCartItems() {
+    public List<OrderItem> getCartItems() {
         return cartItems;
     }
 
@@ -52,12 +52,12 @@ public class CartBB implements Serializable {
      *
      * @param cartItems The new list of items in the cart
      */
-    public void setCartItems(List<BasicOrderItem> cartItems) {
+    public void setCartItems(List<OrderItem> cartItems) {
         cartItems.addAll(cartItems);
     }
 
     public BasicEntity findCartItemById(long id) {
-        for (BasicOrderItem e : cartItems) {
+        for (OrderItem e : cartItems) {
             if (e.getId() == id) {
                 return e.getEntity();
             }
@@ -65,15 +65,15 @@ public class CartBB implements Serializable {
         return null;
     }
 
-    public void add(BasicOrderItem item) {
+    public void add(OrderItem item) {
         cartItems.add(item);
     }
 
-    public void remove(BasicOrderItem item) {
+    public void remove(OrderItem item) {
         cartItems.remove(item);
     }
 
-    public BasicEntity getEntity(BasicOrderItem item) {
+    public BasicEntity getEntity(OrderItem item) {
         return item.getEntity();
     }
 
@@ -81,7 +81,7 @@ public class CartBB implements Serializable {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("CartBB{");
-        for (BasicOrderItem e : cartItems) {
+        for (OrderItem e : cartItems) {
             sb.append(e.getTitle());
         }
         sb.append("}");

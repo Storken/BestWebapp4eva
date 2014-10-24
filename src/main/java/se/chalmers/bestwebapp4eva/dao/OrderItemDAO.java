@@ -6,7 +6,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.entity.BasicOrderItem;
+import se.chalmers.bestwebapp4eva.entity.OrderItem;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
@@ -14,13 +14,13 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  * @author erik
  */
 @Stateless
-public class BasicOrderItemDAO extends AbstractDAO<BasicOrderItem, Long> implements IBasicOrderItemDAO {
+public class OrderItemDAO extends AbstractDAO<OrderItem, Long> implements IOrderItemDAO {
 
     @PersistenceContext
     private EntityManager em;
 
-    public BasicOrderItemDAO() {
-        super(BasicOrderItem.class);
+    public OrderItemDAO() {
+        super(OrderItem.class);
     }
 
     @Override
@@ -29,23 +29,23 @@ public class BasicOrderItemDAO extends AbstractDAO<BasicOrderItem, Long> impleme
     }
 
     @Override
-    public List<BasicOrderItem> getById(long id) {
+    public List<OrderItem> getById(long id) {
         String query = "SELECT i FROM BasicOrderItem o WHERE o.id = :id";
-        TypedQuery<BasicOrderItem> result = em.createQuery(query, BasicOrderItem.class).setParameter("id", id);
+        TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("id", id);
         return result.getResultList();
     }
 
     @Override
-    public List<BasicOrderItem> getByOrderQuantity(double orderQuantity) {
+    public List<OrderItem> getByOrderQuantity(double orderQuantity) {
         String query = "SELECT i FROM BasicOrderItem i WHERE i.orderQuantity = :orderQuantity";
-        TypedQuery<BasicOrderItem> result = em.createQuery(query, BasicOrderItem.class).setParameter("orderQuantity", orderQuantity);
+        TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("orderQuantity", orderQuantity);
         return result.getResultList();
     }
     
     @Override
-    public List<BasicOrderItem> getByEntity(BasicEntity entity) {
+    public List<OrderItem> getByEntity(BasicEntity entity) {
         String query = "SELECT i FROM BasicOrderItem i WHERE i.entity = :entity";
-        TypedQuery<BasicOrderItem> result = em.createQuery(query, BasicOrderItem.class).setParameter("entity", entity);
+        TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("entity", entity);
         return result.getResultList();
     }
     

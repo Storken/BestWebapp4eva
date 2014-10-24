@@ -19,7 +19,7 @@ import se.chalmers.bestwebapp4eva.auth.User;
  * @author tholene
  */
 @Entity
-public class EntityOrder extends AbstractDBObject{
+public class Order extends AbstractDBObject{
     
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -30,23 +30,23 @@ public class EntityOrder extends AbstractDBObject{
     private Date orderDate;
     
     @OneToMany
-    private List<BasicOrderItem> orderItems;
+    private List<OrderItem> orderItems;
     
     @JoinColumn(nullable = false)
     @ManyToOne
     private User currentUser;
     
-    public EntityOrder() {
+    public Order() {
     }
     
-    public EntityOrder(Date date, List<BasicOrderItem> items, User currentUser) {
+    public Order(Date date, List<OrderItem> items, User currentUser) {
         this.orderDate = date;
         this.orderItems = items;
         this.currentUser = currentUser;
     }
     
         
-    public EntityOrder(long id, Date orderDate, List<BasicOrderItem> items, User currentUser) {
+    public Order(long id, Date orderDate, List<OrderItem> items, User currentUser) {
         this.id = id;
         this.orderDate = orderDate;
         this.orderItems = items;
@@ -62,7 +62,7 @@ public class EntityOrder extends AbstractDBObject{
         return orderDate;
     }
     
-    public List<BasicOrderItem> getItems() {
+    public List<OrderItem> getItems() {
         return orderItems;
     }
     
@@ -79,7 +79,7 @@ public class EntityOrder extends AbstractDBObject{
         this.orderDate = orderDate;
     }
     
-    public void setItems(List<BasicOrderItem> items) {
+    public void setItems(List<OrderItem> items) {
         this.orderItems = items;
     }
     
@@ -91,7 +91,7 @@ public class EntityOrder extends AbstractDBObject{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Order no. ").append(id).append(":");
-        for(BasicOrderItem e: orderItems) {
+        for(OrderItem e: orderItems) {
             sb.append("\n").append(e.getTitle()).append(", ").append(e.getOrderQuantity()).append(" ").append(e.getUnit()).append(" ");
         }
         sb.append("\nPlaced by ").append(currentUser.getUsername()).append(" at ").append(orderDate.toString()).append(".");

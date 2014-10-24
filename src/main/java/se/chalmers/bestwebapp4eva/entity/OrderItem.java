@@ -18,7 +18,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
  * @author tholene
  */
 @Entity
-public class BasicOrderItem extends AbstractDBObject {
+public class OrderItem extends AbstractDBObject {
     
     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
@@ -29,10 +29,10 @@ public class BasicOrderItem extends AbstractDBObject {
     @Column
     private double orderQuantity;
 
-    public BasicOrderItem() {
+    public OrderItem() {
     }
 
-    public BasicOrderItem(BasicEntity entity) {
+    public OrderItem(BasicEntity entity) {
         this.entity = entity;
         this.orderQuantity = 0;
     }
