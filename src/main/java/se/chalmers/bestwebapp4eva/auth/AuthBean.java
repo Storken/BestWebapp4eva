@@ -33,6 +33,11 @@ public class AuthBean implements Serializable {
 
     }
 
+    /**
+     * This method tries to communicate and login to the database through glassfish.
+     * 
+     * @return success if it succeeds or fail if it fails 
+     */
     public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
@@ -66,6 +71,10 @@ public class AuthBean implements Serializable {
         return "fail";
     }
     
+    /**
+     * Create an account for either an admin or a user.
+     * @return 
+     */
     public String createAccount(){
         if(ad.getUserByUsername(username).isEmpty()){
             if(isAdmin)

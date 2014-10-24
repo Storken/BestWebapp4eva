@@ -52,7 +52,9 @@
             
             
             <li>
-                <h:link value="Log out" outcome="dashboard" />
+                <h:form>
+                    <h:commandLink class="pull-right" value="Log out" action="#{authBean.logout}" />
+                </h:form>
             </li>
         </ul>
   
