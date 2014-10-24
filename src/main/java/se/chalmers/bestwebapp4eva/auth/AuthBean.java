@@ -44,12 +44,19 @@ public class AuthBean implements Serializable {
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{username, password});
+            externalContext.getFlash().setKeepMessages(true);
 
         // Really check is there some data in database?
         if(ad.getUserByUsername(username).size() < 1){
             LOG.log(Level.INFO, "*** No such username: {0}", new Object[]{username});
+            message("Username and password did not match!");
             return "fail";
         }
+        if(!hasValue()){
+            message("Username or password did not have a value");
+            return "fail";
+        }
+        
         User u = ad.getUserByUsername(username).get(0);
         LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPassword()});
 
@@ -80,12 +87,18 @@ public class AuthBean implements Serializable {
      * @return 
      */
     public String createAccount(){
-        if(ad.getUserByUsername(username).isEmpty()){
-            if(isAdmin)
-                return createAdmin();
-            return createUser();
+        if(hasValue()){
+            if(ad.getUserByUsername(username).isEmpty()){
+                if(isAdmin)
+                    return createAdmin();
+                return createUser();
+            }
+            LOG.log(Level.INFO, "*** This username already exists");
+            message("Username already exists");
+            return "fail";
         }
-        LOG.log(Level.INFO, "*** This username already exists");
+        LOG.log(Level.INFO, "*** Username or password has no value");
+        message("Username or password was filled incorrectly");
         return "fail";
     }
 
@@ -108,6 +121,17 @@ public class AuthBean implements Serializable {
         LOG.log(Level.INFO, "*** Logout success");
         isLoggedIn = false;
         return "success";
+    }
+    
+    private boolean hasValue(){
+        return !username.isEmpty() && !password.isEmpty();
+    }
+    
+    private void message(String out){
+            FacesContext.getCurrentInstance().
+                    addMessage(null, 
+                            new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                    out, null));
     }
 
     // ------------------------------

@@ -62,7 +62,7 @@ public class TestAuthentication {
         utx.begin();
         em.joinTransaction();
         em.createQuery("DELETE FROM USERS").executeUpdate();
-        em.createQuery("DELETE FROM Users_groups").executeUpdate();
+        em.createQuery("DELETE FROM USER_GROUPS").executeUpdate();
         utx.commit();
     }
    

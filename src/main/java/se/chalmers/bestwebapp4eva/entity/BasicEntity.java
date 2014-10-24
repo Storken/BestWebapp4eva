@@ -2,6 +2,7 @@ package se.chalmers.bestwebapp4eva.entity;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -9,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 
 /**
@@ -19,6 +21,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class BasicEntity extends AbstractDBObject {
 
+        
     /**
      * Enum for unit types kg, pcs, l.
      */

@@ -54,19 +54,20 @@
             </li>
             
             <li>
-                <p:commandLink value="#{authBean.isLoggedIn? '' : 'Log in'}" onclick="PF('dlg1').show()"  />
+                <p:commandLink value="#{authBean.isLoggedIn? '' : 'Log in'}" onclick="PF('dlg1').show(); PF('dlg2').hide()"  />
             </li>
      
             
-                <p:dialog header="Log in" widgetVar="dlg1" id="dialogue1">
+            <p:dialog header="Log in" widgetVar="dlg1" id="dialogue1" 
+                      resizable="false" closable="false" draggable="false">
                     <h:form>
                         <h:outputText value="Username: "/>
                         <br/>
-                        <h:inputText value="#{authBean.username}"/>
+                        <h:inputText id="usrname" value="#{authBean.username}"/>
                         <br/>
                         <h:outputText value="Password: "/>
                         <br/>
-                        <h:inputText value="#{authBean.password}"/>
+                        <h:inputText id="passwrd" value="#{authBean.password}"/>
                         <br/>
                         <p:commandButton value="Log in" action="#{authBean.login}"/>
                         <p:commandButton value="Create" onclick="PF('dlg2').show(); PF('dlg1').hide()"/>
@@ -74,7 +75,8 @@
                 </p:dialog>
      
             
-            <p:dialog header="Create a new user" widgetVar="dlg2" id="dialogue2">
+            <p:dialog header="Create a new user" widgetVar="dlg2" id="dialogue2"
+                      resizable="false" closable="false" draggable="false">
                     <h:form>
                         <h:outputText value="Username: "/>
                         <br/>

@@ -23,21 +23,21 @@
                     <td><b><u>Available</u></b></td>
                     <td><b><u>In order</u></b></td>
                 </thead>
-                <ui:repeat value="#{cartBB.cartItems}" var="entity">
+                <ui:repeat value="#{cartBB.cartItems}" var="item">
                     <tr>
-                        <td><h:outputText value="#{entity.id}" /></td>
-                        <td><h:outputText value="#{entity.title}" /></td>
+                        <td><h:outputText value="#{item.id}" /></td>
+                        <td><h:outputText value="#{item.title}" /></td>
                         <td>
                             <h:outputText id="q" 
-                                          value="#{entity.quantity - entity.orderQuantity} #{entity.unit}"/></td>
+                                          value="#{item.quantity - item.orderQuantity} #{item.unit}"/></td>
                         <td>
                             <p:spinner id="s" 
-                                       value="#{entity.orderQuantity}"
-                                       suffix=" #{entity.unit}" 
-                                       max="#{entity.quantity}" 
+                                       value="#{item.orderQuantity}"
+                                       suffix=" #{item.unit}" 
+                                       max="#{item.quantity}" 
                                        min="0" 
                                        validator="#{cartCtrl.validateOrder}" 
-                                       rendered="#{!cartCtrl.isSpinnerDisabled(entity)}">
+                                       rendered="#{!cartCtrl.isSpinnerDisabled(item)}">
                                 <p:ajax update="q :f:order" 
                                         event="change" 
                                         listener="#{cartCtrl.updateOrderStatus}"/>
@@ -46,7 +46,7 @@
                                         listener="#{cartCtrl.updateOrderStatus}"/>
                             </p:spinner>
                             <h:outputText value="Out of stock" 
-                                          rendered="#{cartCtrl.isSpinnerDisabled(entity)}"/>
+                                          rendered="#{cartCtrl.isSpinnerDisabled(item)}"/>
                         </td>
                         <h:message for="s" styleClass="error"/>
                     </tr>
