@@ -4,7 +4,7 @@
     <!-- Change to "Production" when you are ready to deploy -->
     <context-param>
         <param-name>javax.faces.PROJECT_STAGE</param-name>
-        <param-value>Development</param-value>
+        <param-value>Production</param-value>
     </context-param>
     
     <context-param>  
@@ -68,8 +68,8 @@
         <auth-method>FORM</auth-method>
         <realm-name>authRealm</realm-name>
         <form-login-config>
-            <form-login-page>/login.xhtml</form-login-page>
-            <form-error-page>/login.xhtml</form-error-page>
+            <form-login-page>/index.xhtml</form-login-page>
+            <form-error-page>/index.xhtml</form-error-page>
         </form-login-config>
     </login-config>
 </web-app>
