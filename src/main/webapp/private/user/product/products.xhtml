@@ -1,36 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/template.xhtml">
 
-    <h:head>
-    </h:head>
-    <h:body>
-        <ui:composition template="/WEB-INF/template.xhtml">
-            <ui:define name="content"> 
-                <br/>
-                <p:layout id="layout">
-                    <p:layoutUnit position="center">      
-                        <ui:include src="/private/user/product/catalogue.xhtml"/>
+    <ui:define name="content"> 
+        <br/>
+        <p:layout id="layout">
+            <p:layoutUnit position="center">      
+                <ui:include src="/private/user/product/catalogue.xhtml"/>
 
-                    </p:layoutUnit>
+            </p:layoutUnit>
 
-                    <p:layoutUnit position="east" size="300" header="Cart" id="cart" effect="slide" collapsed="#{cartCtrl.collapseCart()}">
-                        <ui:include src="/private/user/product/cart.xhtml"/>
-                    </p:layoutUnit>
-                </p:layout>
+            <p:layoutUnit position="east" size="300" header="Cart" id="cart" effect="slide" collapsed="#{cartCtrl.collapseCart()}">
+                <ui:include src="/private/user/product/cart.xhtml"/>
+            </p:layoutUnit>
+        </p:layout>
 
-                <p:dialog header="Manage entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="90%" closeOnEscape="true" draggable="false">
-                    <ui:include src="/private/user/product/manageEntityPopup.xhtml"/>
-                </p:dialog>
-                <p:dialog header="Create new product" widgetVar="newEntityDialog" modal="true" showEffect="size" hideEffect="size" resizable="true" closeOnEscape="true" draggable="false">
-                    <ui:include src="/private/user/product/newEntityDialog.xhtml"/>
-                </p:dialog>
-            </ui:define>
-        </ui:composition>
-    </h:body>
-</html>
+        <p:dialog header="Manage entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="90%" closeOnEscape="true" draggable="false">
+            <ui:include src="/private/user/product/manageEntityPopup.xhtml"/>
+        </p:dialog>
+        <p:dialog header="Create new product" widgetVar="newEntityDialog" modal="true" showEffect="size" hideEffect="size" resizable="true" closeOnEscape="true" draggable="false">
+            <ui:include src="/private/user/product/newEntityDialog.xhtml"/>
+        </p:dialog>
+    </ui:define>
+</ui:composition>
