@@ -6,9 +6,6 @@
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:p="http://primefaces.org/ui">
-    <f:metadata>
-        <f:viewParam name="page" value="#{page}" />
-    </f:metadata>
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -31,9 +28,7 @@
       
        <!-- Brand logo -->
        <div class="navbar-header">
-            <h:link id="homeLink" value="BestWebapp4eva" class="navbar-brand" outcome="home" >
-                    <f:param name="page" value="home" />
-            </h:link>
+            <h:link id="homeLink" value="BestWebapp4eva" class="navbar-brand" outcome="home" />
        </div>
             
        <ui class="nav navbar-nav pull-left">

@@ -40,7 +40,7 @@ public class TestAuthentication {
  
     @Deployment
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "maindb.war")
+        return ShrinkWrap.create(WebArchive.class)
                 .addPackage("se.chalmers.bestwebapp4eva.auth")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
@@ -48,21 +48,21 @@ public class TestAuthentication {
  
     @Before
     public void prepareTest() throws Exception {
-        //clearData();
+        clearData();
         utx.begin();
     }
  
     @After
     public void commitTransaction() throws Exception {
         utx.commit();
-        //clearData();
+        clearData();
     }
  
     private void clearData() throws Exception {
         utx.begin();
         em.joinTransaction();
-        em.createQuery("DELETE FROM APP.USERS").executeUpdate();
-        em.createQuery("DELETE FROM APP.GROUPS_USERS").executeUpdate();
+        em.createQuery("DELETE FROM USERS").executeUpdate();
+        em.createQuery("DELETE FROM GROUPS_USERS").executeUpdate();
         utx.commit();
     }
    
