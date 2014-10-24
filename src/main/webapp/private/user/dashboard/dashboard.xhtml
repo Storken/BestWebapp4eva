@@ -4,22 +4,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
 
     <h:head>
     </h:head>
+    
     <h:body>
+
         <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
-                <div id="indxdiv">
-                    <h:graphicImage id="theguy" library="img" name="theguy.png"/>
-                    <div id="loginmessages">
-                        <h:messages/>
-                        <h:message for="usrname"/>
-                        <h:message for="passwrd"/>
-                    </div>
-                </div>
+                
+                <br/>
+                <p:layout id="layout" fullPage="true">
+                    <p:layoutUnit position="center">      
+                        <ui:include src="/private/user/dashboard/orders.xhtml"/>
+
+                    </p:layoutUnit>
+                </p:layout>
+                
             </ui:define>
         </ui:composition>
     </h:body>

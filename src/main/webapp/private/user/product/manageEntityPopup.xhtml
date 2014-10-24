@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <p:outputPanel id="multiEntityDetail" style="text-align:center">
+        <h1 align="center">Put a beställning from your lager</h1>
+        <h4 align="center">...the way YOU want to</h4>
+
+
+
+
+
+        <h:form id="f">
+            <table align="center" cellspacing="5">
+                <thead>
+                    <td><b><u>Id</u></b></td>
+                    <td><b><u>Title</u></b></td>
+                    <td><b><u>Available</u></b></td>
+                    <td><b><u>In order</u></b></td>
+                </thead>
+                <ui:repeat value="#{cartBB.cartItems}" var="item">
+                    <tr>
+                        <td><h:outputText value="#{item.id}" /></td>
+                        <td><h:outputText value="#{item.title}" /></td>
+                        <td>
+                            <h:outputText id="q" 
+                                          value="#{item.quantity - item.orderQuantity} #{item.unit}"/></td>
+                        <td>
+                            <p:spinner id="s" 
+                                       value="#{item.orderQuantity}"
+                                       suffix=" #{item.unit}" 
+                                       max="#{item.quantity}" 
+                                       min="0" 
+                                       validator="#{cartCtrl.validateOrder}" 
+                                       rendered="#{!cartCtrl.isSpinnerDisabled(item)}">
+                                <p:ajax update="q :f:order" 
+                                        event="change" 
+                                        listener="#{cartCtrl.updateOrderStatus}"/>
+                                <p:ajax update="q :f:order" 
+                                        event="keyup" 
+                                        listener="#{cartCtrl.updateOrderStatus}"/>
+                            </p:spinner>
+                            <h:outputText value="Out of stock" 
+                                          rendered="#{cartCtrl.isSpinnerDisabled(item)}"/>
+                        </td>
+                        <h:message for="s" styleClass="error"/>
+                    </tr>
+                </ui:repeat>
+
+            </table>
+            <br></br>
+            <p:commandButton id="order" 
+                             value="#{cartCtrl.orderButtonMessage}" 
+                             update=":cartItems :layout" 
+                             actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" 
+                             onclick="PF('multiEntityDialog').hide()" 
+                             icon="#{cartCtrl.orderButtonIcon}" 
+                             disabled="#{cartCtrl.orderDisabled}"/>
+        </h:form>
+    </p:outputPanel>
+</ui:composition>

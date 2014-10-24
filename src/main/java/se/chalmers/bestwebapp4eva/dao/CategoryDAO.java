@@ -17,12 +17,12 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  * @author simon
  */
 @Stateless
-public class CategoryCollection extends AbstractDAO<Category, Long> implements ICategoryCollection {
+public class CategoryDAO extends AbstractDAO<Category, Long> implements ICategoryDAO {
 
     @PersistenceContext
     private EntityManager em;
 
-    public CategoryCollection() {
+    public CategoryDAO() {
         super(Category.class);
     }
 
@@ -31,7 +31,6 @@ public class CategoryCollection extends AbstractDAO<Category, Long> implements I
         return em;
     }
 
-    @Override
     public List<Category> getByName(String name) {
         String query = "SELECT c FROM Category c WHERE c.name = :name";
         TypedQuery<Category> result = em.createQuery(query, Category.class).setParameter("name", name);

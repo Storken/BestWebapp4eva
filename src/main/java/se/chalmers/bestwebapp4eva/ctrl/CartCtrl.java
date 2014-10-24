@@ -1,15 +1,29 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
+import java.io.Serializable;
+import java.util.Date;
+import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityCollection;
+import se.chalmers.bestwebapp4eva.auth.AuthBean;
+import se.chalmers.bestwebapp4eva.auth.AuthDAO;
+import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
+import se.chalmers.bestwebapp4eva.dao.IOrderItemDAO;
+import se.chalmers.bestwebapp4eva.dao.IOrderDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.view.TableBB;
+import se.chalmers.bestwebapp4eva.view.CatalogueBB;
+import se.chalmers.bestwebapp4eva.entity.OrderItem;
+import se.chalmers.bestwebapp4eva.entity.Order;
 import se.chalmers.bestwebapp4eva.view.CartBB;
+
 
 /**
  * Controller for the cart
@@ -17,15 +31,60 @@ import se.chalmers.bestwebapp4eva.view.CartBB;
  * @author tholene
  */
 @Named
-@RequestScoped
-public class CartCtrl {
+@SessionScoped
+public class CartCtrl implements Serializable {
 
     @EJB
-    private IBasicEntityCollection bec;
+    private IBasicEntityDAO basicEntityDAO;
+    
+    @EJB
+    private IOrderDAO orderDAO;
+    
+    @EJB
+    private IOrderItemDAO basicOrderItemDAO;
+    
+    @EJB
+    private AuthDAO authDAO;
+    
     @Inject
-    private CartBB cart;
+    private CartBB cartBB;
+    
     @Inject
-    private TableBB entities;
+    private CatalogueBB entities;
+    
+    @Inject 
+    private AuthBean ab;
+
+    private boolean orderDisabled = true;
+
+    private double totalStock = 0.0;
+    private double totalOrdered = 0.0;
+    private Collection<Double> orders;
+
+    public boolean isOrderDisabled() {
+        return orderDisabled;
+    }
+
+    public void updateOrderStatus() {
+        totalStock = 0.0;
+        totalOrdered = 0.0;
+        for (OrderItem i : cartBB.getCartItems()) {
+            // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
+            BasicEntity be = basicEntityDAO.getById(i.getEntity().getId()).get(0);
+            totalStock += be.getQuantity();
+            totalOrdered += i.getOrderQuantity();
+        }
+        orderDisabled = totalOrdered == 0.0 || totalStock == 0.0;
+        totalOrdered = 0.0;
+    }
+
+    public void setOrderDisabled(boolean orderDisabled) {
+        this.orderDisabled = orderDisabled;
+    }
+
+    public boolean isSpinnerDisabled(OrderItem item) {
+        return item.getQuantity() == 0.0;
+    }
 
     /**
      * Add all the selected items to the cart
@@ -34,25 +93,17 @@ public class CartCtrl {
      */
     public void addSelectionToCart(ActionEvent actionEvent) {
         List<BasicEntity> items = entities.getSelectedEntities();
-        if (items != null) {
-            for (BasicEntity i : items) {
-                // Dont add the same item twice
-                if (!cart.getCartItems().contains(i)) {
-                    cart.add(i);
-                }
+        for (BasicEntity be : items) {
+            OrderItem bi = new OrderItem(be);
+            if (!cartBB.getCartItems().contains(bi)) {
+                cartBB.add(bi);
+                
             }
         }
-
     }
 
-    /**
-     * Remove an item from the cart
-     *
-     * @param entity The item to be removed
-     */
-    public void removeFromCart(BasicEntity entity) {
-        cart.remove(entity);
-
+    public void removeFromCart(OrderItem item) {
+        cartBB.remove(item);   
     }
 
     /**
@@ -61,24 +112,50 @@ public class CartCtrl {
      * If an item hasn't changed it will still be updated in the database but
      * this won't have any negative impact.
      *
-     * @param changed All the items that are in the cart
+     * @param order All the items that are in the cart
      */
-    public void executeChanges(List<BasicEntity> changed) {
-        for (BasicEntity e : changed) {
-            bec.update(e);
+    public void placeOrder(List<OrderItem> order) {
+        for (OrderItem i : order) {
+            i.getEntity().setQuantity(i.getEntity().getQuantity() - i.getOrderQuantity());
+            BasicEntity wrapper = new BasicEntity(i.getId(), i.getEntity().getTitle(), i.getEntity().getPrice(), i.getEntity().getQuantity(), i.getEntity().getUnit(), i.getEntity().getCategory());
+            basicEntityDAO.update(wrapper);
+            basicOrderItemDAO.create(i);
+            
         }
-        cart.getCartItems().clear();
+        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authDAO.getUserByUsername(ab.getUsername()).get(0));
+        orderDAO.create(dbOrder);
+        cartBB.getCartItems().clear();
+        totalOrdered = 0.0;
+        totalStock = 0.0;     
+    }
+
+    public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException {
+        double ordered = (Double) value;
+        // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
+        if (ordered < 0.0) {
+            orderDisabled = true;
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nothing to order", null);
+            throw new ValidatorException(message);
+        } else {
+            orderDisabled = false;
+        }
 
     }
 
-    //Temporary method
-    public void incQuantity(BasicEntity entity) {
-        entity.setQuantity(entity.getQuantity() + 1);
+    public String getOrderButtonMessage() {
+        if (orderDisabled) {
+            return "Cannot place order";
+        } else {
+            return "Place order";
+        }
     }
 
-    //Temporary method
-    public void decQuantity(BasicEntity entity) {
-        entity.setQuantity(entity.getQuantity() - 1);
+    public String getOrderButtonIcon() {
+        if (orderDisabled) {
+            return "ui-icon ui-icon-notice";
+        } else {
+            return "ui-icon ui-icon-check";
+        }
     }
 
     /**
@@ -90,6 +167,6 @@ public class CartCtrl {
      * <code>false</code> if the cart is not empty and ∫should be shown
      */
     public boolean collapseCart() {
-        return cart.getCartItems().isEmpty();
+        return cartBB.getCartItems().isEmpty();
     }
 }

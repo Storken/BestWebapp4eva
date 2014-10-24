@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <h:form>
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Title:" for="title"/>
+            <h:inputText id="title" value="#{newEntityDialogBB.title}" required="true"/>
+
+            <h:outputLabel value="Price:" for="price"/>
+            <h:inputText id="price" value="#{newEntityDialogBB.price}" required="true"/>
+
+            <h:outputLabel value="Quantity:" for="quantity"/>
+            <h:inputText id="quantity" value="#{newEntityDialogBB.quantity}" required="true"/>
+
+            <h:outputLabel value="Unit:" for ="unit"/>
+            <p:selectOneMenu id="unit" required="true" value="#{newEntityDialogBB.unit}">
+                <f:selectItems value="#{newEntityDialogBB.units}" />
+            </p:selectOneMenu>
+
+            <h:outputLabel value="Category:" for="category" />
+            <p:selectOneMenu id="category" required="true" value="#{newEntityDialogBB.category}" converter="#{categoryConverter}">
+                <f:selectItems value="#{newEntityDialogBB.categories}" var="category" itemLabel="#{category.name}" />
+            </p:selectOneMenu>
+        </h:panelGrid>
+
+
+        <p:commandButton value="Cancel" onclick="newEntityDialog.hide()"/>
+        <p:commandButton value="Create entity" onclick="newEntityDialog.hide()" actionListener="#{newEntityCtrl.add}" update="@(.ui-datatable)"/>
+    </h:form>        
+
+
+</ui:composition>

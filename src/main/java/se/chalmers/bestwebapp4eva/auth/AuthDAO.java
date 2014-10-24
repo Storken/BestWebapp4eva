@@ -47,7 +47,7 @@ public class AuthDAO extends AbstractDAO<User, String> {
         user.setPassword(password);
         em.persist(user);
         
-        Group group = new Group();
+        Groups group = new Groups();
         group.setGroupname(groupname);
         group.setUsername(username);
         em.persist(group);
@@ -63,7 +63,7 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return found;
     }
 
-    public List<User> getByUsername(String username) {
+    public List<User> getUserByUsername(String username) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.username =:username", User.class)
                 .setParameter("username", username);
@@ -73,16 +73,14 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return found;
     }
     
-    // If using default digest algorithm 
-    //  (also put Hex and UTF-8 in realm configuration
-    private String getSHA256(String passwd) throws NoSuchAlgorithmException,
-            UnsupportedEncodingException {
-        MessageDigest md = MessageDigest.getInstance("SHA-256");
-        String text = "admin";
-        md.update(text.getBytes("UTF-8")); // Change this to "UTF-16" if needed
-        byte[] digest = md.digest();
-        BigInteger bigInt = new BigInteger(1, digest);
-        return bigInt.toString(16);
+    public List<Groups> getGroupByUsername(String username) {
+        TypedQuery<Groups> query;
+        query = em.createQuery("select g from " + Groups.class.getSimpleName() + " g WHERE g.username =:username", Groups.class)
+                .setParameter("username", username);
+
+        List<Groups> found = new ArrayList<>();
+        found.addAll(query.getResultList());
+        return found;
     }
 
 }

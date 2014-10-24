@@ -5,24 +5,26 @@
  */
 package se.chalmers.bestwebapp4eva.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
+import se.chalmers.bestwebapp4eva.entity.OrderItem;
 
 /**
  *
  * @author tholene
  */
 @Named
-@RequestScoped
-public class CartBB {
+@SessionScoped
+public class CartBB implements Serializable {
 
     /* The items currently in the cart */
-    private static List<BasicEntity> cartItems;
+    private List<OrderItem> cartItems;
 
     @PostConstruct
     public void post() {
@@ -41,8 +43,8 @@ public class CartBB {
      *
      * @return A list of all the items in the cart
      */
-    public List<BasicEntity> getCartItems() {
-        return CartBB.cartItems;
+    public List<OrderItem> getCartItems() {
+        return cartItems;
     }
 
     /**
@@ -50,37 +52,39 @@ public class CartBB {
      *
      * @param cartItems The new list of items in the cart
      */
-    public void setCartItems(List<BasicEntity> cartItems) {
-        CartBB.cartItems.addAll(cartItems);
+    public void setCartItems(List<OrderItem> cartItems) {
+        cartItems.addAll(cartItems);
     }
 
-    /**
-     * Add a new item to the cart
-     *
-     * @param entity The item to be added
-     */
-    public void add(BasicEntity entity) {
-        CartBB.cartItems.add(entity);
+    public BasicEntity findCartItemById(long id) {
+        for (OrderItem e : cartItems) {
+            if (e.getId() == id) {
+                return e.getEntity();
+            }
+        }
+        return null;
     }
 
-    /**
-     * Remove an item from the cart
-     *
-     * @param entity The item to be removed
-     */
-    public void remove(BasicEntity entity) {
-        CartBB.cartItems.remove(entity);
+    public void add(OrderItem item) {
+        cartItems.add(item);
+    }
+
+    public void remove(OrderItem item) {
+        cartItems.remove(item);
+    }
+
+    public BasicEntity getEntity(OrderItem item) {
+        return item.getEntity();
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("CartBB{");
-        for (BasicEntity e : CartBB.cartItems) {
+        for (OrderItem e : cartItems) {
             sb.append(e.getTitle());
         }
         sb.append("}");
         return sb.toString();
     }
-
 }

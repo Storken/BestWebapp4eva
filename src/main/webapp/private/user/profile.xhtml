@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:head>
+    </h:head>
+    <h:body>
+        <ui:composition template="/WEB-INF/template.xhtml">
+            <ui:define name="content"> 
+                <p:layout id="layout" fullPage="true">
+                    <p:layoutUnit position="center">     
+                        <br/>
+                        <br/>
+                        <h2>Your Best profile 4eva</h2>
+                        <br/>
+                        <h2>Username: </h2>
+                        <h:outputText class="h2" value="#{authBean.username}" />
+                        <br/>
+                        <h2>Password: </h2>
+                        <h:outputText class="h2" value="#{authBean.password}" />
+                        <br/>
+                        <h2>Admin: </h2>
+                        <h:outputText class="h2" value="#{authBean.isAdmin? 'Yes':'No'}" />
+                        <br/>
+                        </p:layoutUnit>
+                </p:layout>
+
+            </ui:define>
+        </ui:composition>
+
+    </h:body>
+</html>
