@@ -13,14 +13,16 @@
         <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
                 <br/>
-                <p:panelGrid id="layout" columns="2">
-                    <p:panel id="cataloguePanel">   
-                    <ui:include src="/private/user/product/catalogue.xhtml"/>
-                    </p:panel> 
-                    <p:panel id="cartPanel">
+                <p:layout id="layout">
+                    <p:layoutUnit position="center">      
+                        <ui:include src="/private/user/product/catalogue.xhtml"/>
+
+                    </p:layoutUnit>
+
+                    <p:layoutUnit position="east" size="300" header="Cart" id="cart" effect="slide" collapsed="#{cartCtrl.collapseCart()}">
                         <ui:include src="/private/user/product/cart.xhtml"/>
-                    </p:panel>
-                </p:panelGrid>
+                    </p:layoutUnit>
+                </p:layout>
 
                 <p:dialog header="Manage entities" widgetVar="multiEntityDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="90%" closeOnEscape="true" draggable="false">
                     <ui:include src="/private/user/product/manageEntityPopup.xhtml"/>
