@@ -8,18 +8,18 @@
                 xmlns:f="http://java.sun.com/jsf/core">
     <table width="100%">
         <br/>
-        <ui:repeat id="cartItems" value="#{cartBB.cartItems}" var="entity">
+        <ui:repeat id="cartItems" value="#{cartBB.cartItems}" var="item">
             <tr>
                 <td align="right" style="padding-bottom: 1em">
-                    <h:outputText value="#{entity.id} -"/>
+                    <h:outputText value="#{item.id} -"/>
                 </td>
                 <td align="left" style="padding-bottom: 1em">
-                    <h:outputText value="#{entity.title}, "/>
-                    <h:outputText value="#{entity.quantity} "/>
-                    <h:outputText value="#{entity.unit}"/>
+                    <h:outputText value="#{item.title}, "/>
+                    <h:outputText value="#{item.quantity} "/>
+                    <h:outputText value="#{item.unit}"/>
                 </td>
                 <td align="right" style="padding-bottom: 1em">
-                    <p:commandLink title="Remove from cart" actionListener="#{cartCtrl.removeFromCart(entity)}" styleClass="ui-icon ui-icon-closethick" update=":layout"/> 
+                    <p:commandLink title="Remove from cart" actionListener="#{cartCtrl.removeFromCart(item)}" styleClass="ui-icon ui-icon-closethick" update=":layout"/> 
                 </td>
             </tr>
         </ui:repeat>

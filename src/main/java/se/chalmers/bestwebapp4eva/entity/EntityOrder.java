@@ -1,6 +1,5 @@
 package se.chalmers.bestwebapp4eva.entity;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Column;
@@ -13,7 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 import se.chalmers.bestwebapp4eva.auth.User;
 
 /**
@@ -32,7 +30,7 @@ public class EntityOrder extends AbstractDBObject{
     private Date orderDate;
     
     @OneToMany
-    private List<BasicOrderEntity> orderItems;
+    private List<BasicOrderItem> orderItems;
     
     @JoinColumn(nullable = false)
     @ManyToOne
@@ -41,14 +39,14 @@ public class EntityOrder extends AbstractDBObject{
     public EntityOrder() {
     }
     
-    public EntityOrder(Date date, List<BasicOrderEntity> items, User currentUser) {
+    public EntityOrder(Date date, List<BasicOrderItem> items, User currentUser) {
         this.orderDate = date;
         this.orderItems = items;
         this.currentUser = currentUser;
     }
     
         
-    public EntityOrder(long id, Date orderDate, List<BasicOrderEntity> items, User currentUser) {
+    public EntityOrder(long id, Date orderDate, List<BasicOrderItem> items, User currentUser) {
         this.id = id;
         this.orderDate = orderDate;
         this.orderItems = items;
@@ -64,7 +62,7 @@ public class EntityOrder extends AbstractDBObject{
         return orderDate;
     }
     
-    public List<BasicOrderEntity> getItems() {
+    public List<BasicOrderItem> getItems() {
         return orderItems;
     }
     
@@ -81,7 +79,7 @@ public class EntityOrder extends AbstractDBObject{
         this.orderDate = orderDate;
     }
     
-    public void setItems(List<BasicOrderEntity> items) {
+    public void setItems(List<BasicOrderItem> items) {
         this.orderItems = items;
     }
     
@@ -93,7 +91,7 @@ public class EntityOrder extends AbstractDBObject{
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Order no. ").append(id).append(":");
-        for(BasicOrderEntity e: orderItems) {
+        for(BasicOrderItem e: orderItems) {
             sb.append("\n").append(e.getTitle()).append(", ").append(e.getOrderQuantity()).append(" ").append(e.getUnit()).append(" ");
         }
         sb.append("\nPlaced by ").append(currentUser.getUsername()).append(" at ").append(orderDate.toString()).append(".");

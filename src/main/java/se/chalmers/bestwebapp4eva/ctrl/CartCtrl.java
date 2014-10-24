@@ -2,7 +2,6 @@ package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
@@ -19,7 +18,7 @@ import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.IEntityOrderDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.view.CatalogueBB;
-import se.chalmers.bestwebapp4eva.entity.BasicOrderEntity;
+import se.chalmers.bestwebapp4eva.entity.BasicOrderItem;
 import se.chalmers.bestwebapp4eva.entity.EntityOrder;
 import se.chalmers.bestwebapp4eva.view.CartBB;
 
@@ -61,11 +60,11 @@ public class CartCtrl implements Serializable {
     public void updateOrderStatus() {
         totalStock = 0.0;
         totalOrdered = 0.0;
-        for (BasicOrderEntity e : cartBB.getCartItems()) {
+        for (BasicOrderItem i : cartBB.getCartItems()) {
             // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
-            BasicEntity be = basicEntityDAO.getById(e.getId()).get(0);
+            BasicEntity be = basicEntityDAO.getById(i.getEntity().getId()).get(0);
             totalStock += be.getQuantity();
-            totalOrdered += e.getOrderQuantity();
+            totalOrdered += i.getOrderQuantity();
         }
         orderDisabled = totalOrdered == 0.0 || totalStock == 0.0;
     }
@@ -74,8 +73,8 @@ public class CartCtrl implements Serializable {
         this.orderDisabled = orderDisabled;
     }
 
-    public boolean isSpinnerDisabled(BasicOrderEntity entity) {
-        return entity.getQuantity() == 0.0;
+    public boolean isSpinnerDisabled(BasicOrderItem item) {
+        return item.getQuantity() == 0.0;
     }
 
     /**
@@ -85,26 +84,16 @@ public class CartCtrl implements Serializable {
      */
     public void addSelectionToCart(ActionEvent actionEvent) {
         List<BasicEntity> items = entities.getSelectedEntities();
-        List<BasicOrderEntity> orderItems = new ArrayList<>();
         for (BasicEntity be : items) {
-            orderItems.add(new BasicOrderEntity(be));
-        }
-        for (BasicOrderEntity boe : orderItems) {
-            // Dont add the same item twice
-            if (!cartBB.getCartItems().contains(boe)) {
-                cartBB.add(boe);
+            BasicOrderItem bi = new BasicOrderItem(be);
+            if (!cartBB.getCartItems().contains(bi)) {
+                cartBB.add(bi);
             }
         }
-
     }
 
-    /**
-     * Remove an item from the cart
-     *
-     * @param entity The item to be removed
-     */
-    public void removeFromCart(BasicOrderEntity entity) {
-        cartBB.remove(entity);   
+    public void removeFromCart(BasicOrderItem item) {
+        cartBB.remove(item);   
     }
 
     /**
@@ -115,10 +104,10 @@ public class CartCtrl implements Serializable {
      *
      * @param order All the items that are in the cart
      */
-    public void placeOrder(List<BasicOrderEntity> order) {
-        for (BasicOrderEntity e : order) {
-            e.setQuantity(e.getQuantity() - e.getOrderQuantity());
-            BasicEntity wrapper = new BasicEntity(e.getId(), e.getTitle(), e.getPrice(), e.getQuantity(), e.getUnit(), e.getCategory());
+    public void placeOrder(List<BasicOrderItem> order) {
+        for (BasicOrderItem i : order) {
+            i.getEntity().setQuantity(i.getEntity().getQuantity() - i.getOrderQuantity());
+            BasicEntity wrapper = new BasicEntity(i.getId(), i.getEntity().getTitle(), i.getEntity().getPrice(), i.getEntity().getQuantity(), i.getEntity().getUnit(), i.getEntity().getCategory());
             basicEntityDAO.update(wrapper);
         }
         EntityOrder dbOrder = new EntityOrder(new Date(System.currentTimeMillis()), order, authDAO.getByUsername("erik").get(0));
