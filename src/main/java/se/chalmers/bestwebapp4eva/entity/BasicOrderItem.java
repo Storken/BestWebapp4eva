@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
 import javax.persistence.OneToOne;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 
@@ -22,7 +24,6 @@ public class BasicOrderItem extends AbstractDBObject {
     @GeneratedValue (strategy = GenerationType.AUTO)
     private long pk;
     
-    @OneToOne (cascade = CascadeType.REFRESH)
     private BasicEntity entity;
 
     @Column
@@ -44,10 +45,6 @@ public class BasicOrderItem extends AbstractDBObject {
     public void setId(long id) {
         this.entity.setId(id);
     }
-    
-    public void setEntityId(long id) {
-        this.entity.setId(id);
-    }
 
     public void setEntity(BasicEntity entity) {
         this.entity = entity;
@@ -66,10 +63,6 @@ public class BasicOrderItem extends AbstractDBObject {
         return entity.getId();
     }
     
-    public Long getEntityId() {
-        return entity.getId();
-    }
-
     public BasicEntity getEntity() {
         return entity;
     }

@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.auth.AuthDAO;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
+import se.chalmers.bestwebapp4eva.dao.IBasicOrderItemDAO;
 import se.chalmers.bestwebapp4eva.dao.IEntityOrderDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.view.CatalogueBB;
@@ -37,6 +38,9 @@ public class CartCtrl implements Serializable {
     
     @EJB
     private IEntityOrderDAO orderDAO;
+    
+    @EJB
+    private IBasicOrderItemDAO basicOrderItemDAO;
     
     @EJB
     private AuthDAO authDAO;
@@ -67,6 +71,7 @@ public class CartCtrl implements Serializable {
             totalOrdered += i.getOrderQuantity();
         }
         orderDisabled = totalOrdered == 0.0 || totalStock == 0.0;
+        totalOrdered = 0.0;
     }
 
     public void setOrderDisabled(boolean orderDisabled) {
@@ -88,6 +93,7 @@ public class CartCtrl implements Serializable {
             BasicOrderItem bi = new BasicOrderItem(be);
             if (!cartBB.getCartItems().contains(bi)) {
                 cartBB.add(bi);
+                
             }
         }
     }
@@ -109,6 +115,8 @@ public class CartCtrl implements Serializable {
             i.getEntity().setQuantity(i.getEntity().getQuantity() - i.getOrderQuantity());
             BasicEntity wrapper = new BasicEntity(i.getId(), i.getEntity().getTitle(), i.getEntity().getPrice(), i.getEntity().getQuantity(), i.getEntity().getUnit(), i.getEntity().getCategory());
             basicEntityDAO.update(wrapper);
+            basicOrderItemDAO.create(i);
+            
         }
         EntityOrder dbOrder = new EntityOrder(new Date(System.currentTimeMillis()), order, authDAO.getByUsername("erik").get(0));
         orderDAO.create(dbOrder);
