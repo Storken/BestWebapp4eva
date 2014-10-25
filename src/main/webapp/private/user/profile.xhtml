@@ -18,13 +18,13 @@
                         <h2>Your Best profile 4eva</h2>
                         <br/>
                         <h2>Username: </h2>
-                        <h:outputText class="h2" value="#{authBB.username}" />
+                        <h:outputText class="h2" value="#{authCtrl.currentUser.username}" />
                         <br/>
                         <h2>Password: </h2>
-                        <h:outputText class="h2" value="#{auauthBBassword}" />
+                        <h:outputText class="h2" value="#{authCtrl.currentUser.password}" />
                         <br/>
                         <h2>Admin: </h2>
-                        <h:outputText class="h2" value="#{authauthBBdmin? 'Yes':'No'}" />
+                        <h:outputText class="h2" value="#{authCtrl.currentUserIsAdmin? 'Yes':'No'}" />
                         <br/>
                         </p:layoutUnit>
                 </p:layout>

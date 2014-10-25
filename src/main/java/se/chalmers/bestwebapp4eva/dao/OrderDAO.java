@@ -37,15 +37,15 @@ public class OrderDAO extends AbstractDAO<Order, Long> implements IOrderDAO {
 
     @Override
     public List<Order> getById(long id) {
-        String query = "SELECT o FROM Orders o WHERE o.id = :id";
-        TypedQuery<Order> result = em.createQuery(query, Order.class).setParameter("id", id);
+        EasyCriteria<Order> result = EasyCriteriaFactory.createQueryCriteria(em, Order.class);
+        result.andEquals("id", id);
         return result.getResultList();
     }
 
     @Override
     public List<Order> getByDate(Date date) {
-        String query = "SELECT o FROM Orders o WHERE o.date = :date";
-        TypedQuery<Order> result = em.createQuery(query, Order.class).setParameter("date", date);
+        EasyCriteria<Order> result = EasyCriteriaFactory.createQueryCriteria(em, Order.class);
+        result.andEquals("date", date);
         return result.getResultList();
     }
 

@@ -13,7 +13,9 @@ import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.PersistenceException;
 import se.chalmers.bestwebapp4eva.auth.AuthBB;
+import se.chalmers.bestwebapp4eva.auth.AuthCtrl;
 import se.chalmers.bestwebapp4eva.auth.AuthDAO;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.IOrderItemDAO;
@@ -23,7 +25,7 @@ import se.chalmers.bestwebapp4eva.view.CatalogueBB;
 import se.chalmers.bestwebapp4eva.entity.OrderItem;
 import se.chalmers.bestwebapp4eva.entity.Order;
 import se.chalmers.bestwebapp4eva.view.CartBB;
-
+import se.chalmers.bestwebapp4eva.view.OrderBB;
 
 /**
  * Controller for the cart
@@ -36,22 +38,22 @@ public class CartCtrl implements Serializable {
 
     @EJB
     private IBasicEntityDAO basicEntityDAO;
-    
+
     @EJB
     private IOrderDAO orderDAO;
-    
+
     @EJB
     private IOrderItemDAO basicOrderItemDAO;
     
-    @EJB
-    private AuthDAO authDAO;
-    
     @Inject
-    private AuthBB authBean;
+    private AuthCtrl authCtrl;
     
     @Inject
     private CartBB cartBB;
     
+    @Inject 
+    private OrderBB orderBB;
+
     @Inject
     private CatalogueBB entities;
 
@@ -59,7 +61,7 @@ public class CartCtrl implements Serializable {
 
     private double totalStock = 0.0;
     private double totalOrdered = 0.0;
-    private Collection<Double> orders;
+    private String orderStatus = "";
 
     public boolean isOrderDisabled() {
         return orderDisabled;
@@ -97,13 +99,13 @@ public class CartCtrl implements Serializable {
             OrderItem bi = new OrderItem(be);
             if (!cartBB.getCartItems().contains(bi)) {
                 cartBB.add(bi);
-                
+
             }
         }
     }
 
     public void removeFromCart(OrderItem item) {
-        cartBB.remove(item);   
+        cartBB.remove(item);
     }
 
     /**
@@ -120,13 +122,19 @@ public class CartCtrl implements Serializable {
             BasicEntity wrapper = new BasicEntity(i.getId(), i.getEntity().getTitle(), i.getEntity().getPrice(), i.getEntity().getQuantity(), i.getEntity().getUnit(), i.getEntity().getCategory());
             basicEntityDAO.update(wrapper);
             basicOrderItemDAO.create(i);
-            
+
         }
-        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authDAO.getUserByUsername(authBean.getUsername()).get(0));
-        orderDAO.create(dbOrder);
+        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authCtrl.getCurrentUser());
+        try {
+            orderDAO.create(dbOrder);
+            orderBB.setOrder(dbOrder);
+        } catch (PersistenceException e) {
+             orderStatus = "failed";
+        }
         cartBB.getCartItems().clear();
         totalOrdered = 0.0;
-        totalStock = 0.0;     
+        totalStock = 0.0;
+        orderStatus = "success";
     }
 
     public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException {
@@ -168,5 +176,9 @@ public class CartCtrl implements Serializable {
      */
     public boolean collapseCart() {
         return cartBB.getCartItems().isEmpty();
+    }
+    
+    public String getOrderStatus() {
+        return orderStatus;
     }
 }

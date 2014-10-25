@@ -77,8 +77,25 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
-        <from-outcome>categories</from-outcome>
-        <to-view-id>/private/user/category/categories.xhtml</to-view-id>
-    </navigation-case>
+            <from-outcome>categories</from-outcome>
+            <to-view-id>/private/user/category/categories.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/private/user/product/products.xhtml</from-view-id>
+    <navigation-case>
+            <from-action>#{cartCtrl.getOrderStatus()}</from-action>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/private/user/order/orderConfirmation.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/private/user/order/orderConfirmation.xhtml</from-view-id>
+    <navigation-case>           
+            <from-outcome>confirm</from-outcome>
+            <to-view-id>/private/user/dashboard/dashboard.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
     </navigation-rule>
 </faces-config>
