@@ -37,6 +37,12 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return em;
     }
     
+    /**
+     * Create a user with a group of either user or admin.
+     * @param username
+     * @param password 
+     * @param groupname should be "user" or "admin"
+     */
     public void createUserAndGroup(String username, String password, String groupname) {
         User user = new User();
         user.setUsername(username);
@@ -49,6 +55,8 @@ public class AuthDAO extends AbstractDAO<User, String> {
         em.persist(group);
     }
 
+    // FINDING METHODS
+    
     public List<User> getById(long id) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.id =:id", User.class)

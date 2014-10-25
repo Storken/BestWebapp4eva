@@ -1,11 +1,13 @@
 package se.chalmers.bestwebapp4eva.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
@@ -18,8 +20,8 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  * @author simon
  */
 @Named
-@RequestScoped
-public class NewEntityDialogBB {
+@ViewScoped
+public class NewEntityDialogBB implements Serializable {
 
     private Long id;
     private String title;
@@ -31,6 +33,12 @@ public class NewEntityDialogBB {
     private Category category;
     private List<Category> categories;
 
+    private String newCatName;
+    private String newCatDescription;
+
+    private boolean newCatPanelVisible;
+
+
     @EJB
     ICategoryDAO cc;
 
@@ -39,6 +47,19 @@ public class NewEntityDialogBB {
         categories = cc.findAll();
         units = new ArrayList<>();
         units.addAll(Arrays.asList(BasicEntity.Unit.values()));
+    }
+
+    // For the toggling of the custom category panel to work this BB needs to be viewscoped. 
+    // Since the bean is viewscoped, we need a method for manually clearing all fields in 
+    // the "newEntityDialog".
+    public void clearFields() {
+        this.id = (long) 0;
+        this.title = null;
+        this.price = 0;
+        this.quantity = 0;
+        this.category = null;
+        newCatPanelVisible = false;
+
     }
 
     public Long getId() {
@@ -105,8 +126,32 @@ public class NewEntityDialogBB {
         this.categories = categories;
     }
 
+    public String getNewCatName() {
+        return newCatName;
+    }
+
+    public void setNewCatName(String newCatName) {
+        this.newCatName = newCatName;
+    }
+
+    public String getNewCatDescription() {
+        return newCatDescription;
+    }
+
+    public void setNewCatDescription(String newCatDescription) {
+        this.newCatDescription = newCatDescription;
+    }
+
+    public boolean getNewCatPanelVisible() {
+        return newCatPanelVisible;
+    }
+
+    public void setNewCatPanelVisible(boolean newCatPanelVisible) {
+        this.newCatPanelVisible = newCatPanelVisible;
+    }
+
     @Override
     public String toString() {
-        return "AddEntityBB{" + "id=" + id + ", name=" + title + ", price=" + price + ", quantity=" + quantity + ",unit=" + unit + ",category=" + category.getName() + "}";
+        return "NewEntityDialogBB{" + "id=" + id + ", name=" + title + ", price=" + price + ", quantity=" + quantity + ",unit=" + unit + ",category=" + category.getName() + "}";
     }
 }

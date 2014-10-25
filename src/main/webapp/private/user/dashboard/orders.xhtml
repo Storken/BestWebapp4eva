@@ -12,7 +12,7 @@ and open the template in the editor.
                 xmlns:f="http://java.sun.com/jsf/core">
     <table width="100%">
         <br/>
-        <ui:repeat id="orders" value="#{orderBB.orders}" var="order">
+        <ui:repeat id="orders" value="#{dashboardBB.orders}" var="order">
             <tr>
                 <td align="right" style="padding-bottom: 1em">
                     <h:outputText value="#{order.id} -"/>
