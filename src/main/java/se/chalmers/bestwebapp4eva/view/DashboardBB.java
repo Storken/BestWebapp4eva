@@ -6,9 +6,10 @@
 package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.Order;
 
@@ -24,6 +25,12 @@ public class DashboardBB implements Serializable{
     
     public DashboardBB(){
         
+    }
+    
+    @PostConstruct
+    private void init(){
+        if(orders == null)
+            orders = new ArrayList();
     }
 
     public List<Order> getOrders() {

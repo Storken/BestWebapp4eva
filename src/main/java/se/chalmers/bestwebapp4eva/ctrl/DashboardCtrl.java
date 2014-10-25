@@ -11,7 +11,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.auth.AuthBB;
+import se.chalmers.bestwebapp4eva.auth.AuthCtrl;
 import se.chalmers.bestwebapp4eva.auth.AuthDAO;
 import se.chalmers.bestwebapp4eva.dao.OrderDAO;
 import se.chalmers.bestwebapp4eva.entity.Order;
@@ -31,6 +31,9 @@ public class DashboardCtrl implements Serializable{
     @EJB
     private AuthDAO authDAO;
     
+    @EJB
+    private AuthCtrl ac;
+    
     @Inject
     private DashboardBB dashboardBB;
     
@@ -39,7 +42,7 @@ public class DashboardCtrl implements Serializable{
     }
     
     public List<Order> getOrders(){
-        return null;
+        return od.getByUser(ac.getCurrentUser().getUsername());
     }
     
 }

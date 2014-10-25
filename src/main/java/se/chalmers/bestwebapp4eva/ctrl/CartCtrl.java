@@ -48,6 +48,7 @@ public class CartCtrl implements Serializable {
     
     @Inject
     private AuthBB authBean;
+    
     @Inject
     private CartBB cartBB;
     

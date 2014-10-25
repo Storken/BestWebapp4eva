@@ -79,7 +79,6 @@ public class AuthCtrl implements Serializable{
             externalContext.getSessionMap().put("user", u);  // Store User in session
             currentUser = u;
             userInlogged = true;
-            System.out.println(currentUser.getUsername());
             if(!getUserGroup().equals("admin"))
                 return "success";
             return "adminsuccess";
