@@ -11,9 +11,12 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.primefaces.event.RowEditEvent;
 import se.chalmers.bestwebapp4eva.auth.AuthCtrl;
 import se.chalmers.bestwebapp4eva.auth.AuthDAO;
+import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.dao.OrderDAO;
+import se.chalmers.bestwebapp4eva.entity.Category;
 import se.chalmers.bestwebapp4eva.entity.Order;
 import se.chalmers.bestwebapp4eva.view.DashboardBB;
 
@@ -26,13 +29,7 @@ import se.chalmers.bestwebapp4eva.view.DashboardBB;
 public class DashboardCtrl implements Serializable{
     
     @EJB
-    private OrderDAO od; 
-    
-    @EJB
-    private AuthDAO authDAO;
-    
-    @Inject 
-    private AuthCtrl ac;
+    private ICategoryDAO categoryDAO;
     
     @Inject
     private DashboardBB dashboardBB;
@@ -41,8 +38,13 @@ public class DashboardCtrl implements Serializable{
         
     }
     
-    public void updateDashboard(){
-        dashboardBB.setOrders(od.getByUser(ac.getCurrentUser().getUsername()));
+    public void onRowEdit(RowEditEvent event) {
+        Category editedEntity = (Category)event.getObject();
+        categoryDAO.update(editedEntity);
+    }
+    
+    public void onRowCancel(RowEditEvent event) {
+        System.out.println("rowCancel");
     }
     
 }

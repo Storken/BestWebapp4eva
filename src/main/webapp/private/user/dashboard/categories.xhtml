@@ -1,37 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-
-
-    <h:form id="category123">
+    <h:form id="tableCategories">
         <p:dataTable 
-            id="categories"
             var="category" 
-            value="#{categoryBB.categories}"
+            value="#{dashboardBB.categories}"
             lazy="true" 
             paginator="true" 
-            paginatorAlwaysVisible="true"
-            paginatorPosition="top"
-            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             rows="10"
             sortBy="#{category.id}"
             emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
-            selection="#{categoryBB.selectedCategories}"
+            selection="#{catalogueBB.selectedEntities}"
             rowKey="#{category.id}"
             editable="true"
+            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             currentPageReportTemplate="Page {currentPage} of {totalPages}"
-            rowsPerPageTemplate="10,50,100"> 
+            rowsPerPageTemplate="10,50,100"
+            id="entities"> 
 
             <f:facet name="header">
                 Categories
             </f:facet>
-            <p:ajax event="rowEdit" listener="#{editCategoryCtrl.onRowEdit}"/>
-            <p:ajax event="rowEditCancel" listener="#{editCategoryCtrl.onRowCancel}"/>
+            <p:ajax event="rowEdit" listener="#{dashboardCtrl.onRowEdit}"/>
+            <p:ajax event="rowEditCancel" listener="#{dashboardCtrl.onRowCancel}"/>
             <p:column selectionMode="multiple" style="width:48px;text-align:center"/>
             <p:column sortBy="#{category.id}" filterBy="#{category.id}" filterMatchMode="contains" headerText="ID">    
                 <h:outputText value="#{category.id}" />
@@ -44,23 +44,17 @@
             </p:column>
             <p:column sortBy="#{category.description}" filterBy="#{category.description}" filterMatchMode="contains" headerText="Description">                 
                 <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{category.description}"/></f:facet>
+                    <f:facet name="output"><h:outputText value="$ #{category.description}"/></f:facet>
                     <f:facet name="input"><p:inputText value="#{category.description}"/></f:facet>
                 </p:cellEditor>
+
             </p:column>
             <p:column style="width:32px">
                 <p:rowEditor />
             </p:column>
-            <f:facet name="footer">
-                <p:commandButton value="New category" style="align: left" onclick="PF('newCategoryDialog').show();"/>
-            </f:facet>
         </p:dataTable>
     </h:form>
-    
-    <p:dialog header="Create new category" widgetVar="newCategoryDialog" 
-              showEffect="size" hideEffect="size" resizable="false" closeOnEscape="true" draggable="false">
-        <ui:include src="/private/user/category/newCategoryDialog.xhtml"/>
-    </p:dialog>
 
 
+    <hr/>
 </ui:composition>

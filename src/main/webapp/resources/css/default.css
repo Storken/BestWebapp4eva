@@ -13,8 +13,7 @@ root {
 }
 
 body {
-    margin: auto;
-    
+    background-color: #22313F;
 }
 
 .ui-tabs{

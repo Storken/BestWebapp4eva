@@ -17,10 +17,13 @@
         <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
                 <br/>
-                <p:layout id="layout"  style="height: 800px">
-                    <p:layoutUnit position="center">      
+                <p:layout id="layout"  style="position: absolute; bottom: 0px; top: 50px; width: 100%">
+                    <p:layoutUnit position="center" size="50%">      
                         <ui:include src="/private/user/dashboard/orders.xhtml"/>
 
+                    </p:layoutUnit>
+                    <p:layoutUnit position="east" size="50%">
+                        <ui:include src="/private/user/category/categorylist.xhtml"/>
                     </p:layoutUnit>
                 </p:layout>
             </ui:define>
