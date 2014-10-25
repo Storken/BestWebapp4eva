@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import se.chalmers.bestwebapp4eva.auth.User;
@@ -19,6 +20,7 @@ import se.chalmers.bestwebapp4eva.auth.User;
  * @author tholene
  */
 @Entity
+@Table (name = "Orders")
 public class Order extends AbstractDBObject{
     
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,23 +36,23 @@ public class Order extends AbstractDBObject{
     
     @JoinColumn(nullable = false)
     @ManyToOne
-    private User currentUser;
+    private User user;
     
     public Order() {
     }
     
-    public Order(Date date, List<OrderItem> items, User currentUser) {
+    public Order(Date date, List<OrderItem> items, User user) {
         this.orderDate = date;
         this.orderItems = items;
-        this.currentUser = currentUser;
+        this.user = user;
     }
     
         
-    public Order(long id, Date orderDate, List<OrderItem> items, User currentUser) {
+    public Order(long id, Date orderDate, List<OrderItem> items, User user) {
         this.id = id;
         this.orderDate = orderDate;
         this.orderItems = items;
-        this.currentUser = currentUser; 
+        this.user = user; 
     }
     
     @Override
@@ -67,7 +69,7 @@ public class Order extends AbstractDBObject{
     }
     
     public User getUser() {
-        return currentUser;
+        return user;
     }
 
     @Override
@@ -83,8 +85,8 @@ public class Order extends AbstractDBObject{
         this.orderItems = items;
     }
     
-    public void setUser(User currentUser) {
-        this.currentUser = currentUser;
+    public void setUser(User user) {
+        this.user = user;
     }
     
     @Override
@@ -94,7 +96,7 @@ public class Order extends AbstractDBObject{
         for(OrderItem e: orderItems) {
             sb.append("\n").append(e.getTitle()).append(", ").append(e.getOrderQuantity()).append(" ").append(e.getUnit()).append(" ");
         }
-        sb.append("\nPlaced by ").append(currentUser.getUsername()).append(" at ").append(orderDate.toString()).append(".");
+        sb.append("\nPlaced by ").append(user.getUsername()).append(" at ").append(orderDate.toString()).append(".");
         return sb.toString();
     }
     

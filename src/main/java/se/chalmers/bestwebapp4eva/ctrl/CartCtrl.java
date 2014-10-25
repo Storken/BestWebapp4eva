@@ -13,6 +13,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
+import se.chalmers.bestwebapp4eva.auth.AuthBean;
 import se.chalmers.bestwebapp4eva.auth.AuthDAO;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.IOrderItemDAO;
@@ -46,6 +47,8 @@ public class CartCtrl implements Serializable {
     private AuthDAO authDAO;
     
     @Inject
+    private AuthBean authBean;
+    @Inject
     private CartBB cartBB;
     
     @Inject
@@ -72,6 +75,7 @@ public class CartCtrl implements Serializable {
         }
         orderDisabled = totalOrdered == 0.0 || totalStock == 0.0;
         totalOrdered = 0.0;
+       System.out.println(orderDAO.getByUser(authDAO.getUserByUsername(authBean.getUsername()).get(0).getUsername()));
     }
 
     public void setOrderDisabled(boolean orderDisabled) {
@@ -118,7 +122,7 @@ public class CartCtrl implements Serializable {
             basicOrderItemDAO.create(i);
             
         }
-        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authDAO.getUserByUsername("erik").get(0));
+        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authDAO.getUserByUsername(authBean.getUsername()).get(0));
         orderDAO.create(dbOrder);
         cartBB.getCartItems().clear();
         totalOrdered = 0.0;

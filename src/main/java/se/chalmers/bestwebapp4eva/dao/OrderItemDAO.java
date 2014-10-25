@@ -30,21 +30,21 @@ public class OrderItemDAO extends AbstractDAO<OrderItem, Long> implements IOrder
 
     @Override
     public List<OrderItem> getById(long id) {
-        String query = "SELECT i FROM BasicOrderItem o WHERE o.id = :id";
+        String query = "SELECT i FROM OrderItem o WHERE o.id = :id";
         TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("id", id);
         return result.getResultList();
     }
 
     @Override
     public List<OrderItem> getByOrderQuantity(double orderQuantity) {
-        String query = "SELECT i FROM BasicOrderItem i WHERE i.orderQuantity = :orderQuantity";
+        String query = "SELECT i FROM OrderItem i WHERE i.orderQuantity = :orderQuantity";
         TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("orderQuantity", orderQuantity);
         return result.getResultList();
     }
     
     @Override
     public List<OrderItem> getByEntity(BasicEntity entity) {
-        String query = "SELECT i FROM BasicOrderItem i WHERE i.entity = :entity";
+        String query = "SELECT i FROM OrderItem i WHERE i.entity = :entity";
         TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("entity", entity);
         return result.getResultList();
     }
