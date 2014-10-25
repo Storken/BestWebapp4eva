@@ -54,13 +54,20 @@
 
             </table>
             <br></br>
+            <p:commandButton id="cancel" 
+                             value="Close cart"                          
+                             onclick="PF('multiEntityDialog').hide()" 
+                             icon="ui-icon ui-icon-closethick"
+                             />
             <p:commandButton id="order" 
                              value="#{cartCtrl.orderButtonMessage}" 
                              update=":cartItems :layout" 
                              actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" 
                              onclick="PF('multiEntityDialog').hide()" 
                              icon="#{cartCtrl.orderButtonIcon}" 
-                             disabled="#{cartCtrl.orderDisabled}"/>
+                             disabled="#{cartCtrl.orderDisabled}"
+                             action="#{cartCtrl.getOrderStatus()}"
+                             />
         </h:form>
     </p:outputPanel>
 </ui:composition>
