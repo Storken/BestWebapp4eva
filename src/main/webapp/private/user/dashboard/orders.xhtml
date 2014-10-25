@@ -10,7 +10,7 @@ and open the template in the editor.
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-            <h:form id="tableForm">
+    <h:form id="tableForm">
         <p:dataTable 
             var="order" 
             value="#{dashboardBB.orders}"
@@ -29,10 +29,10 @@ and open the template in the editor.
                 Orders
             </f:facet>
             <p:column sortBy="#{order.id}" headerText="ID">    
-                <p:commandLink value="#{order.id}" onclick="#{orderBB.setOrder(order)}" oncomplete="PF('orderDialog').show()"/>
+                <p:commandLink value="#{order.id}" />
             </p:column>
             <p:column sortBy="#{order.date}" headerText="Date">    
-                <p:commandLink value="#{order.date}" onclick="#{orderBB.setOrder(order)}" oncomplete="PF('orderDialog').show()"/>
+                <p:commandLink value="#{order.date}"/>
 
             </p:column>
         </p:dataTable>
