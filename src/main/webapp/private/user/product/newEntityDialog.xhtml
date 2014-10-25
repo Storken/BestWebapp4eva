@@ -7,7 +7,7 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <h:form>
+    <h:form id="newEntityForm">
         <h:panelGrid columns="2" cellpadding="5">
             <h:outputLabel value="Title:" for="title"/>
             <h:inputText id="title" value="#{newEntityDialogBB.title}" required="true"/>
@@ -24,10 +24,26 @@
             </p:selectOneMenu>
 
             <h:outputLabel value="Category:" for="category" />
-            <p:selectOneMenu id="category" required="true" value="#{newEntityDialogBB.category}" converter="#{categoryConverter}">
-                <f:selectItems value="#{newEntityDialogBB.categories}" var="category" itemLabel="#{category.name}" />
-            </p:selectOneMenu>
+            <h:panelGrid columns="2">
+                <p:selectOneMenu id="category" required="true" disabled="#{newEntityDialogBB.newCatPanelVisible}" value="#{newEntityDialogBB.category}" converter="#{categoryConverter}">
+                    <f:selectItems value="#{newEntityDialogBB.categories}" var="category" itemLabel="#{category.name}" />
+                </p:selectOneMenu>
+                <p:commandButton id="newCatBtn" type="button" icon="ui-icon-plus" >
+                    <p:ajax listener="#{newEntityCtrl.togglePanel}" update=":newEntityForm:newCat :newEntityForm:category"/>
+                </p:commandButton>
+            </h:panelGrid>
         </h:panelGrid>
+<<<<<<< HEAD:src/main/webapp/private/user/product/newEntityDialog.xhtml
+=======
+        <p:panel id="newCat" header="New Category" visible="#{newEntityDialogBB.newCatPanelVisible}">
+            <h:panelGrid columns="2" cellpadding="0">
+                <p:outputLabel for="newName" value="Name:" />
+                <p:inputText id="newName" value="#{newEntityDialogBB.newCatName}" />
+                <p:outputLabel for="newDescription" value="Description:"/>
+                <p:inputText id="newDescription" value="#{newEntityDialogBB.newCatDescription}" />
+            </h:panelGrid>
+        </p:panel> 
+>>>>>>> manageCategories:src/main/webapp/partials/product/newEntityDialog.xhtml
 
 
         <p:commandButton value="Cancel" onclick="newEntityDialog.hide()"/>
