@@ -29,10 +29,10 @@ and open the template in the editor.
                 Orders
             </f:facet>
          <p:column style="width:48px;text-align:center"/>
-            <p:column sortBy="#{order.id}" filterBy="#{order.id}" filterMatchMode="contains" headerText="ID">    
+            <p:column sortBy="#{order.id}" headerText="ID">    
                 <h:outputText value="#{order.id}" />
             </p:column>
-            <p:column sortBy="#{order.date}" filterBy="#{order.date}" filterMatchMode="contains" headerText="Date">                 
+            <p:column sortBy="#{order.date}" headerText="Date">                 
                 <h:outputText value="#{order.date}"/>
             </p:column>
             <p:column style="width:32px">
