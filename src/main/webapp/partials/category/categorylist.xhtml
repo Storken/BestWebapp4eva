@@ -57,6 +57,10 @@
         </p:dataTable>
     </h:form>
     
+    <h:form prependId="false">
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+    </h:form>
+    
     <p:dialog header="Create new category" widgetVar="newCategoryDialog" modal="true" showEffect="size" hideEffect="size" resizable="true" closeOnEscape="true" draggable="false">
                     <ui:include src="/partials/category/newCategoryDialog.xhtml"/>
                 </p:dialog>
