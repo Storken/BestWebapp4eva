@@ -1,0 +1,39 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package se.chalmers.bestwebapp4eva.ctrl;
+
+import java.io.Serializable;
+import java.util.List;
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+import se.chalmers.bestwebapp4eva.auth.AuthDAO;
+import se.chalmers.bestwebapp4eva.dao.OrderDAO;
+import se.chalmers.bestwebapp4eva.entity.Order;
+
+/**
+ *
+ * @author Bosch
+ */
+@Named
+@SessionScoped
+public class DashboardCtrl implements Serializable{
+    
+    @EJB
+    private OrderDAO od; 
+    
+    @EJB
+    private AuthDAO authDAO;
+    
+    public DashboardCtrl(){
+        
+    }
+    
+    public List<Order> getOrders(){
+        return null;
+    }
+    
+}
