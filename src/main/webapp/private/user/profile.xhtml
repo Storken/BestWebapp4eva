@@ -23,8 +23,8 @@
                         <h2>Password: </h2>
                         <h:outputText class="h2" value="#{authCtrl.currentUser.password}" />
                         <br/>
-                        <h2>Admin: </h2>
-                        <h:outputText class="h2" value="#{authCtrl.currentUserIsAdmin? 'Yes':'No'}" />
+                        <h2>Level of user: </h2>
+                        <h:outputText class="h2" value="#{authCtrl.userGroup}" />
                         <br/>
                         </p:layoutUnit>
                 </p:layout>

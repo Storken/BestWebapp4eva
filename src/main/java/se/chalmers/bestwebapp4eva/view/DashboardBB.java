@@ -11,8 +11,11 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import se.chalmers.bestwebapp4eva.auth.AuthCtrl;
 import se.chalmers.bestwebapp4eva.auth.AuthDAO;
+import se.chalmers.bestwebapp4eva.dao.IOrderDAO;
 import se.chalmers.bestwebapp4eva.dao.OrderDAO;
 import se.chalmers.bestwebapp4eva.entity.Order;
 
@@ -30,6 +33,12 @@ public class DashboardBB implements Serializable{
     @EJB
     private AuthDAO ad;
     
+    @EJB
+    private IOrderDAO od;
+    
+    @Inject
+    private AuthCtrl ac;
+    
     public DashboardBB(){
         
     }
@@ -38,6 +47,8 @@ public class DashboardBB implements Serializable{
     private void init(){
         if(orders == null)
             orders = new ArrayList();
+        
+        orders.addAll(od.getByUser(ac.getCurrentUser().getUsername()));
     }
 
     public List<Order> getOrders() {
