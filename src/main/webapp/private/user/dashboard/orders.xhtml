@@ -29,18 +29,14 @@ and open the template in the editor.
                 Orders
             </f:facet>
             <p:column sortBy="#{order.id}" headerText="ID">    
-                <p:commandLink value="#{order.id}" />
+                <p:commandLink value="#{order.id}" onclick="#{orderBB.setOrder(order)}; PF('orderDialog').show()"/>
             </p:column>
             <p:column sortBy="#{order.date}" headerText="Date">    
-                <p:commandLink value="#{order.date}"/>
-
+                <p:commandLink value="#{order.date}" onclick="#{orderBB.setOrder(order)}; PF('orderDialog').show()"/>
+             
             </p:column>
         </p:dataTable>
     </h:form>
-
-
-    <h:form prependId="false">
-        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
-    </h:form>
-    <hr/>
+    
+    
 </ui:composition>

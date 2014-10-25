@@ -90,16 +90,16 @@ public class OrderBB implements Serializable {
         
         pdf.add(Image.getInstance(header));
             
-        pdf.add(new Paragraph("Order placed by: " + getUserName()));
-        pdf.add(new Paragraph("Order placed at: " + getDate().toString()));
-        pdf.add(new Paragraph("\n\n\n"));
+        pdf.add(new Paragraph("\n\n               Order placed by: " + getUserName()));
+        pdf.add(new Paragraph("              Order placed at: " + getDate().toString()));
+        pdf.add(new Paragraph("\n\n"));
 
     }
 
     public void postProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
         Document pdf = (Document) document;
 
-        pdf.add(new Paragraph("\tTotal cost: " + getTotal()));
+        pdf.add(new Paragraph("\n               Total cost: $" + getTotal()));
 
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String theguy = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img" + File.separator + "theguy.png";

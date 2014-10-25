@@ -45,8 +45,11 @@ public class CartCtrl implements Serializable {
     @EJB
     private IOrderItemDAO basicOrderItemDAO;
     
+    @EJB
+    private AuthDAO authDAO;
+    
     @Inject
-    private AuthCtrl authCtrl;
+    private AuthBB authBB;
     
     @Inject
     private CartBB cartBB;
@@ -124,7 +127,7 @@ public class CartCtrl implements Serializable {
             basicOrderItemDAO.create(i);
 
         }
-        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authCtrl.getCurrentUser());
+        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authDAO.getUserByUsername(authBB.getUsername()).get(0));
         try {
             orderDAO.create(dbOrder);
             orderBB.setOrder(dbOrder);
