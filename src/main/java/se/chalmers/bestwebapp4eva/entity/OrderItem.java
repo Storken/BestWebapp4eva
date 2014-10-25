@@ -20,10 +20,10 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 @Entity
 public class OrderItem extends AbstractDBObject {
     
-    @Id
+     @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private long pk;
-    
+
     private BasicEntity entity;
 
     @Column
@@ -57,7 +57,7 @@ public class OrderItem extends AbstractDBObject {
     public Long getPk() {
         return pk;
     }
-
+    
     @Override
     public Long getId() {
         return entity.getId();

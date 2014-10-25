@@ -60,7 +60,9 @@
                              actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" 
                              onclick="PF('multiEntityDialog').hide()" 
                              icon="#{cartCtrl.orderButtonIcon}" 
-                             disabled="#{cartCtrl.orderDisabled}"/>
+                             disabled="#{cartCtrl.orderDisabled}"
+                             action="#{cartCtrl.getOrderStatus()}"
+                             />
         </h:form>
     </p:outputPanel>
 </ui:composition>
