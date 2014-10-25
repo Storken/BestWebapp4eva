@@ -10,24 +10,43 @@ and open the template in the editor.
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-    <table width="100%">
-        <br/>
-        <ui:repeat id="orders" value="#{dashboardBB.orders}" var="order">
-            <tr>
-                <td align="right" style="padding-bottom: 1em">
-                    <h:outputText value="#{order.id} -"/>
-                </td>
-                <td align="left" style="padding-bottom: 1em">
-                    <h:outputText value="#{order.title}, "/>
-                    <h:outputText value="#{order.quantity} "/>
-                    <h:outputText value="#{order.unit}"/>
-                </td>
-                <td align="right" style="padding-bottom: 1em">
-                    <p:commandLink title="Remove from orders" actionListener="#{orderCtrl.removeFromList(order.id)}" styleClass="ui-icon ui-icon-closethick" update=":layout"/> 
-                </td>
-            </tr>
-        </ui:repeat>
-    </table>
+            <h:form id="tableForm">
+        <p:dataTable 
+            var="order" 
+            value="#{dashboardBB.orders}"
+            lazy="true" 
+            paginator="true" 
+            rows="10"
+            sortBy="#{order.id}"
+            emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
+            rowKey="#{order.id}"
+            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+            currentPageReportTemplate="Page {currentPage} of {totalPages}"
+            rowsPerPageTemplate="10,50,100"
+            id="orders"> 
+
+            <f:facet name="header">
+                Orders
+            </f:facet>
+         <p:column style="width:48px;text-align:center"/>
+            <p:column sortBy="#{order.id}" filterBy="#{order.id}" filterMatchMode="contains" headerText="ID">    
+                <h:outputText value="#{order.id}" />
+            </p:column>
+            <p:column sortBy="#{order.date}" filterBy="#{order.date}" filterMatchMode="contains" headerText="Title">                 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{order.date}"/></f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column style="width:32px">
+                <p:rowEditor />
+            </p:column>
+        </p:dataTable>
+    </h:form>
+
+
+    <h:form prependId="false">
+        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+    </h:form>
 
     <hr/>
 </ui:composition>

@@ -31,7 +31,7 @@ public class DashboardCtrl implements Serializable{
     @EJB
     private AuthDAO authDAO;
     
-    @EJB
+    @Inject 
     private AuthCtrl ac;
     
     @Inject
@@ -41,8 +41,8 @@ public class DashboardCtrl implements Serializable{
         
     }
     
-    public List<Order> getOrders(){
-        return od.getByUser(ac.getCurrentUser().getUsername());
+    public void updateDashboard(){
+        dashboardBB.setOrders(od.getByUser(ac.getCurrentUser().getUsername()));
     }
     
 }

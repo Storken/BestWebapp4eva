@@ -15,15 +15,14 @@
 
         <ui:composition template="/WEB-INF/template.xhtml">
             <ui:define name="content"> 
-                
                 <br/>
-                <p:layout id="layout" >
+                <p:layout id="layout"  style="height: 800px">
                     <p:layoutUnit position="center">      
                         <ui:include src="/private/user/dashboard/orders.xhtml"/>
 
                     </p:layoutUnit>
                 </p:layout>
-                
+                        <p:commandButton action="#{dashboardCtrl.updateDashboard()}" value="update"/>
             </ui:define>
         </ui:composition>
     </h:body>
