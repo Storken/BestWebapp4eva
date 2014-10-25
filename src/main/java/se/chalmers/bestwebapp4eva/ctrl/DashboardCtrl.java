@@ -9,10 +9,13 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+import se.chalmers.bestwebapp4eva.auth.AuthBB;
 import se.chalmers.bestwebapp4eva.auth.AuthDAO;
 import se.chalmers.bestwebapp4eva.dao.OrderDAO;
 import se.chalmers.bestwebapp4eva.entity.Order;
+import se.chalmers.bestwebapp4eva.view.DashboardBB;
 
 /**
  *
@@ -27,6 +30,9 @@ public class DashboardCtrl implements Serializable{
     
     @EJB
     private AuthDAO authDAO;
+    
+    @Inject
+    private DashboardBB dashboardBB;
     
     public DashboardCtrl(){
         

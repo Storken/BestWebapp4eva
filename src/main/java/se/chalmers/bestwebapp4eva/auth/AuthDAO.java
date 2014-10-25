@@ -57,6 +57,7 @@ public class AuthDAO extends AbstractDAO<User, String> {
 
     // FINDING METHODS
     
+    
     public List<User> getById(long id) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.id =:id", User.class)
