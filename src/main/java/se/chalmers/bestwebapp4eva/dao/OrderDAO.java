@@ -18,7 +18,7 @@ public class OrderDAO extends AbstractDAO<Order, Long> implements IOrderDAO {
 
     @PersistenceContext
     private EntityManager em;
-
+    
     public OrderDAO() {
         super(Order.class);
     }
