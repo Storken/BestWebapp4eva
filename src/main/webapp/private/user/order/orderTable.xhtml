@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+    <table id="order" border="1" width="20%">
+        <thead>
+            <tr><td><h:outputText value="Placed by: #{orderBB.userName} "/></td></tr>
+            <tr><td><h:outputText value="Placed on: #{orderBB.date}"/></td></tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <table width="100%" border="1">                                        
+                        <thead>
+                            <tr>
+                                <td><b><u>Amount</u></b></td>
+                                <td><b><u>Title</u></b></td>
+                                <td align="center"><b><u>Cost</u></b></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <ui:repeat value="#{orderBB.orderItems}" var="item">
+                                <tr> 
+                                    <td><h:outputText value="#{item.orderQuantity} #{item.unit} "/></td>
+                                    <td><h:outputText value="#{item.title} "/> </td>             
+                                    <td>
+                                        <table width="100%">
+                                            <tr>
+                                                <td align="left" width="100"><h:outputText value="$#{item.price}/#{item.unit}"/></td>
+                                                <td align="center" width="1"><h:outputText value="="/></td>
+                                                <td align="right"><h:outputText value="$#{item.price * item.orderQuantity}" /></td>
+                                            </tr>  
+                                        </table>
+
+                                    </td> 
+                                </tr>
+                            </ui:repeat>
+
+                        </tbody>
+                    </table>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr><td align="right"><h:outputText value="Total: $#{orderBB.total}"/></td></tr>
+        </tfoot>
+    </table>
+</ui:composition> 

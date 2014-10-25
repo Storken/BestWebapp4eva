@@ -7,20 +7,13 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/WEB-INF/template.xhtml">
-    <head>
-
-        <script type="text/javascript" src="jspdf/libs/sprintf.js"/>
-        <script type="text/javascript" src="jspdf/jspdf.js"/>
-        <script type="text/javascript" src="jspdf/libs/base64.js"/>
-    </head>
     <ui:define name="content"> 
         <br/>
-        <p:layout id="layout" style="height: 1080px">
+        <p:layout id="layout">
             <p:layoutUnit position="center">              
                 <div align="center">
                     <br/>
                     <br/>
-                    <h1>Your order has been placed :-)</h1>
                     <br/>
                     <br/>
                     <br/>
@@ -29,7 +22,7 @@
                    
                     <p:commandButton
                         value="OK"
-                        action="confirm"
+                        onclick="PF('orderDialog').hide()"
                         icon="ui-icon ui-icon-check"
                         />
                 </div>

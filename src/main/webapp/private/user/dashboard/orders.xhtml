@@ -30,13 +30,10 @@ and open the template in the editor.
             </f:facet>
          <p:column style="width:48px;text-align:center"/>
             <p:column sortBy="#{order.id}" headerText="ID">    
-                <h:outputText value="#{order.id}" />
+                <p:commandLink value="#{order.id}" onclick="#{orderBB.setOrder(order)}" oncomplete="PF('orderDialog').show()"/>
             </p:column>
-            <p:column sortBy="#{order.date}" headerText="Date">                 
-                <h:outputText value="#{order.date}"/>
-            </p:column>
-            <p:column style="width:32px">
-                <p:rowEditor />
+            <p:column sortBy="#{order.date}" headerText="Date">    
+                <p:commandLink value="#{order.date}" onclick="#{orderBB.setOrder(order)}" oncomplete="PF('orderDialog').show()"/>
             </p:column>
         </p:dataTable>
     </h:form>
@@ -45,6 +42,5 @@ and open the template in the editor.
     <h:form prependId="false">
         <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
     </h:form>
-
     <hr/>
 </ui:composition>
