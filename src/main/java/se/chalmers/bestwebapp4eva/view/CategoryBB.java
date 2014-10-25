@@ -2,10 +2,13 @@ package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
+import org.primefaces.model.LazyDataModel;
+import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
@@ -20,20 +23,30 @@ public class CategoryBB implements Serializable{
     @EJB
     private ICategoryDAO categoryDAO;
     
-    private List<Category> categories;
+    private LazyDataModel<Category> categories;
     
     private List<Category> selectedCategories;
     
     @PostConstruct
     public void init() {
-        categories = categoryDAO.findAll();
+        this.categories = new LazyDataModel<Category>() {
+            @Override
+            public List<Category> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
+                List<Category> result = categoryDAO.getResultList(first, pageSize, sortField, sortOrder, filters);
+                categories.setRowCount(categoryDAO.count(sortField, sortOrder, filters));
+                if (categories.getRowCount() < categoryDAO.findAll().size() && categories.getRowCount() != 0) {
+                    //filterMessage();
+                }
+                return result;
+            }
+        };
     }
     
-    public List<Category> getCategories() {
+    public LazyDataModel<Category> getCategories() {
         return this.categories;
     }
     
-    public void setCategories(List<Category> categories) {
+    public void setCategories(LazyDataModel<Category> categories) {
         this.categories = categories;
     }
     

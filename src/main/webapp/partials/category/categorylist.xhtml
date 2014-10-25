@@ -8,22 +8,24 @@
                 xmlns:f="http://java.sun.com/jsf/core">
 
 
-    <h:form id="category" >
+    <h:form id="category">
         <p:dataTable 
+            id="categories"
             var="category" 
             value="#{categoryBB.categories}"
             lazy="true" 
             paginator="true" 
+            paginatorAlwaysVisible="true"
+            paginatorPosition="top"
+            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             rows="10"
             sortBy="#{category.id}"
             emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
             selection="#{categoryBB.selectedCategories}"
             rowKey="#{category.id}"
             editable="true"
-            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             currentPageReportTemplate="Page {currentPage} of {totalPages}"
-            rowsPerPageTemplate="10,50,100"
-            id="entities"> 
+            rowsPerPageTemplate="10,50,100"> 
 
             <f:facet name="header">
                 Categories
@@ -50,10 +52,14 @@
                 <p:rowEditor />
             </p:column>
             <f:facet name="footer">
-                <p:commandButton value="New category" onclick="PF('newCategoryDialog').show();" actionListener="#"/>
+                <p:commandButton value="New category" style="align: left" onclick="PF('newCategoryDialog').show();"/>
             </f:facet>
         </p:dataTable>
     </h:form>
+    
+    <p:dialog header="Create new category" widgetVar="newCategoryDialog" modal="true" showEffect="size" hideEffect="size" resizable="true" closeOnEscape="true" draggable="false">
+                    <ui:include src="/partials/category/newCategoryDialog.xhtml"/>
+                </p:dialog>
 
 
 </ui:composition>

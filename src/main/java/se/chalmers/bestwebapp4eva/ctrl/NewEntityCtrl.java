@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
@@ -25,6 +20,7 @@ import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
  * Controller class for entities and their connection to the database
  *
  * @author tholene
+ * @author simon
  */
 @Named
 @RequestScoped

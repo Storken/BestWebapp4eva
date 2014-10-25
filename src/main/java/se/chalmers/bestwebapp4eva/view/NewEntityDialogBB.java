@@ -151,6 +151,6 @@ public class NewEntityDialogBB implements Serializable {
 
     @Override
     public String toString() {
-        return "AddEntityBB{" + "id=" + id + ", name=" + title + ", price=" + price + ", quantity=" + quantity + ",unit=" + unit + ",category=" + category.getName() + "}";
+        return "NewEntityDialogBB{" + "id=" + id + ", name=" + title + ", price=" + price + ", quantity=" + quantity + ",unit=" + unit + ",category=" + category.getName() + "}";
     }
 }
