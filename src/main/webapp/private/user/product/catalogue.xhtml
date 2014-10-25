@@ -40,27 +40,16 @@
             </p:column>
             <p:column sortBy="#{entity.price}" filterBy="#{entity.price}" filterMatchMode="contains" headerText="Price">                 
                 <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{entity.price}"/></f:facet>
+                    <f:facet name="output"><h:outputText value="$ #{entity.price}"/></f:facet>
                     <f:facet name="input"><p:inputText value="#{entity.price}"/></f:facet>
                 </p:cellEditor>
 
             </p:column>
             <p:column sortBy="#{entity.quantity}" filterBy="#{entity.quantity}" filterMatchMode="contains" headerText="Quantity">                 
                 <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{entity.quantity} "/></f:facet>
+                    <f:facet name="output"><h:outputText value="#{entity.quantity} #{entity.unit}"/></f:facet>
                     <f:facet name="input"><p:inputText value="#{entity.quantity}"/></f:facet>
                 </p:cellEditor>
-            </p:column>
-            <p:column sortBy="#{entity.unit}" filterBy="#{entity.unit}" filterMatchMode="contains" headerText="Unit">                
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{entity.unit}"/></f:facet>
-                    <f:facet name="input">
-                        <h:selectOneMenu value="#{entity.unit}">
-                            <f:selectItems value="#{catalogueBB.units}" var="unit" itemLabel="#{unit}" itemValue="#{unit}"/>
-                        </h:selectOneMenu>
-                    </f:facet>
-                </p:cellEditor>
-
             </p:column>
             <p:column sortBy="#{entity.category.name}" filterBy="#{entity.category.name}" filterMatchMode="contains" headerText="Category">                 
                 <p:cellEditor>

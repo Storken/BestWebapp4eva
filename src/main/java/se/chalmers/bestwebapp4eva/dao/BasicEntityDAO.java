@@ -107,7 +107,6 @@ public class BasicEntityDAO extends AbstractDAO<BasicEntity, Long> implements IB
         // Filter
         List<String> stringAttributes = new ArrayList<>();
         stringAttributes.add("title");
-        stringAttributes.add("unit");
         stringAttributes.add("category.name");
 
         for (Map.Entry<String, Object> filter : filters.entrySet()) {
