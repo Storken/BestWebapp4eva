@@ -28,12 +28,12 @@ and open the template in the editor.
             <f:facet name="header">
                 Orders
             </f:facet>
-         <p:column style="width:48px;text-align:center"/>
             <p:column sortBy="#{order.id}" headerText="ID">    
                 <p:commandLink value="#{order.id}" onclick="#{orderBB.setOrder(order)}" oncomplete="PF('orderDialog').show()"/>
             </p:column>
             <p:column sortBy="#{order.date}" headerText="Date">    
                 <p:commandLink value="#{order.date}" onclick="#{orderBB.setOrder(order)}" oncomplete="PF('orderDialog').show()"/>
+
             </p:column>
         </p:dataTable>
     </h:form>
