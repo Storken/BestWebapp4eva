@@ -7,25 +7,75 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 template="/WEB-INF/template.xhtml">
+    <head>
 
+        <script type="text/javascript" src="jspdf/libs/sprintf.js"/>
+        <script type="text/javascript" src="jspdf/jspdf.js"/>
+        <script type="text/javascript" src="jspdf/libs/base64.js"/>
+    </head>
     <ui:define name="content"> 
         <br/>
         <p:layout id="layout" style="height: 1080px">
-            <p:layoutUnit position="center">    
-
-                <h:outputText value="Placed by: #{orderBB.userName} "/><br/>
-                <h:outputText value="Placed on: #{orderBB.date}"/><br/>            
-                <h:outputText value="Items :"/><br/>
-
-                <ui:repeat value="#{orderBB.orderItems}" var="item">
-                    <h:outputText value="#{item.orderQuantity} #{item.unit} "/>
-                    <h:outputText value="#{item.title} "/>              
-                    <h:outputText value="for $#{item.price}/#{item.unit}"/>
-                    <h:outputText value=" = $#{item.price * item.orderQuantity}"/>
+            <p:layoutUnit position="center">              
+                <div align="center">
                     <br/>
-                </ui:repeat>
-                 <h:outputText value="Total: $#{orderBB.total}"/><br/>
+                    <br/>
+                    <h1>Your order has been placed :-)</h1>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <table id="order" border="1" width="20%">
+                        <thead>
+                            <tr><td><h:outputText value="Placed by: #{orderBB.userName} "/></td></tr>
+                            <tr><td><h:outputText value="Placed on: #{orderBB.date}"/></td></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <table width="100%" border="1">                                        
+                                        <thead>
+                                            <tr>
+                                                <td><b><u>Amount</u></b></td>
+                                                <td><b><u>Title</u></b></td>
+                                                <td align="center"><b><u>Cost</u></b></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
+                                            <ui:repeat value="#{orderBB.orderItems}" var="item">
+                                                <tr> 
+                                                    <td><h:outputText value="#{item.orderQuantity} #{item.unit} "/></td>
+                                                    <td><h:outputText value="#{item.title} "/> </td>             
+                                                    <td>
+                                                        <table width="100%">
+                                                            <tr>
+                                                                <td align="left" width="100"><h:outputText value="$#{item.price}/#{item.unit}"/></td>
+                                                                <td align="center" width="1"><h:outputText value="="/></td>
+                                                                <td align="right"><h:outputText value="$#{item.price * item.orderQuantity}" /></td>
+                                                            </tr>  
+                                                        </table>
+
+                                                    </td> 
+                                                </tr>
+                                            </ui:repeat>
+
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr><td align="right"><h:outputText value="Total: $#{orderBB.total}"/></td></tr>
+                        </tfoot>
+                    </table>
+                    <br/>
+                   
+                    <p:commandButton
+                        value="OK"
+                        action="confirm"
+                        icon="ui-icon ui-icon-check"
+                        />
+                </div>
             </p:layoutUnit>
         </p:layout>
     </ui:define>
