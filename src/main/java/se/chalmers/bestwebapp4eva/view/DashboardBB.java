@@ -13,7 +13,7 @@ import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.auth.AuthCtrl;
+import se.chalmers.bestwebapp4eva.auth.AuthBB;
 import se.chalmers.bestwebapp4eva.auth.AuthDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.dao.IOrderDAO;
@@ -43,7 +43,7 @@ public class DashboardBB implements Serializable{
     private ICategoryDAO cd;
     
     @Inject
-    private AuthCtrl ac;
+    private AuthBB authBB;
     
     public DashboardBB(){
         
@@ -54,7 +54,7 @@ public class DashboardBB implements Serializable{
         orders = new ArrayList();
         categories = new ArrayList();
         
-        orders.addAll(od.getByUser(ac.getCurrentUser().getUsername()));
+        orders.addAll(od.getByUser(authBB.getUsername()));
         categories.addAll(cd.findAll());
     }
 

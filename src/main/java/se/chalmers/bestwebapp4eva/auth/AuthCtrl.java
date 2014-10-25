@@ -138,10 +138,6 @@ public class AuthCtrl implements Serializable{
                             new FacesMessage(FacesMessage.SEVERITY_WARN,
                                     out, null));
     }
-
-    public User getCurrentUser() {
-        return currentUser;
-    }
     
     public boolean currentUserIsAdmin(){
         if(currentUser != null)
