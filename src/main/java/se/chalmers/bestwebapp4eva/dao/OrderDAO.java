@@ -23,14 +23,10 @@ public class OrderDAO extends AbstractDAO<Order, Long> implements IOrderDAO {
 
     @PersistenceContext
     private EntityManager em;
-<<<<<<< HEAD
 
     @EJB
     private AuthDAO authDAO;
 
-=======
-    
->>>>>>> 3e264177bc3827fa478d414681d0b18dcf080aff
     public OrderDAO() {
         super(Order.class);
     }

@@ -75,7 +75,6 @@ public class CartCtrl implements Serializable {
         }
         orderDisabled = totalOrdered == 0.0 || totalStock == 0.0;
         totalOrdered = 0.0;
-       System.out.println(orderDAO.getByUser(authDAO.getUserByUsername(authBean.getUsername()).get(0).getUsername()));
     }
 
     public void setOrderDisabled(boolean orderDisabled) {
