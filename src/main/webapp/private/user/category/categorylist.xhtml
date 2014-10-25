@@ -55,10 +55,7 @@
                 <p:commandButton value="New category" style="align: left" onclick="PF('newCategoryDialog').show();"/>
             </f:facet>
         </p:dataTable>
-    </h:form>
-    
-    <h:form prependId="false">
-        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+        <p:messages id="categoryFilterMessage" showDetail="true" autoUpdate="true" closable="true" />
     </h:form>
     
     <p:dialog header="Create new category" widgetVar="newCategoryDialog" modal="true" showEffect="size" hideEffect="size" resizable="true" closeOnEscape="true" draggable="false">
