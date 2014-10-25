@@ -32,10 +32,8 @@ and open the template in the editor.
             <p:column sortBy="#{order.id}" filterBy="#{order.id}" filterMatchMode="contains" headerText="ID">    
                 <h:outputText value="#{order.id}" />
             </p:column>
-            <p:column sortBy="#{order.date}" filterBy="#{order.date}" filterMatchMode="contains" headerText="Title">                 
-                <p:cellEditor>
-                    <f:facet name="output"><h:outputText value="#{order.date}"/></f:facet>
-                </p:cellEditor>
+            <p:column sortBy="#{order.date}" filterBy="#{order.date}" filterMatchMode="contains" headerText="Date">                 
+                <h:outputText value="#{order.date}"/>
             </p:column>
             <p:column style="width:32px">
                 <p:rowEditor />
