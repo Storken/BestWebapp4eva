@@ -6,6 +6,7 @@
 package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -19,17 +20,17 @@ import se.chalmers.bestwebapp4eva.entity.Order;
 @ViewScoped
 public class DashboardBB implements Serializable{
     
-    private Order orders;
+    private List<Order> orders;
     
     public DashboardBB(){
         
     }
 
-    public Order getOrders() {
+    public List<Order> getOrders() {
         return orders;
     }
 
-    public void setOrders(Order orders) {
+    public void setOrders(List<Order> orders) {
         this.orders = orders;
     }
     

@@ -31,17 +31,15 @@
        </div>
             
        <ui class="nav navbar-nav pull-left">
-           <li>
                
             <li>
                 <h:link value="Dashboard" 
-                        outcome="#{authBean.isAdmin? 'admindashboard' : 'dashboard'}" />
+                        outcome="#{authCtrl.currentUserIsAdmin()? 'admindashboard' : 'dashboard'}" />
             </li>
-               <li>
+            <li>
                 <h:link value="Products" 
-                        outcome="#{authBean.isAdmin? 'adminproducts' : 'products'}" />
+                        outcome="#{authCtrl.currentUserIsAdmin()? 'adminproducts' : 'products'}" />
             </li>
-           </li>
        </ui>
        <h:graphicImage id="headimg" library="img" name="header.png"/>
         <!-- Right side menu items -->   
@@ -49,12 +47,12 @@
             
             <li>
                 
-                <h:link value="#{authBean.isLoggedIn? authBean.username : ''}" 
-                        outcome="#{authBean.isAdmin? 'adminprofile' : 'profile'}" />
+                <h:link value="#{authCtrl.userInlogged? authCtrl.currentUser.username : ''}" 
+                        outcome="#{authCtrl.currentUserIsAdmin()? 'adminprofile' : 'profile'}" />
             </li>
             
             <li>
-                <p:commandLink value="#{authBean.isLoggedIn? '' : 'Log in'}" onclick="PF('dlg1').show(); PF('dlg2').hide()"  />
+                <p:commandLink value="#{authCtrl.userInlogged? '' : 'Log in'}" onclick="PF('dlg1').show(); PF('dlg2').hide()"  />
             </li>
      
             
@@ -63,13 +61,13 @@
                     <h:form>
                         <h:outputText value="Username: "/>
                         <br/>
-                        <h:inputText id="usrname" value="#{authBean.username}"/>
+                        <h:inputText id="usrname" value="#{authBB.username}"/>
                         <br/>
                         <h:outputText value="Password: "/>
                         <br/>
-                        <h:inputText id="passwrd" value="#{authBean.password}"/>
+                        <h:inputText id="passwrd" value="#{authBB.password}"/>
                         <br/>
-                        <p:commandButton value="Log in" action="#{authBean.login}"/>
+                        <p:commandButton value="Log in" action="#{authCtrl.login}"/>
                         <p:commandButton value="Create" onclick="PF('dlg2').show(); PF('dlg1').hide()"/>
                     </h:form>
                 </p:dialog>
@@ -80,21 +78,21 @@
                     <h:form>
                         <h:outputText value="Username: "/>
                         <br/>
-                        <h:inputText value="#{authBean.username}"/>
+                        <h:inputText value="#{authBB.username}"/>
                         <br/>
                         <h:outputText value="Password: "/>
                         <br/>
-                        <h:inputText value="#{authBean.password}"/>
+                        <h:inputText value="#{authBB.password}"/>                    
                         <br/>
                         <h:outputText value="Check if admin: "/>
-                        <h:selectBooleanCheckbox value="#{authBean.isAdmin}" />
+                        <h:selectBooleanCheckbox value="#{authBB.admin}" />
                         <br/>
-                        <h:commandButton value="Create" action="#{authBean.createAccount}"/>
+                        <h:commandButton value="Create" action="#{authCtrl.createAccount}"/>
                     </h:form>
                 </p:dialog>
   
             <li>
-                <p:commandLink value="#{authBean.isLoggedIn? 'Log out' : ''}" action="#{authBean.logout()}"/>
+                <p:commandLink value="#{authCtrl.userInlogged? 'Log out' : ''}" action="#{authCtrl.logout}"/>
             </li>
             
         </ul>

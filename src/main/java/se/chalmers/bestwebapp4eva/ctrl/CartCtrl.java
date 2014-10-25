@@ -13,7 +13,7 @@ import javax.faces.event.ActionEvent;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.auth.AuthBean;
+import se.chalmers.bestwebapp4eva.auth.AuthBB;
 import se.chalmers.bestwebapp4eva.auth.AuthDAO;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.IOrderItemDAO;
@@ -47,7 +47,7 @@ public class CartCtrl implements Serializable {
     private AuthDAO authDAO;
     
     @Inject
-    private AuthBean authBean;
+    private AuthBB authBean;
     @Inject
     private CartBB cartBB;
     
