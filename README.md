@@ -45,8 +45,6 @@ We decided to use the PrimeFaces JSF Framework since it offers useful, feature r
 Modules
 ==============
 
-We've tried to stay as true to the MVC approach as possible.
-
 The application consists of the following packages:
 * Controllers
 
