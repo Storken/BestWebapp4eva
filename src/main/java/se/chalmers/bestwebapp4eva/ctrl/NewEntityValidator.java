@@ -6,6 +6,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -20,29 +21,62 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
  */
 @Named
 @ViewScoped
-public class NewEntityValidator implements Serializable{
+public class NewEntityValidator implements Serializable, Validator{
     
     @EJB
     IBasicEntityDAO basicEntityDAO;
     
     @EJB
     ICategoryDAO categoryDAO;
-    
-    public void validateTitle(FacesContext ctx, UIComponent component, Object value) {
-        String title = value.toString();
 
-        if(basicEntityDAO.getByTitle(title).size() > 0) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Title", "ERROR");
+    @Override
+    public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
+        FacesMessage message = null;
+        System.out.println(component.getClientId());
+        switch(component.getClientId()) {
+            case "newEntityForm:title":
+                message = getTitleMessage(value.toString());
+                break;
+            case "newEntityForm:price":
+                message = getPriceMessage((double)value);
+                break;
+            case "newEntityForm:quantity":
+                message = getQuantityMessage((double)value);
+                break;
+        }
+        
+        if(message != null) {
             FacesContext.getCurrentInstance().addMessage(component.getClientId(), message);
             throw new ValidatorException(message);
         }
     }
     
-    public void validatePrice(FacesContext ctx, UIComponent component, Object value) {
+    private FacesMessage getTitleMessage(String title) {
         
+        if(basicEntityDAO.getByTitle(title).size() > 0) {
+            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Title", " already exists.");
+        }else if(title.isEmpty()) {
+            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Title", "cannot be empty");
+        }else if(title.length() > 25) {
+            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Title", "too long (25 chars max)");
+        }else{
+            return null;
+        }
     }
     
-    public void validateQuantity(FacesContext ctx, UIComponent component, Object value) {
-        
+    private FacesMessage getPriceMessage(Double price)  {
+        if(price < 0 || price > Double.MAX_VALUE) {
+            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Price", "has to be between 0 and " + Double.MAX_VALUE);
+        }else{
+            return null;
+        }
+    }
+    
+    private FacesMessage getQuantityMessage(Double quantity) {
+        if(quantity < 0 || quantity > Double.MAX_VALUE) {
+            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Quantity", "has to be between 0 and " + Double.MAX_VALUE);
+        }else{
+            return null;
+        }
     }
 }
