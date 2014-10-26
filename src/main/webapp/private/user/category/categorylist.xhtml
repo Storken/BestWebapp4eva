@@ -39,13 +39,19 @@
             <p:column sortBy="#{category.name}" filterBy="#{category.name}" filterMatchMode="contains" headerText="Name">                 
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{category.name}"/></f:facet>
-                    <f:facet name="input"><p:inputText value="#{category.name}"/></f:facet>
+                    <f:facet name="input">
+                        <p:inputText id="nameInput" value="#{category.name}" validator="#{editCategoryValidator.validate}"/>
+                        <p:message for="nameInput"/>
+                    </f:facet>
                 </p:cellEditor>
             </p:column>
             <p:column sortBy="#{category.description}" filterBy="#{category.description}" filterMatchMode="contains" headerText="Description">                 
                 <p:cellEditor>
                     <f:facet name="output"><h:outputText value="#{category.description}"/></f:facet>
-                    <f:facet name="input"><p:inputText value="#{category.description}"/></f:facet>
+                    <f:facet name="input">
+                        <p:inputText id="descriptionInput" value="#{category.description}" validator="#{editCategoryValidator.validate}"/>
+                        <p:message for="descriptionInput" />
+                    </f:facet>
                 </p:cellEditor>
             </p:column>
             <p:column style="width:32px">
