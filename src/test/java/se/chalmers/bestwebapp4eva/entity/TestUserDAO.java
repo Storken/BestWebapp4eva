@@ -5,7 +5,7 @@
  */
 package se.chalmers.bestwebapp4eva.entity;
  
-import se.chalmers.bestwebapp4eva.dao.AuthDAO;
+import se.chalmers.bestwebapp4eva.dao.UserDAO;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
@@ -21,6 +21,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import se.chalmers.bestwebapp4eva.dao.GroupsDAO;
+import se.chalmers.bestwebapp4eva.dao.IGroupsDAO;
+import se.chalmers.bestwebapp4eva.dao.IUserDAO;
  
 /**
  *
@@ -28,7 +31,7 @@ import org.junit.runner.RunWith;
  */
  
 @RunWith(Arquillian.class)
-public class TestAuthDAO {
+public class TestUserDAO {
    
     @PersistenceContext
     private EntityManager em;
@@ -37,8 +40,11 @@ public class TestAuthDAO {
     private UserTransaction utx;
  
     @EJB
-    private AuthDAO ad;
+    private IUserDAO ud;
  
+    @EJB
+    private IGroupsDAO gd;
+    
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class)
@@ -74,13 +80,13 @@ public class TestAuthDAO {
         User u = new User();
         u.setUsername("Bosch");
         u.setPassword("123");
-        ad.create(u);
+        ud.create(u);
        
         Groups g = new Groups();
         g.setUsername(u.getUsername());
         g.setGroupname("user");
        
-        assertTrue(ad.getUserByUsername("Bosch").size() > 0);
+        assertTrue(ud.getUserByUsername("Bosch").size() > 0);
     }
    
     @Test
@@ -95,15 +101,15 @@ public class TestAuthDAO {
         g.setGroupname("admin");
         em.persist(g);
        
-        assertTrue(ad.getUserByUsername("AdminBosch").size() > 0);
-        assertTrue(ad.getGroupByUsername("AdminBosch").get(0).getGroupname().equals("admin"));
+        assertTrue(ud.getUserByUsername("AdminBosch").size() > 0);
+        assertTrue(gd.getByUsername("AdminBosch").get(0).getGroupname().equals("admin"));
     }
     
     @Test
     public void testGetById()throws Exception {
-        ad.createUserAndGroup("q", "1", "user");
-        User u = ad.getUserByUsername("q").get(0);
-        assertTrue(u.equals(ad.getById(u.getId()).get(0)));
+        ud.createUserAndGroup("q", "1", "user");
+        User u = ud.getUserByUsername("q").get(0);
+        assertTrue(u.equals(ud.getById(u.getId()).get(0)));
     }
     
         
