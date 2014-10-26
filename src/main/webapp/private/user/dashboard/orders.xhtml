@@ -38,8 +38,8 @@ and open the template in the editor.
                 <p:dialog header="Order" widgetVar="orderDialog" 
                             showEffect="size" hideEffect="size" resizable="false" 
                             closeOnEscape="true" draggable="false" appendTo="@(body)"
-                            width="300" height="500">
-                      <ui:include src="/private/user/order/orderConfirmation.xhtml"/>
+                            width="300" height="500" modal="true">
+                      <ui:include src="/private/user/order/orderDialog.xhtml"/>
                 </p:dialog>
             </p:column>
         </p:dataTable>
