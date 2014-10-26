@@ -42,6 +42,14 @@ public class OrderBB implements Serializable {
         this.orderItems = orderDAO.getById(order.getId()).get(0).getItems();
     }
 
+    /**
+     * Get the current order
+     *
+     * NOTE: This bean should be request scoped, however time ran out and this
+     * temporal (and not completely working) solution had to make due
+     *
+     * @return the current order
+     */
     public Order getOrder() {
         return order;
     }
