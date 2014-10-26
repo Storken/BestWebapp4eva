@@ -29,21 +29,21 @@ public class NewEntityValidator implements Serializable, Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         FacesMessage message = null;
-        System.out.println(component.getClientId());
-        switch (component.getClientId()) {
-            case "newEntityForm:title":
+ 
+        switch (component.getId()) {
+            case "title":
                 message = getTitleMessage(value.toString());
                 break;
-            case "newEntityForm:price":
+            case "price":
                 message = getPriceMessage((double) value);
                 break;
-            case "newEntityForm:quantity":
+            case "quantity":
                 message = getQuantityMessage((double) value);
                 break;
-            case "newEntityForm:newName":
+            case "newName":
                 message = getCategoryNameMessage(value.toString());
                 break;
-            case "newEntityForm:newDescription":
+            case "newDescription":
                 message = getCategoryDescriptionMessage(value.toString());
                 break;
         }

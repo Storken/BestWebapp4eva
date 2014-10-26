@@ -5,9 +5,6 @@
  */
 package se.chalmers.bestwebapp4eva.ctrl;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -15,14 +12,10 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import javax.faces.view.ViewScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.component.datatable.DataTable;
-import org.primefaces.event.RowEditEvent;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
-import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 
 /**
  *
@@ -31,22 +24,24 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 @Named
 @RequestScoped
 public class EditEntityValidator implements Validator {
+
     @EJB
     IBasicEntityDAO basicEntityDAO;
 
     @EJB
     ICategoryDAO categoryDAO;
-    
+
     private long oldEntityId;
-    
+
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         FacesMessage message = null;
+
+        DataTable table = (DataTable) component.getParent().getParent().getParent().getParent();
+        oldEntityId = (long) table.getRowKey();
+
         // Remove table specific part of id.
-        DataTable table = (DataTable)component.getParent().getParent().getParent().getParent();
-        oldEntityId = (long)table.getRowKey();
-        
-        String field = component.getClientId().replaceAll("[0-9]", "").replaceAll("tableForm:entities::", "");
+        String field = component.getId();
         switch (field) {
             case "titleInput":
                 message = getTitleMessage(value.toString());
@@ -62,20 +57,18 @@ public class EditEntityValidator implements Validator {
         if (message != null) {
             FacesContext.getCurrentInstance().addMessage(component.getClientId(), message);
             throw new ValidatorException(message);
-        }else{
-            
         }
     }
 
     private FacesMessage getTitleMessage(String title) {
 
         if (!basicEntityDAO.getByTitle(title).isEmpty()) {
-            if(!basicEntityDAO.getByTitle(title).get(0).getId().equals(oldEntityId)) {
+            if (!basicEntityDAO.getByTitle(title).get(0).getId().equals(oldEntityId)) {
                 return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title already exists.");
-            }else{
+            } else {
                 return null;
             }
-            
+
         } else if (title.isEmpty()) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title cannot be empty.");
         } else if (title.length() > 25) {
