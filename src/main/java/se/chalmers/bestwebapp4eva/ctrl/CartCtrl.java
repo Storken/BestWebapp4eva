@@ -156,7 +156,7 @@ public class CartCtrl implements Serializable {
             basicOrderItemDAO.create(i);
 
         }
-        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authDAO.getUserByUsername(authBB.getUsername()).get(0));
+        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authDAO.getByUsername(authBB.getUsername()).get(0));
         try {
             orderDAO.create(dbOrder);
             orderBB.setOrder(dbOrder);

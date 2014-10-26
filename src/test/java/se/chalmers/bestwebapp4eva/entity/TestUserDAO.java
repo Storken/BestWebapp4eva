@@ -86,7 +86,7 @@ public class TestUserDAO {
         g.setUsername(u.getUsername());
         g.setGroupname("user");
        
-        assertTrue(ud.getUserByUsername("Bosch").size() > 0);
+        assertTrue(ud.getByUsername("Bosch").size() > 0);
     }
    
     @Test
@@ -101,14 +101,14 @@ public class TestUserDAO {
         g.setGroupname("admin");
         em.persist(g);
        
-        assertTrue(ud.getUserByUsername("AdminBosch").size() > 0);
+        assertTrue(ud.getByUsername("AdminBosch").size() > 0);
         assertTrue(gd.getByUsername("AdminBosch").get(0).getGroupname().equals("admin"));
     }
     
     @Test
     public void testGetById()throws Exception {
         ud.createUserAndGroup("q", "1", "user");
-        User u = ud.getUserByUsername("q").get(0);
+        User u = ud.getByUsername("q").get(0);
         assertTrue(u.equals(ud.getById(u.getId()).get(0)));
     }
     
