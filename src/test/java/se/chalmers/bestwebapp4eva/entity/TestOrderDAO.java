@@ -18,11 +18,12 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import se.chalmers.bestwebapp4eva.dao.AuthDAO;
+import se.chalmers.bestwebapp4eva.dao.UserDAO;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.dao.IOrderDAO;
 import se.chalmers.bestwebapp4eva.dao.IOrderItemDAO;
+import se.chalmers.bestwebapp4eva.dao.IUserDAO;
 
 /**
  *
@@ -47,7 +48,7 @@ public class TestOrderDAO {
     private IBasicEntityDAO basicEntityDAO;
 
     @EJB
-    private AuthDAO authDAO;
+    private IUserDAO userDAO;
 
     @EJB
     private ICategoryDAO categoryDAO;
@@ -102,7 +103,7 @@ public class TestOrderDAO {
 
         //An order consists of orderitems and at least one user
         User u = new User("tty0", "passwd");
-        authDAO.create(u);
+        userDAO.create(u);
 
         //An order also needs to be tied to a Date
         Date d = new Date(System.currentTimeMillis());

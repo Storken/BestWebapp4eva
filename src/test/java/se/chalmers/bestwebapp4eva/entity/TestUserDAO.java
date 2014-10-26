@@ -4,7 +4,8 @@
  * and open the template in the editor.
  */
 package se.chalmers.bestwebapp4eva.entity;
-
+ 
+import se.chalmers.bestwebapp4eva.dao.UserDAO;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.persistence.EntityManager;
@@ -20,67 +21,98 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
-import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
-
+import se.chalmers.bestwebapp4eva.dao.GroupsDAO;
+import se.chalmers.bestwebapp4eva.dao.IGroupsDAO;
+import se.chalmers.bestwebapp4eva.dao.IUserDAO;
+ 
 /**
  *
  * @author Bosch
  */
+ 
 @RunWith(Arquillian.class)
-public class TestCategoryDAO {
-
+public class TestUserDAO {
+   
     @PersistenceContext
-    EntityManager em;
-
+    private EntityManager em;
+ 
     @Resource
-    UserTransaction utx;
-
+    private UserTransaction utx;
+ 
     @EJB
-    ICategoryDAO categoryDAO;
-
+    private IUserDAO ud;
+ 
+    @EJB
+    private IGroupsDAO gd;
+    
     @Deployment
     public static WebArchive createDeployment() {
-        return ShrinkWrap.create(WebArchive.class, "test.war")
+        return ShrinkWrap.create(WebArchive.class)
                 .addPackage("se.chalmers.bestwebapp4eva.entity")
                 .addPackage("se.chalmers.bestwebapp4eva.dao")
-                .addPackage("se.chalmers.bestwebapp4eva.utils")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
-
+ 
     @Before
     public void prepareTest() throws Exception {
         clearData();
         utx.begin();
     }
-
+ 
     @After
     public void commitTransaction() throws Exception {
         utx.commit();
         clearData();
     }
-
+ 
     private void clearData() throws Exception {
         utx.begin();
         em.joinTransaction();
-        em.createQuery("DELETE FROM BasicEntity").executeUpdate();
-        em.createQuery("DELETE FROM Category").executeUpdate();
+        em.createQuery("DELETE FROM User").executeUpdate();
+        em.createQuery("DELETE FROM Groups").executeUpdate();
         utx.commit();
     }
     
-    @Test 
-    public void testPersistance() throws Exception {
-        Category c = new Category("Title", "Description");
-        categoryDAO.create(c);
-        assertTrue(categoryDAO.findAll().size() > 0);
-        assertTrue(c.equals(categoryDAO.getByName(c.getName()).get(0)));
+   
+    @Test
+    public void testCreateUser() throws Exception {
+        User u = new User();
+        u.setUsername("Bosch");
+        u.setPassword("123");
+        ud.create(u);
+       
+        Groups g = new Groups();
+        g.setUsername(u.getUsername());
+        g.setGroupname("user");
+       
+        assertTrue(ud.getByUsername("Bosch").size() > 0);
+    }
+   
+    @Test
+    public void testCreateAdmin() throws Exception {
+        User u = new User();
+        u.setUsername("AdminBosch");
+        u.setPassword("123");
+        em.persist(u);
+       
+        Groups g = new Groups();
+        g.setUsername(u.getUsername());
+        g.setGroupname("admin");
+        em.persist(g);
+       
+        assertTrue(ud.getByUsername("AdminBosch").size() > 0);
+        assertTrue(gd.getByUsername("AdminBosch").get(0).getGroupname().equals("admin"));
     }
     
-    @Test 
-    public void testGetById() throws Exception {
-        Category c = new Category("Title", "Description");
-        categoryDAO.create(c);
-        assertTrue(c.equals(categoryDAO.getById(c.getId()).get(0)));
+    @Test
+    public void testGetById()throws Exception {
+        ud.createUserAndGroup("q", "1", "user");
+        User u = ud.getByUsername("q").get(0);
+        assertTrue(u.equals(ud.getById(u.getId()).get(0)));
     }
+    
+        
+    
+   
 }

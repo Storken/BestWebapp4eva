@@ -34,11 +34,11 @@
                
             <li>
                 <h:link value="Dashboard" 
-                        outcome="#{authCtrl.currentUserIsAdmin()? 'admindashboard' : 'dashboard'}"/>
+                        outcome="#{userCtrl.currentUserIsAdmin()? 'admindashboard' : 'dashboard'}"/>
             </li>
             <li>
                 <h:link value="Products" 
-                        outcome="#{authCtrl.currentUserIsAdmin()? 'adminproducts' : 'products'}" />
+                        outcome="#{userCtrl.currentUserIsAdmin()? 'adminproducts' : 'products'}" />
             </li>
        </ui>
        <h:graphicImage id="headimg" library="img" name="header.png"/>
@@ -47,12 +47,12 @@
             
             <li>
                 
-                <h:link value="#{authCtrl.userInlogged? authBB.username : ''}" 
-                        outcome="#{authCtrl.currentUserIsAdmin()? 'adminprofile' : 'profile'}" />
+                <h:link value="#{userCtrl.userInlogged? userBB.username : ''}" 
+                        outcome="#{userCtrl.currentUserIsAdmin()? 'adminprofile' : 'profile'}" />
             </li>
             
             <li>
-                <p:commandLink value="#{authCtrl.userInlogged? '' : 'Log in'}" onclick="PF('loginDialog').show(); PF('createDialog').hide()"  />
+                <p:commandLink value="#{userCtrl.userInlogged? '' : 'Log in'}" onclick="PF('loginDialog').show(); PF('createDialog').hide()"  />
             </li>
      
             
@@ -61,13 +61,13 @@
                     <h:form>
                         <h:outputText value="Username: "/>
                         <br/>
-                        <h:inputText id="usrname" value="#{authBB.username}"/>
+                        <h:inputText id="usrname" value="#{userBB.username}"/>
                         <br/>
                         <h:outputText value="Password: "/>
                         <br/>
-                        <h:inputText id="passwrd" value="#{authBB.password}"/>
+                        <h:inputText id="passwrd" value="#{userBB.password}"/>
                         <br/>
-                        <p:commandButton value="Log in" action="#{authCtrl.login}"/>
+                        <p:commandButton value="Log in" action="#{userCtrl.login}"/>
                         <p:commandButton value="Create" onclick="PF('createDialog').show(); PF('loginDialog').hide()"/>
                     </h:form>
                 </p:dialog>
@@ -78,21 +78,21 @@
                     <h:form>
                         <h:outputText value="Username: "/>
                         <br/>
-                        <h:inputText value="#{authBB.username}"/>
+                        <h:inputText value="#{userBB.username}"/>
                         <br/>
                         <h:outputText value="Password: "/>
                         <br/>
-                        <h:inputText value="#{authBB.password}"/>                    
+                        <h:inputText value="#{userBB.password}"/>                    
                         <br/>
                         <h:outputText value="Check if admin: "/>
-                        <h:selectBooleanCheckbox value="#{authBB.admin}" />
+                        <h:selectBooleanCheckbox value="#{userBB.admin}" />
                         <br/>
-                        <h:commandButton value="Create" action="#{authCtrl.createAccount}"/>
+                        <h:commandButton value="Create" action="#{userCtrl.createAccount}"/>
                     </h:form>
                 </p:dialog>
   
             <li>
-                <p:commandLink value="#{authCtrl.userInlogged? 'Log out' : ''}" action="#{authCtrl.logout}"/>
+                <p:commandLink value="#{userCtrl.userInlogged? 'Log out' : ''}" action="#{userCtrl.logout}"/>
             </li>
             
         </ul>
