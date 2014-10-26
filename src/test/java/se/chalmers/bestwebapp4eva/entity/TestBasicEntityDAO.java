@@ -228,7 +228,7 @@ public class TestBasicEntityDAO {
         List<BasicEntity> lessThanFilterList = basicEntityDAO.getResultList(-1, -1, "id", SortOrder.ASCENDING, lessThanOperator);
         assertTrue(lessThanFilterList.size() == 3 && lessThanFilterList.get(2).getId().equals(b3.getId()));
         
-        // Test less than or equal operator
+        // Test less than or equal to operator
         Map<String, Object> lessThanOrEqualOperator = new HashMap<>();
         lessThanOrEqualOperator.put("id", "<=" + b2.getId());
         List<BasicEntity> lessThanOrEqualFilterList = basicEntityDAO.getResultList(-1, -1, "id", SortOrder.ASCENDING, lessThanOrEqualOperator);

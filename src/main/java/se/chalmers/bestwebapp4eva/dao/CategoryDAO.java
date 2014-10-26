@@ -60,7 +60,8 @@ public class CategoryDAO extends AbstractDAO<Category, Long> implements ICategor
         }
 
         // Filter
-        for (Map.Entry<String, Object> filter : filters.entrySet()) {
+        if(filters != null) {
+            for (Map.Entry<String, Object> filter : filters.entrySet()) {
             String key = filter.getKey();
             String value = filter.getValue().toString().toLowerCase();
 
@@ -100,6 +101,8 @@ public class CategoryDAO extends AbstractDAO<Category, Long> implements ICategor
                 criteria.andStringLike(true, key, "%" + value + "%");
             }
         }
+        }
+        
         return criteria.setFirstResult(first).setMaxResults(first).getResultList();
     }
 
