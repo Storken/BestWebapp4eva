@@ -139,19 +139,6 @@ public class CartCtrl implements Serializable {
         orderStatus = "success";
     }
 
-    public void validateOrder(FacesContext context, UIComponent componentToValidate, Object value) throws ValidatorException {
-        double ordered = (Double) value;
-        // must be the total quantity, entity.getQuantity() will return value manipulated by current spinner value
-        if (ordered < 0.0) {
-            orderDisabled = true;
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nothing to order", null);
-            throw new ValidatorException(message);
-        } else {
-            orderDisabled = false;
-        }
-
-    }
-
     public String getOrderButtonMessage() {
         if (orderDisabled) {
             return "Cannot place order";

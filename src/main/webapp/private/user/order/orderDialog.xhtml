@@ -16,10 +16,7 @@
                 <br/>
                 <br/>
                 <ui:include src="/private/user/order/orderTable.xhtml"/>
-                <br/>
-                <p:commandButton value="Export to PDF" ajax="false" icon="ui-icon ui-icon-note"> 
-                    <p:dataExporter type="pdf" target="pftable" fileName="Order #{orderBB.date}" encoding="UTF-8" preProcessor="#{orderBB.preProcessPDF}" postProcessor="#{orderBB.postProcessPDF}"/>
-                </p:commandButton>       
+                <br/>    
                 <p:commandButton
                     value="OK"
                     onclick="PF('orderDialog').hide()"

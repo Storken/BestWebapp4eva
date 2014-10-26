@@ -6,17 +6,17 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
+    <f:facet name="header">Cart</f:facet>
     <table width="100%">
+
         <br/>
         <ui:repeat id="cartItems" value="#{cartBB.cartItems}" var="item">
             <tr>
                 <td align="right" style="padding-bottom: 1em">
-                    <h:outputText value="#{item.id} -"/>
+                    <h:outputText value="ID.#{item.id} -"/>
                 </td>
                 <td align="left" style="padding-bottom: 1em">
-                    <h:outputText value="#{item.title}, "/>
-                    <h:outputText value="#{item.quantity} "/>
-                    <h:outputText value="#{item.unit}"/>
+                    <h:outputText value="#{item.title}"/>                 
                 </td>
                 <td align="right" style="padding-bottom: 1em">
                     <p:commandLink title="Remove from cart" actionListener="#{cartCtrl.removeFromCart(item)}" styleClass="ui-icon ui-icon-closethick" update=":layout"/> 
@@ -26,5 +26,7 @@
     </table>
 
     <hr/>
-    <p:commandButton id="manageButton" value="Proceed to order" update="multiEntityDetail" oncomplete="PF('multiEntityDialog').show()" icon="ui-icon-cart"/>
+    <div align="center">
+        <p:commandButton id="manageButton" value="Proceed to order" update="cartDialog" oncomplete="PF('cartDialog').show()" icon="ui-icon-cart"/>
+    </div>
 </ui:composition>
