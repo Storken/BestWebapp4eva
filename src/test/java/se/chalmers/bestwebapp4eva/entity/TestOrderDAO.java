@@ -81,6 +81,7 @@ public class TestOrderDAO {
         em.createQuery("DELETE FROM OrderItem").executeUpdate();
         em.createQuery("DELETE FROM User").executeUpdate();
         em.createQuery("DELETE FROM BasicEntity").executeUpdate();
+        em.createQuery("DELETE FROM Category").executeUpdate();
 
         utx.commit();
     }

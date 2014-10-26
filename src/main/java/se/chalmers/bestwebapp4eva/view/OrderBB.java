@@ -1,28 +1,18 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.chalmers.bestwebapp4eva.view;
 
 import com.lowagie.text.BadElementException;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
-import static com.lowagie.text.Element.ALIGN_RIGHT;
 import com.lowagie.text.Image;
 import com.lowagie.text.PageSize;
-import static com.lowagie.text.PageSize.A4;
 import com.lowagie.text.Paragraph;
-import com.lowagie.text.pdf.PdfWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
@@ -32,6 +22,7 @@ import se.chalmers.bestwebapp4eva.entity.Order;
 import se.chalmers.bestwebapp4eva.entity.OrderItem;
 
 /**
+ * Backing Bean for an Order
  *
  * @author erik
  */
@@ -42,6 +33,7 @@ public class OrderBB implements Serializable {
     @EJB
     private IOrderDAO orderDAO;
 
+    /* The order and its order items */
     private Order order;
     private List<OrderItem> orderItems;
 
@@ -54,14 +46,30 @@ public class OrderBB implements Serializable {
         return order;
     }
 
+    /**
+     * Get the date of the order
+     *
+     * @return the date
+     */
     public Date getDate() {
         return order.getDate();
     }
 
+    /**
+     *
+     * Get the user of the order
+     *
+     * @return the user
+     */
     public String getUserName() {
         return order.getUser().getUsername();
     }
 
+    /**
+     * Get the total cost of the order
+     *
+     * @return the total cost
+     */
     public double getTotal() {
         double total = 0.0;
         for (OrderItem i : getOrderItems()) {
@@ -70,6 +78,11 @@ public class OrderBB implements Serializable {
         return total;
     }
 
+    /**
+     * Get the order items of the order
+     *
+     * @return the order items
+     */
     public List<OrderItem> getOrderItems() {
         List<OrderItem> actual = new ArrayList<>();
         for (OrderItem i : orderItems) {
@@ -80,22 +93,24 @@ public class OrderBB implements Serializable {
         return actual;
     }
 
+    /* Add order information and logo to top of PDF */
     public void preProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
         Document pdf = (Document) document;
         pdf.open();
         pdf.setPageSize(PageSize.A4);
-        
+
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String header = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img" + File.separator + "header.png";
-        
+
         pdf.add(Image.getInstance(header));
-            
+
         pdf.add(new Paragraph("\n\n               Order placed by: " + getUserName()));
         pdf.add(new Paragraph("              Order placed at: " + getDate().toString()));
         pdf.add(new Paragraph("\n\n"));
 
     }
 
+    /* Add order total and logo to bottom of PDF */
     public void postProcessPDF(Object document) throws IOException, BadElementException, DocumentException {
         Document pdf = (Document) document;
 
@@ -103,9 +118,9 @@ public class OrderBB implements Serializable {
 
         ServletContext servletContext = (ServletContext) FacesContext.getCurrentInstance().getExternalContext().getContext();
         String theguy = servletContext.getRealPath("") + File.separator + "resources" + File.separator + "img" + File.separator + "theguy.png";
-        
+
         pdf.add(Image.getInstance(theguy));
-       
+
         pdf.close();
     }
 }

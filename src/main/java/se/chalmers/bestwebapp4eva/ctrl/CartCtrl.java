@@ -2,15 +2,10 @@ package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Collection;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.PersistenceException;
@@ -43,32 +38,46 @@ public class CartCtrl implements Serializable {
 
     @EJB
     private IOrderItemDAO basicOrderItemDAO;
-    
+
     @EJB
     private AuthDAO authDAO;
-    
+
     @Inject
     private AuthBB authBB;
-    
+
     @Inject
     private CartBB cartBB;
-    
-    @Inject 
+
+    @Inject
     private OrderBB orderBB;
 
     @Inject
     private CatalogueBB entities;
 
+    // Boolean for telling if the orderButton should be disabled or not
     private boolean orderDisabled = true;
 
+    // Total available stock of the products in the cart
     private double totalStock = 0.0;
+    // Total amount of ordered products
     private double totalOrdered = 0.0;
+    // Message for the redirect action
     private String orderStatus = "";
 
+    /**
+     * Check if the orderButton is disabled
+     *
+     * @return <code>true</code> if the button is disabled, else
+     * <code>false</code>
+     */
     public boolean isOrderDisabled() {
         return orderDisabled;
     }
 
+    /**
+     * This method should be called as soon as an item in the order has been
+     * changed in order to update the view
+     */
     public void updateOrderStatus() {
         totalStock = 0.0;
         totalOrdered = 0.0;
@@ -82,16 +91,29 @@ public class CartCtrl implements Serializable {
         totalOrdered = 0.0;
     }
 
+    /**
+     * Set if the orderButton should be disabled or not
+     *
+     * @param orderDisabled should be <code>true</code> for the button to be
+     * disabled, else <code>false</code>
+     */
     public void setOrderDisabled(boolean orderDisabled) {
         this.orderDisabled = orderDisabled;
     }
 
+    /**
+     * Check if the spinner for an item should be disabled or not
+     *
+     * @param item the item that has the spinner
+     * @return <code>true</code> if the spinner is disabled, <code>false</code>
+     * otherwise
+     */
     public boolean isSpinnerDisabled(OrderItem item) {
         return item.getQuantity() == 0.0;
     }
 
     /**
-     * Add all the selected items to the cart
+     * Add all the selected items (in the products table) to the cart
      *
      * @param actionEvent The received event
      */
@@ -106,6 +128,11 @@ public class CartCtrl implements Serializable {
         }
     }
 
+    /**
+     * Remove an item from the cart
+     *
+     * @param item the item to remove
+     */
     public void removeFromCart(OrderItem item) {
         cartBB.remove(item);
     }
@@ -115,6 +142,8 @@ public class CartCtrl implements Serializable {
      * <br>
      * If an item hasn't changed it will still be updated in the database but
      * this won't have any negative impact.
+     *
+     * This will also create an Order entry in the database
      *
      * @param order All the items that are in the cart
      */
@@ -131,7 +160,7 @@ public class CartCtrl implements Serializable {
             orderDAO.create(dbOrder);
             orderBB.setOrder(dbOrder);
         } catch (PersistenceException e) {
-             orderStatus = "failed";
+            orderStatus = "failed";
         }
         cartBB.getCartItems().clear();
         totalOrdered = 0.0;
@@ -139,6 +168,11 @@ public class CartCtrl implements Serializable {
         orderStatus = "success";
     }
 
+    /**
+     * Get the message for the orderButton
+     *
+     * @return the message to be displayed on the orderButton
+     */
     public String getOrderButtonMessage() {
         if (orderDisabled) {
             return "Cannot place order";
@@ -147,6 +181,11 @@ public class CartCtrl implements Serializable {
         }
     }
 
+    /**
+     * Get the icon for the orderButton
+     *
+     * @return the name of the orderButton icon
+     */
     public String getOrderButtonIcon() {
         if (orderDisabled) {
             return "ui-icon ui-icon-notice";
@@ -166,7 +205,13 @@ public class CartCtrl implements Serializable {
     public boolean collapseCart() {
         return cartBB.getCartItems().isEmpty();
     }
-    
+
+    /**
+     * Get the orderstatus for knowing if the order was successful or not
+     *
+     * @return <code>success</code> if the order was successfully placed,
+     * <code>false</code> otherwise
+     */
     public String getOrderStatus() {
         return orderStatus;
     }

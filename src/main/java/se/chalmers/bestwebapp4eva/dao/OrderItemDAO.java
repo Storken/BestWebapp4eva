@@ -7,9 +7,9 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.OrderItem;
-import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
+ * Data Access Object for OrderItems
  *
  * @author erik
  */
@@ -41,14 +41,12 @@ public class OrderItemDAO extends AbstractDAO<OrderItem, Long> implements IOrder
         TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("orderQuantity", orderQuantity);
         return result.getResultList();
     }
-    
+
     @Override
     public List<OrderItem> getByEntity(BasicEntity entity) {
         String query = "SELECT i FROM OrderItem i WHERE i.entity = :entity";
         TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("entity", entity);
         return result.getResultList();
     }
-    
-    
 
 }
