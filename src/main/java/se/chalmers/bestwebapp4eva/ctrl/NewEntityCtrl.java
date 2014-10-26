@@ -2,6 +2,7 @@ package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
@@ -19,8 +20,8 @@ import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
  * @author simon
  */
 @Named
-@ViewScoped
-public class NewEntityCtrl implements Serializable {
+@RequestScoped
+public class NewEntityCtrl {
 
     @EJB
     private IBasicEntityDAO basicEntityDAO;

@@ -14,7 +14,10 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
- * A backing bean for the dialog used to add new entities.
+ * A backing bean for the dialog used to add new entities. Has to be ViewScoped
+ * to be able to toggle category panel? Otherwise the bean "forgets" the
+ * newCatPanelVisible value when clicking on + button in dialog.
+ *
  * @author simon
  */
 @Named
@@ -27,7 +30,7 @@ public class NewEntityDialogBB implements Serializable {
     private double quantity;
     private Unit unit;
     private Category category;
-    
+
     private List<Unit> units;
     private List<Category> categories;
 
