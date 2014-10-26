@@ -14,7 +14,7 @@ import se.chalmers.bestwebapp4eva.entity.User;
 
 /**
  *
- * @author hajo
+ * @author Bosch
  */
 @Stateless
 public class AuthDAO extends AbstractDAO<User, String> {

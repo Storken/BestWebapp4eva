@@ -99,6 +99,6 @@ public class TestAuthentication {
         assertTrue(ad.getUserByUsername("AdminBosch").size() > 0);
         assertTrue(ad.getGroupByUsername("AdminBosch").get(0).getGroupname().equals("admin"));
     }
-   
+    
    
 }
