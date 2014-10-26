@@ -71,7 +71,7 @@ public class UserCtrl implements Serializable{
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
 
         // Really check is there some data in database?
-        if(userDAO.getUserByUsername(ab.getUsername()).size() < 1){
+        if(userDAO.getByUsername(ab.getUsername()).size() < 1){
             LOG.log(Level.INFO, "*** No such username: {0}", new Object[]{ab.getUsername()});
             message("Username and password did not match!");
             return "fail";
@@ -81,7 +81,7 @@ public class UserCtrl implements Serializable{
             return "fail";
         }
         
-        User u = userDAO.getUserByUsername(ab.getUsername()).get(0);
+        User u = userDAO.getByUsername(ab.getUsername()).get(0);
         LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPassword()});
 
         try {
@@ -112,7 +112,7 @@ public class UserCtrl implements Serializable{
      */
     public String createAccount(){
         if(ab.hasValue()){
-            if(userDAO.getUserByUsername(ab.getUsername()).isEmpty()){
+            if(userDAO.getByUsername(ab.getUsername()).isEmpty()){
                 if(ab.isAdmin())
                     return createAdmin();
                 return createUser();

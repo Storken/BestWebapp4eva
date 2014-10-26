@@ -24,21 +24,18 @@ and open the template in the editor.
             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             currentPageReportTemplate="Page {currentPage} of {totalPages}"
             rowsPerPageTemplate="10,50,100"
-            id="orders"> 
+            id="orders"
+            > 
 
             <f:facet name="header">
                 Orders
             </f:facet>            
             <p:column headerText="Information">    
-                <p:commandLink value="#{order.tableString}" onclick="#{orderBB.setOrder(order)};
-                        PF('orderDialog').show()"/>
+                <h5>#{order.tableString}</h5>
+                <p:dataList value="#{order.items}" var="item" rows="5" paginatorAlwaysVisible="false" paginatorPosition="bottom" paginator="true">
 
-                <p:dialog header="Order" widgetVar="orderDialog" 
-                            showEffect="size" hideEffect="size" resizable="false" 
-                            closeOnEscape="true" draggable="false" appendTo="@(body)"
-                            width="300" height="500" modal="true">
-                      <ui:include src="/private/user/order/orderDialog.xhtml"/>
-                </p:dialog>
+                    <h:outputText value="#{item.orderQuantity} #{item.unit} of #{item.title}"/>
+                </p:dataList>          
             </p:column>
         </p:dataTable>
 

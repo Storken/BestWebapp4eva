@@ -21,7 +21,7 @@ public interface IUserDAO extends IDAO<User, Long>{
      * @param username the username
      * @return the user put in a List
      */
-    public List<User> getUserByUsername(String username);
+    public List<User> getByUsername(String username);
 
     /**
      * Get a User by searching on a password.

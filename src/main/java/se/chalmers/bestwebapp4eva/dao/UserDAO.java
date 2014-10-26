@@ -71,7 +71,7 @@ public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO{
     }
 
     @Override
-    public List<User> getUserByUsername(String username) {
+    public List<User> getByUsername(String username) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.username =:username", User.class)
                 .setParameter("username", username);
