@@ -15,10 +15,11 @@ and open the template in the editor.
             var="order" 
             value="#{dashboardBB.orders}"
             lazy="true" 
-            paginator="true" 
+            paginator="true"
+            paginatorPosition="top"
             rows="10"
-            sortBy="#{order.id}"
-            emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
+            sortBy="#{order.date}"
+            emptyMessage="You haven't placed any orders yet. Go order something from the products page!"
             rowKey="#{order.id}"
             paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
             currentPageReportTemplate="Page {currentPage} of {totalPages}"
@@ -42,7 +43,8 @@ and open the template in the editor.
                 </p:dialog>
             </p:column>
         </p:dataTable>
+
     </h:form>
-    
-    
+
+
 </ui:composition>

@@ -27,7 +27,7 @@ public class EntityInitializer {
 
     @PostConstruct
     public void init() {
-        if (categoryDAO.findAll().isEmpty() && categoryDAO.findAll().isEmpty()) {
+        if (basicEntityDAO.findAll().isEmpty() || categoryDAO.findAll().isEmpty()) {
             bulkAdd();
         }
     }

@@ -1,6 +1,7 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
@@ -23,7 +24,7 @@ import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
  * @author simon
  */
 @Named
-@RequestScoped
+@ViewScoped
 public class NewEntityCtrl implements Serializable {
 
     @EJB
@@ -34,7 +35,8 @@ public class NewEntityCtrl implements Serializable {
 
     @Inject
     private NewEntityDialogBB newEntityDialogBB;
-
+    
+   
     /**
      * Add a new entity to the database
      *
@@ -61,7 +63,7 @@ public class NewEntityCtrl implements Serializable {
         newEntityDialogBB.clearFields();
     }
     
-    public void togglePanel() {
+    public void toggleCategoryPanel() {
         boolean oldValue = newEntityDialogBB.getNewCatPanelVisible();
         boolean newValue = !oldValue;
         newEntityDialogBB.setNewCatPanelVisible(newValue);

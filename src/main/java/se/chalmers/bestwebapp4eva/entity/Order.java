@@ -99,4 +99,11 @@ public class Order extends AbstractDBObject{
         return sb.toString();
     }
     
+    public String getTableString() {
+        double total = 0.0;
+        for(OrderItem i: orderItems) {
+            total += i.getOrderQuantity() * i.getPrice();
+        }
+        return "\t\tOrder placed on " + orderDate.toString() + " (Total of $" + total + ").";
+    }
 }
