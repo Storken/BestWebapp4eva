@@ -7,8 +7,9 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 /**
- *
- * @author hajo
+ * Backing bean for authentication
+ * 
+ * @author Bosch
  */
 @Named
 @SessionScoped
@@ -22,6 +23,10 @@ public class AuthBB implements Serializable {
     public AuthBB() {
     }
     
+    /**
+     * checks if the username-field or the password-field is empty.
+     * @return false if empty.
+     */
     public boolean hasValue(){
         return !username.isEmpty() && !password.isEmpty();
     }

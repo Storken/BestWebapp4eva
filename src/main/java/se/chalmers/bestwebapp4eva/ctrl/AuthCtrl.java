@@ -22,7 +22,8 @@ import se.chalmers.bestwebapp4eva.dao.AuthDAO;
 import se.chalmers.bestwebapp4eva.entity.User;
 
 /**
- *
+ * Controller for the authentication, here all the important methods exist.
+ * 
  * @author Bosch
  */
 @Named
@@ -113,18 +114,30 @@ public class AuthCtrl implements Serializable{
         return "fail";
     }
 
+    /**
+     * Create a user with privilege of a user.
+     * @return 
+     */
     public String createUser() {
         ad.createUserAndGroup(ab.getUsername(), ab.getPassword(), "user");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
         return login();
     }
     
+    /**
+     * Create a user with privilege of an admin.
+     * @return 
+     */
     public String createAdmin() {
         ad.createUserAndGroup(ab.getUsername(), ab.getPassword(), "admin");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
         return login();
     }
 
+    /**
+     * Logs the user out from the session
+     * @return 
+     */
     public String logout() {
         ExternalContext externalContext = FacesContext.getCurrentInstance().
                 getExternalContext();
@@ -135,6 +148,10 @@ public class AuthCtrl implements Serializable{
         return "success";
     }
     
+    /**
+     * Failmessages
+     * @param out the string to be printed
+     */
     private void message(String out){
             FacesContext.getCurrentInstance().
                     addMessage(null, 

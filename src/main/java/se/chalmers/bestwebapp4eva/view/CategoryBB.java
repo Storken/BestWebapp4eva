@@ -68,6 +68,6 @@ public class CategoryBB implements Serializable {
             message = categories.getRowCount() + " items matching your criteria";
         }
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Found", message));
+        FacesContext.getCurrentInstance().addMessage("categoryFilterMessage", new FacesMessage(FacesMessage.SEVERITY_INFO, "Found", message));
     }
 }

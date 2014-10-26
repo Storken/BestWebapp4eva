@@ -2,6 +2,7 @@ package se.chalmers.bestwebapp4eva.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,7 @@ import se.chalmers.bestwebapp4eva.entity.AbstractDBObject;
  *
  * NOTE : User is a reserved word in SQL
  *
- * @author hajo
+ * @author Bosch
  */
 @Entity
 @Table(name="USERS")
