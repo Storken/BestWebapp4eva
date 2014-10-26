@@ -5,6 +5,7 @@
 Group 13</b>
 
 <br>
+<h3>See Setup.pdf for configurations in order to run the project</h3>
 We've created Bestlagerapp4eva, a web based warehousing application.
 
 In Bestlagerapp4eva, you can create your own entities (or rather, products) and manage them. This is ideal for any small (or large) company that wants to keep track of i.e how many planks they have in their warehouse. 
