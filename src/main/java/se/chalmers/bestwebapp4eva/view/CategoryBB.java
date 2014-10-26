@@ -36,9 +36,6 @@ public class CategoryBB implements Serializable {
             public List<Category> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
                 List<Category> result = categoryDAO.getResultList(first, pageSize, sortField, sortOrder, filters);
                 categories.setRowCount(categoryDAO.count(sortField, sortOrder, filters));
-                if (categories.getRowCount() < categoryDAO.findAll().size() && categories.getRowCount() != 0) {
-                    filterMessage();
-                }
                 return result;
             }
         };
@@ -58,16 +55,5 @@ public class CategoryBB implements Serializable {
 
     public void setSelectedCategories(List<Category> selectedCategories) {
         this.selectedCategories = selectedCategories;
-    }
-
-    private void filterMessage() {
-        String message;
-        if (categories.getRowCount() == 1) {
-            message = categories.getRowCount() + " item matching your criteria";
-        } else {
-            message = categories.getRowCount() + " items matching your criteria";
-        }
-
-        FacesContext.getCurrentInstance().addMessage("categoryFilterMessage", new FacesMessage(FacesMessage.SEVERITY_INFO, "Found", message));
     }
 }

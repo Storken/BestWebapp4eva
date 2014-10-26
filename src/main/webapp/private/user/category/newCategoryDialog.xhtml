@@ -8,17 +8,32 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <h:form id="newCategoryForm">
-        <h:panelGrid columns="2" cellpadding="5">
+        <h:panelGrid id="newCategoryPanel" columns="2" cellpadding="5">
             <h:outputLabel value="Name:" for="name"/>
-            <h:inputText id="name" value="#{newCategoryDialogBB.name}" required="true"/>
+            <h:inputText id="name" value="#{newCategoryDialogBB.name}" validator="#{newCategoryValidator.validate}"/>
+            
+            <h:outputText value=""/>
+            <p:message for="name"/>
 
             <h:outputLabel value="Description:" for="description"/>
-            <h:inputText id="description" value="#{newCategoryDialogBB.description}" required="true"/>
+            <h:inputText id="description" value="#{newCategoryDialogBB.description}" validator="#{newCategoryValidator.validate}"/>
             
+            <h:outputText value=""/>
+            <p:message for="description"/>
+
         </h:panelGrid>
         <p:commandButton value="Cancel" onclick="newCategoryDialog.hide()"/>
-        <p:commandButton value="Create category" onclick="newCategoryDialog.hide()" actionListener="#{newCategoryCtrl.add}"/>
+        <p:commandButton value="Create category" update=":newCategoryForm:newCategoryPanel :category123:categories" oncomplete="handleSubmit(xhr, status, args)" actionListener="#{newCategoryCtrl.add}"/>
     </h:form>        
-
+    <script type="text/javascript">
+        function handleSubmit(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('newCategoryDialog').jq.effect("shake", {times: 5}, 100);
+            }
+            else {
+                PF('newCategoryDialog').hide();
+            }
+        }
+    </script>
 
 </ui:composition>
