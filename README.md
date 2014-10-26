@@ -26,16 +26,16 @@ Simon Persson - 9204171293 simon.jrp@gmail.com
 Usecases
 ==============
 
-* You are able to create a user
-* With this user you are able to log in
-* The user can add entities to the database 
-* The user can edit entities in the database
-* The user can add categories to the database
-* The user can edit categories in the database
-* The user can filter and sort entities based on their attributes
-* The user can place an order of entities from the database
-* The user can go through previouly placed orders
-* The user can export a placed order as a PDF file after placing it
+* Create a user
+* Log in with the created user
+* Add entities to the database 
+* Edit entities in the database
+* Add categories to the database
+* Edit categories in the database
+* Filter and sort entities based on their attributes
+* Place an order of entities from the database
+* Go through previouly placed orders
+* Export a placed order as a PDF file after placing it
 
 Approach
 ==============
@@ -63,7 +63,7 @@ The models of the application, such as a User or an Order.
 
 * Views
   
-The classes that provide the web pages with the information they should show. For example these classes are used   in every almost table that lists things from the database.
+The classes that provide the web pages with the information they should show (backing beans). For example these classes are used in almost every table that lists things from the database.
 
 
 
