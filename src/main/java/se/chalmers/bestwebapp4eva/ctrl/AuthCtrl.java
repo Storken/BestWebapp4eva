@@ -37,10 +37,6 @@ public class AuthCtrl implements Serializable{
     
     private boolean userInlogged;
     
-    private FacesContext context;
-    
-    private ExternalContext externalContext;
-    
     public AuthCtrl(){
         
     }
@@ -53,17 +49,18 @@ public class AuthCtrl implements Serializable{
     
     @PostConstruct
     public void init(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
         
     }
     
     /**
      * This method tries to communicate and login to the database through glassfish.
-     * 
+     * There are a lot of LOG-messages so be sure to check your logs if something doesn't
+     * go as it should.
      * @return success if it succeeds or fail if it fails 
      */
     public String login() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
 
@@ -148,6 +145,8 @@ public class AuthCtrl implements Serializable{
      * @return 
      */
     public String logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
         externalContext.invalidateSession();
         LOG.log(Level.INFO, "*** Logout success");
         currentUser = null;
@@ -160,6 +159,8 @@ public class AuthCtrl implements Serializable{
      * @param out the string to be printed
      */
     private void message(String out){
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
         externalContext.getFlash().setKeepMessages(true);
 
         FacesContext.getCurrentInstance().
@@ -168,12 +169,20 @@ public class AuthCtrl implements Serializable{
                                     out, null));
     }
     
+    /**
+     * Get a bool telling if the user is admin or not.
+     * @return true if current user is admin, false otherwise
+     */
     public boolean currentUserIsAdmin(){
         if(currentUser != null)
             return ad.getGroupByUsername(currentUser.getUsername()).get(0).getGroupname().equals("admin");
         return false;
     }
 
+    /**
+     * Checks if a user is logged in
+     * @return true if user is logged in
+     */
     public boolean isUserInlogged() {
         return userInlogged;
     }

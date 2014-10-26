@@ -38,6 +38,7 @@ public class AuthBB implements Serializable {
     }
 
     public void setUsername(String username) {
+        System.out.println();
         this.username = username;
     }
 

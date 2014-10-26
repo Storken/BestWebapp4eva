@@ -32,14 +32,14 @@ public class CatalogueBB implements Serializable {
     private LazyDataModel<BasicEntity> entities;
 
     private List<BasicEntity> selectedEntities;
-    
+
     private List<Category> categories;
-    
+
     private List<Unit> units;
 
     @EJB
     private ICategoryDAO categoryDAO;
-    
+
     @EJB
     private IBasicEntityDAO bec;
 
@@ -50,13 +50,10 @@ public class CatalogueBB implements Serializable {
             public List<BasicEntity> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
                 List<BasicEntity> result = bec.getResultList(first, pageSize, sortField, sortOrder, filters);
                 entities.setRowCount(bec.count(sortField, sortOrder, filters));
-                if (entities.getRowCount() < bec.findAll().size() && entities.getRowCount() != 0) {
-                    filterMessage();
-                }
                 return result;
             }
         };
-        
+
         categories = categoryDAO.findAll();
         units = Arrays.asList(BasicEntity.Unit.values());
     }
@@ -77,22 +74,10 @@ public class CatalogueBB implements Serializable {
         this.selectedEntities = selectedEntities;
     }
 
-    // Method for showing a message if a filter is applied to the table.
-    private void filterMessage() {
-        String message;
-        if (entities.getRowCount() == 1) {
-            message = entities.getRowCount() + " item matching your criteria";
-        } else {
-            message = entities.getRowCount() + " items matching your criteria";
-        }
-
-        FacesContext.getCurrentInstance().addMessage("catalogueFilterMessage", new FacesMessage(FacesMessage.SEVERITY_INFO, "Found", message));
-    }
-    
     public List<Category> getCategories() {
         return this.categories;
     }
-    
+
     public List<Unit> getUnits() {
         return this.units;
     }

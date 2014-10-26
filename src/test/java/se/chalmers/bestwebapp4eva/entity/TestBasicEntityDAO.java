@@ -71,6 +71,7 @@ public class TestBasicEntityDAO {
         utx.begin();
         em.joinTransaction();
         em.createQuery("DELETE FROM BasicEntity").executeUpdate();
+        em.createQuery("DELETE FROM Category").executeUpdate();
         utx.commit();
     }
     
@@ -82,5 +83,68 @@ public class TestBasicEntityDAO {
         basicEntityDAO.create(be);
         List<BasicEntity> list = basicEntityDAO.findAll();
         assertTrue(list.size() == 1);
+    }
+    
+    @Test
+    public void testGetByIdAndTitle() throws Exception {        
+        Category c = new Category("Title", "Description");
+        categoryDAO.create(c);
+        BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg, c);
+        basicEntityDAO.create(be);
+        be = basicEntityDAO.getByTitle("hamburger").get(0);
+        assertTrue(be.equals(basicEntityDAO.getById(be.getId()).get(0)));
+    }
+    
+    @Test
+    public void testGetByPrice() throws Exception {
+        Category c = new Category("Title", "Description");
+        categoryDAO.create(c);
+        BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg, c);
+        basicEntityDAO.create(be);
+        be = basicEntityDAO.getByTitle("hamburger").get(0);
+        assertTrue(be.equals(basicEntityDAO.getByPrice(be.getPrice()).get(0)));
+    }
+    
+    @Test
+    public void testGetByQuantity() throws Exception {
+        Category c = new Category("Title", "Description");
+        categoryDAO.create(c);
+        BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg, c);
+        basicEntityDAO.create(be);
+        be = basicEntityDAO.getByTitle("hamburger").get(0);
+        assertTrue(be.equals(basicEntityDAO.getByQuantity(be.getQuantity()).get(0)));
+    }
+    
+    @Test
+    public void testGetByUnit() throws Exception {
+        Category c = new Category("Title", "Description");
+        categoryDAO.create(c);
+        BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg, c);
+        basicEntityDAO.create(be);
+        be = basicEntityDAO.getByTitle("hamburger").get(0);
+        assertTrue(be.equals(basicEntityDAO.getByUnit(be.getUnit()).get(0)));
+    }
+    
+    @Test
+    public void testGetByCategory() throws Exception {
+        Category c = new Category("Title", "Description");
+        categoryDAO.create(c);
+        BasicEntity be = new BasicEntity("hamburger", 100, 20, Unit.kg, c);
+        basicEntityDAO.create(be);
+        be = basicEntityDAO.getByTitle("hamburger").get(0);
+        assertTrue(be.equals(basicEntityDAO.getByCategory(be.getCategory()).get(0)));
+    }
+    
+    @Test
+    public void testCount() throws Exception {
+            Category c;
+            BasicEntity be;
+        for(int i = 0; i < 10; i++){
+            c = new Category("Title"+i, "Description"+i);
+            categoryDAO.create(c);
+            be = new BasicEntity("hamburger"+i, 100, 20, Unit.kg, c);
+            basicEntityDAO.create(be);
+        }
+        assertTrue(basicEntityDAO.findAll().size() == basicEntityDAO.count());
     }
 }

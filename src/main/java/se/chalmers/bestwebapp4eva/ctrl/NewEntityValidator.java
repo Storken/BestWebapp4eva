@@ -29,19 +29,22 @@ public class NewEntityValidator implements Serializable, Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         FacesMessage message = null;
-        System.out.println(component.getClientId());
-        switch (component.getClientId()) {
-            case "newEntityForm:title":
+ 
+        switch (component.getId()) {
+            case "title":
                 message = getTitleMessage(value.toString());
                 break;
-            case "newEntityForm:price":
+            case "price":
                 message = getPriceMessage((double) value);
                 break;
-            case "newEntityForm:quantity":
+            case "quantity":
                 message = getQuantityMessage((double) value);
                 break;
-            case "newEntityForm:newName":
-                message = getCategoryMessage(value.toString());
+            case "newName":
+                message = getCategoryNameMessage(value.toString());
+                break;
+            case "newDescription":
+                message = getCategoryDescriptionMessage(value.toString());
                 break;
         }
 
@@ -53,10 +56,10 @@ public class NewEntityValidator implements Serializable, Validator {
 
     private FacesMessage getTitleMessage(String title) {
 
-        if (!basicEntityDAO.getByTitle(title).isEmpty()) {
-            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title already exists.");
-        } else if (title.isEmpty()) {
+        if (title.isEmpty()) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title cannot be empty.");
+        }else if (!basicEntityDAO.getByTitle(title).isEmpty()) {
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title already exists.");
         } else if (title.length() > 25) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title too long (25 chars max).");
         } else {
@@ -80,12 +83,20 @@ public class NewEntityValidator implements Serializable, Validator {
         }
     }
 
-    private FacesMessage getCategoryMessage(String categoryName) {
+    private FacesMessage getCategoryNameMessage(String categoryName) {
         if (!categoryDAO.getByName(categoryName).isEmpty()) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Name", "Name already exists.");
         } else if (categoryName.length() > 25) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Name", "Name too long (25 chars max).");
         } else {
+            return null;
+        }
+    }
+    
+    private FacesMessage getCategoryDescriptionMessage(String categoryDescription) {
+        if(categoryDescription.length() > 50) {
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Description", "Description too long (50 chars max).");
+        }else{
             return null;
         }
     }

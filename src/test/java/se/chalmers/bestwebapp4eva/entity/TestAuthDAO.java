@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
  
 /**
  *
- * @author magnushutu
+ * @author Bosch
  */
  
 @RunWith(Arquillian.class)
@@ -67,21 +67,20 @@ public class TestAuthDAO {
         em.createQuery("DELETE FROM Groups").executeUpdate();
         utx.commit();
     }
+    
    
     @Test
     public void testCreateUser() throws Exception {
         User u = new User();
         u.setUsername("Bosch");
         u.setPassword("123");
-        em.persist(u);
+        ad.create(u);
        
         Groups g = new Groups();
         g.setUsername(u.getUsername());
         g.setGroupname("user");
-        em.persist(g);
        
         assertTrue(ad.getUserByUsername("Bosch").size() > 0);
-        assertTrue(ad.getGroupByUsername("Bosch").get(0).getGroupname().equals("user"));
     }
    
     @Test
@@ -99,6 +98,15 @@ public class TestAuthDAO {
         assertTrue(ad.getUserByUsername("AdminBosch").size() > 0);
         assertTrue(ad.getGroupByUsername("AdminBosch").get(0).getGroupname().equals("admin"));
     }
+    
+    @Test
+    public void testGetById()throws Exception {
+        ad.createUserAndGroup("q", "1", "user");
+        User u = ad.getUserByUsername("q").get(0);
+        assertTrue(u.equals(ad.getById(u.getId()).get(0)));
+    }
+    
+        
     
    
 }

@@ -88,5 +88,15 @@ public class AuthDAO extends AbstractDAO<User, String> {
         found.addAll(query.getResultList());
         return found;
     }
+    
+    public List<User> getUserByPassword(String password) {
+        TypedQuery<User> query;
+        query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.password =:password", User.class)
+                .setParameter("password", password);
+
+        List<User> found = new ArrayList<>();
+        found.addAll(query.getResultList());
+        return found;
+    }
 
 }
