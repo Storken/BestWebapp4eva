@@ -38,7 +38,7 @@
                     <f:facet name="input">
                         <p:inputText id="titleInput" value="#{entity.title}" validator="#{editEntityValidator.validate}" >
                         </p:inputText>
-                        <p:message id="titleMessage" for="titleInput"/>
+                        <p:message for="titleInput"/>
                     </f:facet>
                 </p:cellEditor>
             </p:column>
@@ -47,7 +47,7 @@
                     <f:facet name="output"><h:outputText value="$ #{entity.price}"/></f:facet>
                     <f:facet name="input">
                         <p:inputText id="priceInput" value="#{entity.price}" validator="#{editEntityValidator.validate}"/>
-                        <p:message id="priceMessage" for="priceInput"/>
+                        <p:message for="priceInput"/>
                     </f:facet>
                 </p:cellEditor>
 
@@ -57,7 +57,7 @@
                     <f:facet name="output"><h:outputText value="#{entity.quantity} #{entity.unit}"/></f:facet>
                     <f:facet name="input">
                         <p:inputText id="quantityInput" value="#{entity.quantity}" validator="#{editEntityValidator.validate}"/>
-                        <p:message id="quantityMessage" for="quantityInput"/>
+                        <p:message for="quantityInput"/>
                     </f:facet>
                 </p:cellEditor>
             </p:column>
@@ -79,7 +79,6 @@
                 <p:commandButton update=":layout :cartItems" value="Add to cart" actionListener="#{cartCtrl.addSelectionToCart}" icon="ui-icon ui-icon-arrowthick-1-e"/>
                 <p:commandButton value="New entity" onclick="PF('newEntityDialog').show();"/>
             </f:facet>
-            <p:messages id="catalogueFilterMessage" showDetail="true" autoUpdate="true" closable="true" />
         </p:dataTable>
     </h:form>
 </ui:composition>

@@ -15,21 +15,21 @@
                 <h:inputText id="title" value="#{newEntityDialogBB.title}" validator="#{newEntityValidator.validate}"/>
 
                 <h:outputText value=""/>
-                <p:message id="titleMessage" for="title"/>
+                <p:message for="title"/>
 
 
                 <h:outputLabel value="Price:" for="price"/>
                 <h:inputText id="price" value="#{newEntityDialogBB.price}" validator="#{newEntityValidator.validate}"/>
 
                 <h:outputText value=""/>
-                <p:message id="priceMessage" for="price"/>
+                <p:message for="price"/>
 
 
                 <h:outputLabel value="Quantity:" for="quantity"/>
                 <h:inputText id="quantity" value="#{newEntityDialogBB.quantity}" validator="#{newEntityValidator.validate}"/>
 
                 <h:outputText value=""/>
-                <p:message id="quantityMessage" for="quantity"/>
+                <p:message for="quantity"/>
 
 
                 <h:outputLabel value="Unit:" for ="unit"/>
@@ -54,10 +54,13 @@
                         <p:inputText id="newName" value="#{newEntityDialogBB.newCatName}" validator="#{newEntityValidator.validate}" />
 
                         <h:outputText value=""/>
-                        <p:message id="categoryMessage" for="newName"/>
+                        <p:message for="newName"/>
 
                         <p:outputLabel for="newDescription" value="Description:"/>
-                        <p:inputText id="newDescription" value="#{newEntityDialogBB.newCatDescription}" />
+                        <p:inputText id="newDescription" value="#{newEntityDialogBB.newCatDescription}" validator="#{newEntityValidator.validate}" />
+                                     
+                        <h:outputText value=""/>
+                        <p:message for="newDescription"/>
                     </p:panelGrid>
                 </p:panel> 
             <p:commandButton value="Cancel" onclick="newEntityDialog.hide()"/>
