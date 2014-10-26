@@ -1,5 +1,9 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
@@ -18,7 +22,7 @@ import se.chalmers.bestwebapp4eva.view.CatalogueBB;
  */
 @Named
 @RequestScoped
-public class EditEntityCtrl {
+public class EditEntityCtrl{
     
     @EJB
     ICategoryDAO categoryDAO;
@@ -32,9 +36,10 @@ public class EditEntityCtrl {
     public void onRowEdit(RowEditEvent event) {
         BasicEntity editedEntity = (BasicEntity)event.getObject();
         basicEntityDAO.update(editedEntity);
+        
     }
     
     public void onRowCancel(RowEditEvent event) {
-        System.out.println("rowCancel");
+       // Do nothing...
     }
 }
