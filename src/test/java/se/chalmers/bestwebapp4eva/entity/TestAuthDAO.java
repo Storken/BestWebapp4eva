@@ -81,7 +81,6 @@ public class TestAuthDAO {
         g.setGroupname("user");
        
         assertTrue(ad.getUserByUsername("Bosch").size() > 0);
-        assertTrue(ad.getGroupByUsername("Bosch").get(0).getGroupname().equals("user"));
     }
    
     @Test
