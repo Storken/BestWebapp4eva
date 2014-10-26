@@ -33,7 +33,13 @@ and open the template in the editor.
             </p:column>
             <p:column sortBy="#{order.date}" headerText="Date">    
                 <p:commandLink value="#{order.date}" onclick="#{orderBB.setOrder(order)}; PF('orderDialog').show()"/>
-             
+                
+                <p:dialog header="Order" widgetVar="orderDialog" 
+                            showEffect="size" hideEffect="size" resizable="false" 
+                            closeOnEscape="true" draggable="false" appendTo="@(body)"
+                            width="300" height="500">
+                      <ui:include src="/private/user/order/orderConfirmation.xhtml"/>
+                </p:dialog>
             </p:column>
         </p:dataTable>
     </h:form>
