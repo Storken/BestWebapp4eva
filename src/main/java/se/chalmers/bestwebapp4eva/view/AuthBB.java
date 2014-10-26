@@ -1,4 +1,4 @@
-package se.chalmers.bestwebapp4eva.auth;
+package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
 

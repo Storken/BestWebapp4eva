@@ -2,7 +2,7 @@ package se.chalmers.bestwebapp4eva.dao;
 
 import java.util.Date;
 import java.util.List;
-import se.chalmers.bestwebapp4eva.auth.User;
+import se.chalmers.bestwebapp4eva.entity.User;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.Order;
 

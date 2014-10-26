@@ -1,4 +1,4 @@
-package se.chalmers.bestwebapp4eva.auth;
+package se.chalmers.bestwebapp4eva.dao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import se.chalmers.bestwebapp4eva.dao.AbstractDAO;
+import se.chalmers.bestwebapp4eva.entity.Groups;
+import se.chalmers.bestwebapp4eva.entity.User;
 
 /**
  *

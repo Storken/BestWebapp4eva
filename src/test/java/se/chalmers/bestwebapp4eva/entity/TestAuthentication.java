@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.chalmers.bestwebapp4eva.auth;
+package se.chalmers.bestwebapp4eva.entity;
  
+import se.chalmers.bestwebapp4eva.dao.AuthDAO;
 import javax.annotation.Resource;
-import javax.inject.Inject;
+import javax.ejb.EJB;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
@@ -35,13 +36,14 @@ public class TestAuthentication {
     @Resource
     private UserTransaction utx;
  
-    @Inject
+    @EJB
     private AuthDAO ad;
  
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class)
-                .addPackage("se.chalmers.bestwebapp4eva.auth")
+                .addPackage("se.chalmers.bestwebapp4eva.entity")
+                .addPackage("se.chalmers.bestwebapp4eva.dao")
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }

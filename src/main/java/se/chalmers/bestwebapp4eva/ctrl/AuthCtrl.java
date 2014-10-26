@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.chalmers.bestwebapp4eva.auth;
+package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
 import java.util.logging.Level;
@@ -17,6 +17,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
+import se.chalmers.bestwebapp4eva.view.AuthBB;
+import se.chalmers.bestwebapp4eva.dao.AuthDAO;
+import se.chalmers.bestwebapp4eva.entity.User;
 
 /**
  *

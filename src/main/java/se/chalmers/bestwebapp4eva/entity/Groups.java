@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.chalmers.bestwebapp4eva.auth;
+package se.chalmers.bestwebapp4eva.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;

@@ -9,8 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import se.chalmers.bestwebapp4eva.auth.AuthDAO;
-import se.chalmers.bestwebapp4eva.auth.User;
+import se.chalmers.bestwebapp4eva.entity.User;
 import se.chalmers.bestwebapp4eva.entity.Order;
 
 /**
