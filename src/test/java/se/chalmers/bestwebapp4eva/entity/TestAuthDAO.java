@@ -24,7 +24,7 @@ import org.junit.runner.RunWith;
  
 /**
  *
- * @author magnushutu
+ * @author Bosch
  */
  
 @RunWith(Arquillian.class)

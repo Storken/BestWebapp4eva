@@ -37,10 +37,6 @@ public class AuthCtrl implements Serializable{
     
     private boolean userInlogged;
     
-    private FacesContext context;
-    
-    private ExternalContext externalContext;
-    
     public AuthCtrl(){
         
     }
@@ -53,8 +49,6 @@ public class AuthCtrl implements Serializable{
     
     @PostConstruct
     public void init(){
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
         
     }
     
@@ -64,6 +58,8 @@ public class AuthCtrl implements Serializable{
      * @return success if it succeeds or fail if it fails 
      */
     public String login() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
 
@@ -148,6 +144,8 @@ public class AuthCtrl implements Serializable{
      * @return 
      */
     public String logout() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
         externalContext.invalidateSession();
         LOG.log(Level.INFO, "*** Logout success");
         currentUser = null;
@@ -160,6 +158,8 @@ public class AuthCtrl implements Serializable{
      * @param out the string to be printed
      */
     private void message(String out){
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
         externalContext.getFlash().setKeepMessages(true);
 
         FacesContext.getCurrentInstance().
