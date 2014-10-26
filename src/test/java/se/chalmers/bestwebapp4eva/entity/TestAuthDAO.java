@@ -67,6 +67,7 @@ public class TestAuthDAO {
         em.createQuery("DELETE FROM Groups").executeUpdate();
         utx.commit();
     }
+    
    
     @Test
     public void testCreateUser() throws Exception {
@@ -99,6 +100,15 @@ public class TestAuthDAO {
         assertTrue(ad.getUserByUsername("AdminBosch").size() > 0);
         assertTrue(ad.getGroupByUsername("AdminBosch").get(0).getGroupname().equals("admin"));
     }
+    
+    @Test
+    public void testGetById()throws Exception {
+        ad.createUserAndGroup("q", "1", "user");
+        User u = ad.getUserByUsername("q").get(0);
+        assertTrue(u.equals(ad.getById(u.getId()).get(0)));
+    }
+    
+        
     
    
 }
