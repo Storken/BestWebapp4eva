@@ -28,13 +28,11 @@ and open the template in the editor.
 
             <f:facet name="header">
                 Orders
-            </f:facet>
-            <p:column sortBy="#{order.id}" headerText="ID">    
-                <p:commandLink value="#{order.id}" onclick="#{orderBB.setOrder(order)}; PF('orderDialog').show()"/>
-            </p:column>
-            <p:column sortBy="#{order.date}" headerText="Date">    
-                <p:commandLink value="#{order.date}" onclick="#{orderBB.setOrder(order)}; PF('orderDialog').show()"/>
-                
+            </f:facet>            
+            <p:column headerText="Information">    
+                <p:commandLink value="#{order.tableString}" onclick="#{orderBB.setOrder(order)};
+                        PF('orderDialog').show()"/>
+
                 <p:dialog header="Order" widgetVar="orderDialog" 
                             showEffect="size" hideEffect="size" resizable="false" 
                             closeOnEscape="true" draggable="false" appendTo="@(body)"
