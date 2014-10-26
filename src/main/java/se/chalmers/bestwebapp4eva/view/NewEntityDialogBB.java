@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
@@ -15,8 +14,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
- *
- * @author tholene
+ * A backing bean for the dialog used to add new entities.
  * @author simon
  */
 @Named
@@ -27,17 +25,18 @@ public class NewEntityDialogBB implements Serializable {
     private String title;
     private double price;
     private double quantity;
-
     private Unit unit;
-    private List<Unit> units;
     private Category category;
+    
+    private List<Unit> units;
     private List<Category> categories;
 
+    // Variables for custom category.
     private String newCatName;
     private String newCatDescription;
 
+    // Boolean used to toggle the panel used to add custom category.
     private boolean newCatPanelVisible;
-
 
     @EJB
     ICategoryDAO cc;
@@ -47,19 +46,6 @@ public class NewEntityDialogBB implements Serializable {
         categories = cc.findAll();
         units = new ArrayList<>();
         units.addAll(Arrays.asList(BasicEntity.Unit.values()));
-    }
-
-    // For the toggling of the custom category panel to work this BB needs to be viewscoped. 
-    // Since the bean is viewscoped, we need a method for manually clearing all fields in 
-    // the "newEntityDialog".
-    public void clearFields() {
-        this.id = (long) 0;
-        this.title = null;
-        this.price = 0;
-        this.quantity = 0;
-        this.category = null;
-        newCatPanelVisible = false;
-
     }
 
     public Long getId() {

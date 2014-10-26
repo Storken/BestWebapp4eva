@@ -7,11 +7,11 @@ import java.util.Map;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
+ * A data access object for Category objects.
  *
  * @author simon
  */
@@ -32,16 +32,16 @@ public class CategoryDAO extends AbstractDAO<Category, Long> implements ICategor
 
     @Override
     public List<Category> getByName(String name) {
-        String query = "SELECT c FROM Category c WHERE c.name = :name";
-        TypedQuery<Category> result = em.createQuery(query, Category.class).setParameter("name", name);
-        return result.getResultList();
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, Category.class);
+        criteria.andEquals("name", name);
+        return criteria.getResultList();
     }
 
     @Override
     public List<Category> getById(long id) {
-        String query = "SELECT c FROM Category c WHERE c.id = :id";
-        TypedQuery<Category> result = em.createQuery(query, Category.class).setParameter("id", id);
-        return result.getResultList();
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, Category.class);
+        criteria.andEquals("id", id);
+        return criteria.getResultList();
     }
 
     @Override

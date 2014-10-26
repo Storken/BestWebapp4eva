@@ -3,10 +3,8 @@ package se.chalmers.bestwebapp4eva.dao;
 import com.uaihebert.factory.EasyCriteriaFactory;
 import com.uaihebert.model.EasyCriteria;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +13,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
- * A data access object (DAO) for basic entities.
+ * A data access object for BasicEntity objects.
  *
  * @author simon
  */
@@ -24,12 +22,6 @@ public class BasicEntityDAO extends AbstractDAO<BasicEntity, Long> implements IB
 
     @PersistenceContext
     private EntityManager em;
-
-    // TODO Ugly to have another collection referenced here!!!
-    @EJB
-    private ICategoryDAO cc;
-
-    private static final String[] logicalOperators = new String[]{"<", ">", "<=", ">=", "="};
 
     @Override
     protected EntityManager getEntityManager() {
@@ -42,44 +34,45 @@ public class BasicEntityDAO extends AbstractDAO<BasicEntity, Long> implements IB
 
     @Override
     public List<BasicEntity> getById(long id) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("id", id);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("id", id);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByTitle(String title) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("title", title);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("title", title);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByPrice(double price) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("price", price);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("price", price);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByQuantity(double quantity) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("quantity", quantity);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("quantity", quantity);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByUnit(BasicEntity.Unit unit) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("unit", unit);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("unit", unit);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByCategory(Category category) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("category", category);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.innerJoin("category");
+        criteria.andEquals("category", category);
+        return criteria.getResultList();
     }
 
     @Override

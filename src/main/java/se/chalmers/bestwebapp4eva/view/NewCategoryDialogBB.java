@@ -1,22 +1,14 @@
 package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
-import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
-import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
+ * A backing bean for the dialog used to add new categories.
  *
- * @author tholene
  * @author simon
  */
 @Named

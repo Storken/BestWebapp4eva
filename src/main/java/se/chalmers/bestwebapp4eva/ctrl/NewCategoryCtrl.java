@@ -1,29 +1,17 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.primefaces.event.RowEditEvent;
-import org.primefaces.model.LazyDataModel;
-import se.chalmers.bestwebapp4eva.entity.BasicEntity;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.Category;
-import se.chalmers.bestwebapp4eva.view.CatalogueBB;
 import se.chalmers.bestwebapp4eva.view.NewCategoryDialogBB;
-import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;
 
 /**
- * Controller class for entities and their connection to the database
+ * Controller for adding new Categories to the database.
  *
  * @author simon
  */
@@ -38,7 +26,7 @@ public class NewCategoryCtrl implements Serializable {
     private NewCategoryDialogBB categoryDialogBB;
 
     /**
-     * Add a new category to the database
+     * Add a new category to the database.
      *
      * @param actionEvent The received event
      */
@@ -47,6 +35,7 @@ public class NewCategoryCtrl implements Serializable {
         clearFields();
     }
     
+    // Used to clear fields of the "new category dialog" when the new category has been added.
     private void clearFields() {
         categoryDialogBB.setId(0l);
         categoryDialogBB.setName(null);

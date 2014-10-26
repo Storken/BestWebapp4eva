@@ -12,6 +12,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
+ * A startup bean used for initializing the database with some test items.
  *
  * @author simon
  */
@@ -42,11 +43,11 @@ public class EntityInitializer {
         tmp.add(new Category("iPhones", "Phones from Apple Inc."));
         tmp.add(new Category("Cars", "Cars, preferably Volvo."));
         tmp.add(new Category("Liquid", "Things that are liquid."));
-        
-        for(Category c : tmp) {
+
+        for (Category c : tmp) {
             categoryDAO.create(c);
         }
-        
+
         basicEntityDAO.create(new BasicEntity("Screw", 25, 100, BasicEntity.Unit.pcs, tmp.get(1)));
         basicEntityDAO.create(new BasicEntity("Muppet", 1, 38, BasicEntity.Unit.kg, tmp.get(0)));
         basicEntityDAO.create(new BasicEntity("Book", 32, 95, BasicEntity.Unit.pcs, tmp.get(0)));
@@ -72,6 +73,5 @@ public class EntityInitializer {
         basicEntityDAO.create(new BasicEntity("Thunderstorm", 193, 670, BasicEntity.Unit.pcs, tmp.get(0)));
         basicEntityDAO.create(new BasicEntity("Drums", 58, 475, BasicEntity.Unit.pcs, tmp.get(0)));
         basicEntityDAO.create(new BasicEntity("Sallad", 3, 150, BasicEntity.Unit.kg, tmp.get(2)));
-
     }
 }

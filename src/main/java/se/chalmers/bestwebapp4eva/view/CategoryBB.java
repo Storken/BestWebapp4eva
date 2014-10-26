@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
@@ -15,6 +13,7 @@ import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
+ * A backing bean for the table view of categories.
  *
  * @author simon
  */
@@ -25,6 +24,7 @@ public class CategoryBB implements Serializable {
     @EJB
     private ICategoryDAO categoryDAO;
 
+    // Using LazyDataModel in order to do lazy loading of data for the table.
     private LazyDataModel<Category> categories;
 
     private List<Category> selectedCategories;
@@ -41,18 +41,38 @@ public class CategoryBB implements Serializable {
         };
     }
 
+    /**
+     * Get the list of categories.
+     *
+     * @return A list of categories.
+     */
     public LazyDataModel<Category> getCategories() {
         return this.categories;
     }
 
+    /**
+     * Set the list of categories.
+     *
+     * @param categories The new list of categories.
+     */
     public void setCategories(LazyDataModel<Category> categories) {
         this.categories = categories;
     }
 
+    /**
+     * Get the list of categories selected in the table.
+     *
+     * @return A list of selected categories.
+     */
     public List<Category> getSelectedCategories() {
         return selectedCategories;
     }
 
+    /**
+     * Set the list of categories selected in the table.
+     *
+     * @param selectedCategories A new list of selected categories.
+     */
     public void setSelectedCategories(List<Category> selectedCategories) {
         this.selectedCategories = selectedCategories;
     }

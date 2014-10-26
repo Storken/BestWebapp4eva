@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.chalmers.bestwebapp4eva.ctrl;
 
 import javax.ejb.EJB;
@@ -18,6 +13,8 @@ import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 
 /**
+ * Validator class that is used for validating input and displaying appropriate
+ * error message when an entity is edited directly in the entity table.
  *
  * @author simon
  */
@@ -31,18 +28,17 @@ public class EditEntityValidator implements Validator {
     @EJB
     ICategoryDAO categoryDAO;
 
-    private long oldEntityId;
+    private long entityId;
 
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         FacesMessage message = null;
 
+        // Get the id of the entity being edited (and inputs validated for).
         DataTable table = (DataTable) component.getParent().getParent().getParent().getParent();
-        oldEntityId = (long) table.getRowKey();
+        entityId = (long) table.getRowKey();
 
-        // Remove table specific part of id.
-        String field = component.getId();
-        switch (field) {
+        switch (component.getId()) {
             case "titleInput":
                 message = getTitleMessage(value.toString());
                 break;
@@ -61,14 +57,10 @@ public class EditEntityValidator implements Validator {
     }
 
     private FacesMessage getTitleMessage(String title) {
-
-        if (!basicEntityDAO.getByTitle(title).isEmpty()) {
-            if (!basicEntityDAO.getByTitle(title).get(0).getId().equals(oldEntityId)) {
-                return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title already exists.");
-            } else {
-                return null;
-            }
-
+        if (title.isEmpty()) {
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title cannot be empty.");
+        } else if (!basicEntityDAO.getByTitle(title).isEmpty() && !basicEntityDAO.getByTitle(title).get(0).getId().equals(entityId)) {
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title already exists.");
         } else if (title.isEmpty()) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title cannot be empty.");
         } else if (title.length() > 25) {

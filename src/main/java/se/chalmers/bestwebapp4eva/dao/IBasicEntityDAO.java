@@ -9,6 +9,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
+ * Interface defining functions for BasicEntityDAO.
  *
  * @author simon
  */
@@ -47,6 +48,12 @@ public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
      */
     public List<BasicEntity> getByUnit(Unit unit);
 
+    /**
+     * Get BasicEntity(s) by category.
+     *
+     * @param category
+     * @return A list with the wanted entity(s).
+     */
     public List<BasicEntity> getByCategory(Category category);
 
     /**
@@ -65,6 +72,16 @@ public interface IBasicEntityDAO extends IDAO<BasicEntity, Long> {
      */
     public List<BasicEntity> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters);
 
+    /**
+     * Method for getting the number of items in the database that applies to
+     * the provided filters.
+     *
+     * @param sortField Which field the list should be sorted by.
+     * @param sortOrder In which order the list should be sorted
+     * (SortOrder.ASCENDING, SortOrder.DECENDING etc.).
+     * @param filters A map with filters. The keys are the names of the
+     * attributes and the values are the wanted values of the attributes.
+     * @return The number of items that applies to the provided filters.
+     */
     public int count(String sortField, SortOrder sortOrder, Map<String, Object> filters);
-
 }

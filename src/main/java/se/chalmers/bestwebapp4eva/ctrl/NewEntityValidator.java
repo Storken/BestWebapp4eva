@@ -2,22 +2,23 @@ package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 
 /**
- *
+ * Validator class that is used for validating input and displaying appropriate
+ * error message when an entity is added via the "new entity dialog".
  * @author simon
  */
 @Named
-@ViewScoped
+@RequestScoped
 public class NewEntityValidator implements Serializable, Validator {
 
     @EJB

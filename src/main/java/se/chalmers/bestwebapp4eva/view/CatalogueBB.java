@@ -6,8 +6,6 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.model.LazyDataModel;
@@ -58,26 +56,56 @@ public class CatalogueBB implements Serializable {
         units = Arrays.asList(BasicEntity.Unit.values());
     }
 
+    /**
+     * Get the list of entities.
+     *
+     * @return A list of entities.
+     */
     public LazyDataModel<BasicEntity> getEntities() {
         return entities;
     }
 
+    /**
+     * Get the list of entities selected in the table.
+     *
+     * @return A list of selected entities.
+     */
     public List<BasicEntity> getSelectedEntities() {
         return this.selectedEntities;
     }
 
+    /**
+     * Set the list of entities.
+     *
+     * @param entities The new list of entities.
+     */
     public void setEntities(LazyDataModel<BasicEntity> entities) {
         this.entities = entities;
     }
 
+    /**
+     * Set the list of entities selected in the table.
+     *
+     * @param selectedEntities The new list of selected entities.
+     */
     public void setSelectedEntities(List<BasicEntity> selectedEntities) {
         this.selectedEntities = selectedEntities;
     }
 
+    /**
+     * Get available categories.
+     *
+     * @return A list of categories.
+     */
     public List<Category> getCategories() {
         return this.categories;
     }
 
+    /**
+     * Get available units.
+     *
+     * @return A list of units.
+     */
     public List<Unit> getUnits() {
         return this.units;
     }

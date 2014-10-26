@@ -1,27 +1,22 @@
 package se.chalmers.bestwebapp4eva.entity;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.IdClass;
 import javax.persistence.ManyToOne;
 
 /**
  *
- * Simple class representing a basic entity (with title, price, quantity and
- * unit attributes).
+ * Simple class representing a basic entity (with title, price, quantity, unit
+ * and category attributes).
  */
 @Entity
 public class BasicEntity extends AbstractDBObject {
 
-        
     /**
      * Enum for unit types kg, pcs, l.
      */
@@ -138,10 +133,18 @@ public class BasicEntity extends AbstractDBObject {
         return this.unit;
     }
 
+    /**
+     * Get the category
+     * @return The category.
+     */
     public Category getCategory() {
         return this.category;
     }
 
+    /**
+     * Get the name of the category.
+     * @return The name of the category.
+     */
     public String getCategoryName() {
         return this.category.getName();
     }
@@ -182,6 +185,10 @@ public class BasicEntity extends AbstractDBObject {
         this.unit = unit;
     }
 
+    /**
+     * Set the category.
+     * @param category The new category.
+     */
     public void setCategory(Category category) {
         this.category = category;
     }
