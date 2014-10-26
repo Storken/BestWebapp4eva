@@ -44,13 +44,17 @@
                         <f:selectItems value="#{newEntityDialogBB.categories}" var="category" itemLabel="#{category.name}" />
                     </p:selectOneMenu>
                     <p:commandButton id="newCatBtn" type="button" icon="ui-icon-plus" >
-                        <p:ajax listener="#{newEntityCtrl.toggleCategoryPanel}" update=":newEntityForm:newCat :newEntityForm:category"/>
+                        <p:ajax listener="#{newEntityCtrl.toggleCategoryPanel}" update=":newEntityForm:newCatPanel :newEntityForm:category"/>
                     </p:commandButton>
                 </p:panelGrid>
-                <p:panel id="newCat" header="New Category" visible="#{newEntityDialogBB.newCatPanelVisible}">
-                    <p:panelGrid columns="2">
+                <p:panel id="newCatPanel" header="New Category" visible="#{newEntityDialogBB.newCatPanelVisible}">
+                    <p:panelGrid columns="2" id="newCatGrid">
                         <p:outputLabel for="newName" value="Name:" />
-                        <p:inputText id="newName" value="#{newEntityDialogBB.newCatName}" />
+                        <p:inputText id="newName" value="#{newEntityDialogBB.newCatName}" validator="#{newEntityValidator.validate}" />
+
+                        <h:outputText value=""/>
+                        <p:message id="categoryMessage" for="newName"/>
+
                         <p:outputLabel for="newDescription" value="Description:"/>
                         <p:inputText id="newDescription" value="#{newEntityDialogBB.newCatDescription}" />
                     </p:panelGrid>
@@ -61,15 +65,15 @@
 
         </p:dialog>
     </h:form>
-    
+
     <script type="text/javascript">
-    function handleSubmit(xhr, status, args) {
-        if(args.validationFailed) {
-            PF('newEntityDialog').jq.effect("shake", {times:5}, 100);
+        function handleSubmit(xhr, status, args) {
+            if (args.validationFailed) {
+                PF('newEntityDialog').jq.effect("shake", {times: 5}, 100);
+            }
+            else {
+                PF('newEntityDialog').hide();
+            }
         }
-        else {
-            PF('newEntityDialog').hide();
-        }
-    }
-</script>
+    </script>
 </ui:composition>

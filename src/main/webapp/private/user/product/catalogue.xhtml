@@ -69,10 +69,9 @@
             </p:column>
             <f:facet name="footer">
                 <p:commandButton update=":layout :cartItems" value="Add to cart" actionListener="#{cartCtrl.addSelectionToCart}" icon="ui-icon ui-icon-arrowthick-1-e"/>
-                
+                <p:commandButton value="New entity" onclick="PF('newEntityDialog').show();"/>
             </f:facet>
             <p:messages id="catalogueFilterMessage" showDetail="true" autoUpdate="true" closable="true" />
         </p:dataTable>
     </h:form>
-    <h:form><p:commandButton value="New entity" onclick="PF('newEntityDialog').show();"/></h:form>
 </ui:composition>
