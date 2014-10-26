@@ -86,7 +86,7 @@ public class CatalogueBB implements Serializable {
             message = entities.getRowCount() + " items matching your criteria";
         }
 
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Found", message));
+        FacesContext.getCurrentInstance().addMessage("catalogueFilterMessage", new FacesMessage(FacesMessage.SEVERITY_INFO, "Found", message));
     }
     
     public List<Category> getCategories() {
