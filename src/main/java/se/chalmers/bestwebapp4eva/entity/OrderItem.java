@@ -23,7 +23,7 @@ public class OrderItem extends AbstractDBObject {
      @Id
     @GeneratedValue (strategy = GenerationType.AUTO)
     private long pk;
-
+      
     private BasicEntity entity;
 
     @Column
