@@ -12,7 +12,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.RowEditEvent;
-import se.chalmers.bestwebapp4eva.dao.AuthDAO;
+import se.chalmers.bestwebapp4eva.dao.UserDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.dao.OrderDAO;
 import se.chalmers.bestwebapp4eva.entity.Category;

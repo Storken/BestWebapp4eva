@@ -18,8 +18,11 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import se.chalmers.bestwebapp4eva.view.AuthBB;
-import se.chalmers.bestwebapp4eva.dao.AuthDAO;
+import se.chalmers.bestwebapp4eva.dao.GroupsDAO;
+import se.chalmers.bestwebapp4eva.dao.IGroupsDAO;
+import se.chalmers.bestwebapp4eva.dao.IUserDAO;
+import se.chalmers.bestwebapp4eva.view.UserBB;
+import se.chalmers.bestwebapp4eva.dao.UserDAO;
 import se.chalmers.bestwebapp4eva.entity.User;
 
 /**
@@ -29,23 +32,26 @@ import se.chalmers.bestwebapp4eva.entity.User;
  */
 @Named
 @SessionScoped
-public class AuthCtrl implements Serializable{
+public class UserCtrl implements Serializable{
     
-    private static final Logger LOG = Logger.getLogger(AuthDAO.class.getName());
+    private static final Logger LOG = Logger.getLogger(UserDAO.class.getName());
     
     private User currentUser;
     
     private boolean userInlogged;
     
-    public AuthCtrl(){
+    public UserCtrl(){
         
     }
 
     @EJB
-    private AuthDAO ad;
+    private IUserDAO userDAO;
+    
+    @EJB
+    private IGroupsDAO groupsDAO;
     
     @Inject
-    private AuthBB ab;
+    private UserBB ab;
     
     @PostConstruct
     public void init(){
@@ -65,7 +71,7 @@ public class AuthCtrl implements Serializable{
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
 
         // Really check is there some data in database?
-        if(ad.getUserByUsername(ab.getUsername()).size() < 1){
+        if(userDAO.getUserByUsername(ab.getUsername()).size() < 1){
             LOG.log(Level.INFO, "*** No such username: {0}", new Object[]{ab.getUsername()});
             message("Username and password did not match!");
             return "fail";
@@ -75,7 +81,7 @@ public class AuthCtrl implements Serializable{
             return "fail";
         }
         
-        User u = ad.getUserByUsername(ab.getUsername()).get(0);
+        User u = userDAO.getUserByUsername(ab.getUsername()).get(0);
         LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPassword()});
 
         try {
@@ -106,7 +112,7 @@ public class AuthCtrl implements Serializable{
      */
     public String createAccount(){
         if(ab.hasValue()){
-            if(ad.getUserByUsername(ab.getUsername()).isEmpty()){
+            if(userDAO.getUserByUsername(ab.getUsername()).isEmpty()){
                 if(ab.isAdmin())
                     return createAdmin();
                 return createUser();
@@ -125,7 +131,7 @@ public class AuthCtrl implements Serializable{
      * @return 
      */
     public String createUser() {
-        ad.createUserAndGroup(ab.getUsername(), ab.getPassword(), "user");
+        userDAO.createUserAndGroup(ab.getUsername(), ab.getPassword(), "user");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
         return login();
     }
@@ -135,7 +141,7 @@ public class AuthCtrl implements Serializable{
      * @return 
      */
     public String createAdmin() {
-        ad.createUserAndGroup(ab.getUsername(), ab.getPassword(), "admin");
+        userDAO.createUserAndGroup(ab.getUsername(), ab.getPassword(), "admin");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
         return login();
     }
@@ -175,7 +181,7 @@ public class AuthCtrl implements Serializable{
      */
     public boolean currentUserIsAdmin(){
         if(currentUser != null)
-            return ad.getGroupByUsername(currentUser.getUsername()).get(0).getGroupname().equals("admin");
+            return groupsDAO.getByUsername(currentUser.getUsername()).get(0).getGroupname().equals("admin");
         return false;
     }
 
@@ -188,7 +194,7 @@ public class AuthCtrl implements Serializable{
     }
     
     public String getUserGroup(){
-        return ad.getGroupByUsername(currentUser.getUsername()).get(0).getGroupname();
+        return groupsDAO.getByUsername(currentUser.getUsername()).get(0).getGroupname();
     }
     
 }

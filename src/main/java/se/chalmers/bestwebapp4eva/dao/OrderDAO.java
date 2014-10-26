@@ -23,7 +23,7 @@ public class OrderDAO extends AbstractDAO<Order, Long> implements IOrderDAO {
     private EntityManager em;
 
     @EJB
-    private AuthDAO authDAO;
+    private IUserDAO userDAO;
 
     public OrderDAO() {
         super(Order.class);
@@ -50,7 +50,7 @@ public class OrderDAO extends AbstractDAO<Order, Long> implements IOrderDAO {
 
     @Override
     public List<Order> getByUser(String username) {
-        User user = authDAO.getUserByUsername(username).get(0);
+        User user = userDAO.getUserByUsername(username).get(0);
         EasyCriteria<Order> result = EasyCriteriaFactory.createQueryCriteria(em, Order.class);
         result.andEquals("user", user);
         return result.getResultList();

@@ -17,14 +17,14 @@ import se.chalmers.bestwebapp4eva.entity.User;
  * @author Bosch
  */
 @Stateless
-public class AuthDAO extends AbstractDAO<User, String> {
+public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO{
 
-    private static final Logger LOG = Logger.getLogger(AuthDAO.class.getName());
+    private static final Logger LOG = Logger.getLogger(UserDAO.class.getName());
 
     @PersistenceContext//(unitName = "jee_auth_pu")
     protected EntityManager em;
 
-    public AuthDAO() {
+    public UserDAO() {
         super(User.class);
     }
 
@@ -44,6 +44,7 @@ public class AuthDAO extends AbstractDAO<User, String> {
      * @param password 
      * @param groupname should be "user" or "admin"
      */
+    @Override
     public void createUserAndGroup(String username, String password, String groupname) {
         User user = new User();
         user.setUsername(username);
@@ -69,6 +70,7 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return found;
     }
 
+    @Override
     public List<User> getUserByUsername(String username) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.username =:username", User.class)
@@ -79,16 +81,7 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return found;
     }
     
-    public List<Groups> getGroupByUsername(String username) {
-        TypedQuery<Groups> query;
-        query = em.createQuery("select g from " + Groups.class.getSimpleName() + " g WHERE g.username =:username", Groups.class)
-                .setParameter("username", username);
-
-        List<Groups> found = new ArrayList<>();
-        found.addAll(query.getResultList());
-        return found;
-    }
-    
+    @Override
     public List<User> getUserByPassword(String password) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.password =:password", User.class)

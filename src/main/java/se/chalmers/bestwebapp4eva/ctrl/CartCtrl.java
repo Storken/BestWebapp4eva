@@ -9,11 +9,12 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.PersistenceException;
-import se.chalmers.bestwebapp4eva.view.AuthBB;
-import se.chalmers.bestwebapp4eva.dao.AuthDAO;
+import se.chalmers.bestwebapp4eva.view.UserBB;
+import se.chalmers.bestwebapp4eva.dao.UserDAO;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.IOrderItemDAO;
 import se.chalmers.bestwebapp4eva.dao.IOrderDAO;
+import se.chalmers.bestwebapp4eva.dao.IUserDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.view.CatalogueBB;
 import se.chalmers.bestwebapp4eva.entity.OrderItem;
@@ -40,10 +41,10 @@ public class CartCtrl implements Serializable {
     private IOrderItemDAO basicOrderItemDAO;
 
     @EJB
-    private AuthDAO authDAO;
+    private IUserDAO authDAO;
 
     @Inject
-    private AuthBB authBB;
+    private UserBB authBB;
 
     @Inject
     private CartBB cartBB;

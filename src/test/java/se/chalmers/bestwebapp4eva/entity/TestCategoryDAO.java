@@ -64,6 +64,7 @@ public class TestCategoryDAO {
     private void clearData() throws Exception {
         utx.begin();
         em.joinTransaction();
+        em.createQuery("DELETE FROM BasicEntity").executeUpdate();
         em.createQuery("DELETE FROM Category").executeUpdate();
         utx.commit();
     }
@@ -72,6 +73,14 @@ public class TestCategoryDAO {
     public void testPersistance() throws Exception {
         Category c = new Category("Title", "Description");
         categoryDAO.create(c);
+        assertTrue(categoryDAO.findAll().size() > 0);
         assertTrue(c.equals(categoryDAO.getByName(c.getName()).get(0)));
+    }
+    
+    @Test 
+    public void testGetById() throws Exception {
+        Category c = new Category("Title", "Description");
+        categoryDAO.create(c);
+        assertTrue(c.equals(categoryDAO.getById(c.getId()).get(0)));
     }
 }

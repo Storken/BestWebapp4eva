@@ -13,14 +13,14 @@ import javax.inject.Named;
  */
 @Named
 @SessionScoped
-public class AuthBB implements Serializable {
+public class UserBB implements Serializable {
 
     private String username;
     private String password;
     private boolean admin;
-    private static final Logger LOG = Logger.getLogger(AuthBB.class.getSimpleName());
+    private static final Logger LOG = Logger.getLogger(UserBB.class.getSimpleName());
 
-    public AuthBB() {
+    public UserBB() {
     }
     
     /**
