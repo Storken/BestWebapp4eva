@@ -2,7 +2,6 @@ package se.chalmers.bestwebapp4eva.ctrl;
 
 import java.io.Serializable;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -10,10 +9,8 @@ import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
-import javax.validation.ValidationException;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
-import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 
 /**
  *
@@ -57,11 +54,11 @@ public class NewEntityValidator implements Serializable, Validator {
     private FacesMessage getTitleMessage(String title) {
 
         if (!basicEntityDAO.getByTitle(title).isEmpty()) {
-            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Title", " already exists.");
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title already exists.");
         } else if (title.isEmpty()) {
-            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Title", "cannot be empty.");
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title cannot be empty.");
         } else if (title.length() > 25) {
-            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Title", "too long (25 chars max).");
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title too long (25 chars max).");
         } else {
             return null;
         }
@@ -69,7 +66,7 @@ public class NewEntityValidator implements Serializable, Validator {
 
     private FacesMessage getPriceMessage(Double price) {
         if (price < 0 || price > Double.MAX_VALUE) {
-            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Price", "has to be between 0 and " + Double.MAX_VALUE + ".");
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Price", "Price has to be between 0 and " + Double.MAX_VALUE + ".");
         } else {
             return null;
         }
@@ -77,7 +74,7 @@ public class NewEntityValidator implements Serializable, Validator {
 
     private FacesMessage getQuantityMessage(Double quantity) {
         if (quantity < 0 || quantity > Double.MAX_VALUE) {
-            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Quantity", "has to be between 0 and " + Double.MAX_VALUE + ".");
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Quantity", "Quantity has to be between 0 and " + Double.MAX_VALUE + ".");
         } else {
             return null;
         }
@@ -85,9 +82,9 @@ public class NewEntityValidator implements Serializable, Validator {
 
     private FacesMessage getCategoryMessage(String categoryName) {
         if (!categoryDAO.getByName(categoryName).isEmpty()) {
-            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Name", "already exists.");
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Name", "Name already exists.");
         } else if (categoryName.length() > 25) {
-            return new FacesMessage(FacesMessage.SEVERITY_ERROR, "Name", "too long (25 chars max).");
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Name", "Name too long (25 chars max).");
         } else {
             return null;
         }
