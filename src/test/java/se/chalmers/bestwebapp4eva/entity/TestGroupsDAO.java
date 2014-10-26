@@ -73,7 +73,7 @@ public class TestGroupsDAO {
     
       
     @Test
-    public void testCreateUserWithAGroup() throws Exception {
+    public void testPersistance() throws Exception {
         User u = new User();
         u.setUsername("Bosch");
         u.setPassword("123");
