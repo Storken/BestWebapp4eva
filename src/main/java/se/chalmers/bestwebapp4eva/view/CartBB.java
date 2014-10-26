@@ -1,21 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.chalmers.bestwebapp4eva.view;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.OrderItem;
 
 /**
+ * Backing Bean for the Cart
  *
  * @author tholene
  */
@@ -31,11 +25,6 @@ public class CartBB implements Serializable {
         if (cartItems == null) {
             cartItems = new ArrayList<>();
         }
-    }
-
-    @PreDestroy
-    public void pre() {
-        // Empty
     }
 
     /**
@@ -56,25 +45,22 @@ public class CartBB implements Serializable {
         cartItems.addAll(cartItems);
     }
 
-    public BasicEntity findCartItemById(long id) {
-        for (OrderItem e : cartItems) {
-            if (e.getId() == id) {
-                return e.getEntity();
-            }
-        }
-        return null;
-    }
-
+    /**
+     * Add an item to the cart
+     *
+     * @param item the item to add
+     */
     public void add(OrderItem item) {
         cartItems.add(item);
     }
 
+    /**
+     * Remove an item from the cart
+     *
+     * @param item the item to remove
+     */
     public void remove(OrderItem item) {
         cartItems.remove(item);
-    }
-
-    public BasicEntity getEntity(OrderItem item) {
-        return item.getEntity();
     }
 
     @Override

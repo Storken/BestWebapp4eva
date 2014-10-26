@@ -10,17 +10,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import se.chalmers.bestwebapp4eva.auth.User;
 
 /**
+ * Entity class for an Order.
+ *
+ * NOTE: Order is a reserved keyword for JPQL
  *
  * @author tholene
  */
 @Entity
-public class Order extends AbstractDBObject{
-    
+@Table(name = "Orders")
+public class Order extends AbstractDBObject {
+
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     protected Long id;
@@ -28,74 +32,130 @@ public class Order extends AbstractDBObject{
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
     private Date orderDate;
-    
+
     @OneToMany
     private List<OrderItem> orderItems;
-    
+
     @JoinColumn(nullable = false)
     @ManyToOne
-    private User currentUser;
-    
+    private User user;
+
     public Order() {
     }
-    
-    public Order(Date date, List<OrderItem> items, User currentUser) {
-        this.orderDate = date;
+
+    /**
+     * Create a new Order with automatic ID generation
+     *
+     * @param orderDate the date the order was placed
+     * @param items a list of items in the order
+     * @param user the user that placed the order
+     */
+    public Order(Date orderDate, List<OrderItem> items, User user) {
+        this.orderDate = orderDate;
         this.orderItems = items;
-        this.currentUser = currentUser;
+        this.user = user;
     }
-    
-        
-    public Order(long id, Date orderDate, List<OrderItem> items, User currentUser) {
+
+    /**
+     * Create a new order with a set ID
+     *
+     * @param id the ID of the order
+     * @param orderDate the date the order was placed
+     * @param items a list of items in the order
+     * @param user the user that placed the order
+     */
+    public Order(long id, Date orderDate, List<OrderItem> items, User user) {
         this.id = id;
         this.orderDate = orderDate;
         this.orderItems = items;
-        this.currentUser = currentUser; 
+        this.user = user;
     }
-    
+
     @Override
     public Long getId() {
         return id;
     }
-    
+
+    /**
+     * Get the date the order was placed
+     *
+     * @return the date the order was placed
+     */
     public Date getDate() {
         return orderDate;
     }
-    
+
+    /**
+     * Get the items in the order
+     *
+     * @return the items in the order
+     */
     public List<OrderItem> getItems() {
         return orderItems;
     }
-    
+
+    /**
+     * Get the user that placed the order
+     *
+     * @return the user that placed the order
+     */
     public User getUser() {
-        return currentUser;
+        return user;
     }
 
     @Override
     public void setId(long id) {
         this.id = id;
     }
-  
+
+    /**
+     * Set the date for the order
+     *
+     * @param orderDate the date for the order
+     */
     public void setDate(Date orderDate) {
         this.orderDate = orderDate;
     }
-    
+
+    /**
+     * Set the items for the order
+     *
+     * @param items the items to be in the order
+     */
     public void setItems(List<OrderItem> items) {
         this.orderItems = items;
     }
-    
-    public void setUser(User currentUser) {
-        this.currentUser = currentUser;
+
+    /**
+     * Set the user for the order
+     *
+     * @param user the user for the order
+     */
+    public void setUser(User user) {
+        this.user = user;
     }
-    
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("Order no. ").append(id).append(":");
-        for(OrderItem e: orderItems) {
+        for (OrderItem e : orderItems) {
             sb.append("\n").append(e.getTitle()).append(", ").append(e.getOrderQuantity()).append(" ").append(e.getUnit()).append(" ");
         }
-        sb.append("\nPlaced by ").append(currentUser.getUsername()).append(" at ").append(orderDate.toString()).append(".");
+        sb.append("\nPlaced by ").append(user.getUsername()).append(" at ").append(orderDate.toString()).append(".");
         return sb.toString();
     }
-    
+
+    /**
+     * Get a string more fitting for the order table in the dashboard
+     *
+     * @return string containing the order date and total price
+     */
+    public String getTableString() {
+        double total = 0.0;
+        for (OrderItem i : orderItems) {
+            total += i.getOrderQuantity() * i.getPrice();
+        }
+        return "\t\tOrder placed on " + orderDate.toString() + " (Total of $" + total + ").";
+    }
 }

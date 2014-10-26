@@ -3,15 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package se.chalmers.bestwebapp4eva.auth;
+package se.chalmers.bestwebapp4eva.entity;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import se.chalmers.bestwebapp4eva.entity.AbstractDBObject;
 
 /**
  *
@@ -24,7 +24,11 @@ public class Groups extends AbstractDBObject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    
+    @Column(nullable = false)
     private String username;
+    
+    @Column(nullable = false)
     private String groupname;
     
 

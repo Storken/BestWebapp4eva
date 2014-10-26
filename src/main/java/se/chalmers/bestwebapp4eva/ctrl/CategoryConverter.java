@@ -10,6 +10,8 @@ import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
+ * Class for converting Category objects from object to string and vice versa.
+ * Needed in selector menus when creating/editing a category.
  *
  * @author simon
  */
@@ -19,7 +21,7 @@ public class CategoryConverter implements Converter {
 
     @EJB
     ICategoryDAO cc;
-    
+
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
         if (value != null && value.trim().length() > 0) {

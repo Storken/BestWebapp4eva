@@ -1,7 +1,8 @@
-package se.chalmers.bestwebapp4eva.auth;
+package se.chalmers.bestwebapp4eva.entity;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,7 +15,7 @@ import se.chalmers.bestwebapp4eva.entity.AbstractDBObject;
  *
  * NOTE : User is a reserved word in SQL
  *
- * @author hajo
+ * @author Bosch
  */
 @Entity
 @Table(name="USERS")
@@ -26,7 +27,10 @@ public class User extends AbstractDBObject implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
+    @Column(nullable = false)
     private String username;
+    
+    @Column(nullable = false)
     private String password;
 
     public User() {

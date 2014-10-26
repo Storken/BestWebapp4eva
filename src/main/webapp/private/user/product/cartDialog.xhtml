@@ -7,15 +7,10 @@
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
-    <p:outputPanel id="multiEntityDetail" style="text-align:center">
-        <h1 align="center">Put a beställning from your lager</h1>
-        <h4 align="center">...the way YOU want to</h4>
+    <p:outputPanel id="cartDialog" style="text-align:center">
+        <h1 align="center">Place an order</h1>
 
-
-
-
-
-        <h:form id="f">
+        <h:form id="orderForm">
             <table align="center" cellspacing="5">
                 <thead>
                     <td><b><u>Id</u></b></td>
@@ -28,39 +23,47 @@
                         <td><h:outputText value="#{item.id}" /></td>
                         <td><h:outputText value="#{item.title}" /></td>
                         <td>
-                            <h:outputText id="q" 
-                                          value="#{item.quantity - item.orderQuantity} #{item.unit}"/></td>
+                            <h:outputText id="quantity" 
+                                          value="#{item.quantity} #{item.unit}"/></td>
                         <td>
-                            <p:spinner id="s" 
+                            <p:spinner id="orderquantity" 
                                        value="#{item.orderQuantity}"
                                        suffix=" #{item.unit}" 
                                        max="#{item.quantity}" 
-                                       min="0" 
-                                       validator="#{cartCtrl.validateOrder}" 
-                                       rendered="#{!cartCtrl.isSpinnerDisabled(item)}">
-                                <p:ajax update="q :f:order" 
+                                       min="0"                                       
+                                       rendered="#{!cartCtrl.isSpinnerDisabled(item)}"
+                                       >
+                                <p:ajax update="quantity :orderForm:orderButton" 
                                         event="change" 
                                         listener="#{cartCtrl.updateOrderStatus}"/>
-                                <p:ajax update="q :f:order" 
+
+                                <p:ajax update="quantity :orderForm:orderButton" 
                                         event="keyup" 
                                         listener="#{cartCtrl.updateOrderStatus}"/>
                             </p:spinner>
                             <h:outputText value="Out of stock" 
                                           rendered="#{cartCtrl.isSpinnerDisabled(item)}"/>
-                        </td>
-                        <h:message for="s" styleClass="error"/>
+                        </td>   
                     </tr>
                 </ui:repeat>
 
             </table>
             <br></br>
-            <p:commandButton id="order" 
+            <p:commandButton id="cancel" 
+                             value="Close cart"                          
+                             onclick="PF('cartDialog').hide()" 
+                             icon="ui-icon ui-icon-closethick"  
+                             update=":cartItems :layout" 
+                             />
+            <p:commandButton id="orderButton" 
                              value="#{cartCtrl.orderButtonMessage}" 
                              update=":cartItems :layout" 
                              actionListener="#{cartCtrl.placeOrder(cartBB.cartItems)}" 
-                             onclick="PF('multiEntityDialog').hide()" 
+                             onclick="PF('cartDialog').hide()"                           
                              icon="#{cartCtrl.orderButtonIcon}" 
-                             disabled="#{cartCtrl.orderDisabled}"/>
+                             disabled="#{cartCtrl.orderDisabled}"
+                             action="#{cartCtrl.getOrderStatus()}"
+                             />
         </h:form>
     </p:outputPanel>
 </ui:composition>

@@ -15,8 +15,18 @@ public abstract class AbstractDBObject implements Serializable {
     protected AbstractDBObject() {
     }
 
+    /**
+     * Get the id of the object.
+     *
+     * @return The id.
+     */
     public abstract Long getId();
 
+    /**
+     * Set the id of the object.
+     *
+     * @param id The new id.
+     */
     public abstract void setId(long id);
 
     @Override

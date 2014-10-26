@@ -1,15 +1,16 @@
 package se.chalmers.bestwebapp4eva.dao;
 
+import com.uaihebert.factory.EasyCriteriaFactory;
+import com.uaihebert.model.EasyCriteria;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.OrderItem;
-import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
+ * Data Access Object for OrderItems
  *
  * @author erik
  */
@@ -30,25 +31,23 @@ public class OrderItemDAO extends AbstractDAO<OrderItem, Long> implements IOrder
 
     @Override
     public List<OrderItem> getById(long id) {
-        String query = "SELECT i FROM BasicOrderItem o WHERE o.id = :id";
-        TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("id", id);
+        EasyCriteria<OrderItem> result = EasyCriteriaFactory.createQueryCriteria(em, OrderItem.class);
+        result.andEquals("id", id);
         return result.getResultList();
     }
 
     @Override
     public List<OrderItem> getByOrderQuantity(double orderQuantity) {
-        String query = "SELECT i FROM BasicOrderItem i WHERE i.orderQuantity = :orderQuantity";
-        TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("orderQuantity", orderQuantity);
+        EasyCriteria<OrderItem> result = EasyCriteriaFactory.createQueryCriteria(em, OrderItem.class);
+        result.andEquals("orderQuantity", orderQuantity);
         return result.getResultList();
     }
-    
+
     @Override
     public List<OrderItem> getByEntity(BasicEntity entity) {
-        String query = "SELECT i FROM BasicOrderItem i WHERE i.entity = :entity";
-        TypedQuery<OrderItem> result = em.createQuery(query, OrderItem.class).setParameter("entity", entity);
+        EasyCriteria<OrderItem> result = EasyCriteriaFactory.createQueryCriteria(em, OrderItem.class);
+        result.andEquals("entity", entity);
         return result.getResultList();
     }
-    
-    
 
 }

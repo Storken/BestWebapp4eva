@@ -13,8 +13,7 @@ root {
 }
 
 body {
-    margin: auto;
-    
+    background-color: #22313F;
 }
 
 .ui-tabs{
@@ -176,4 +175,8 @@ aside > h2{
     top: 0px;
     right: 0px;
     width: 200px;
+}
+
+.errorMessage {
+    color: #FFFFFF;
 }

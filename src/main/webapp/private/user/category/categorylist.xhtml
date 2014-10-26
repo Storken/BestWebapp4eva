@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core">
+
+
+    <h:form id="category123">
+        <p:dataTable 
+            id="categories"
+            var="category" 
+            value="#{categoryBB.categories}"
+            lazy="true" 
+            paginator="true" 
+            paginatorAlwaysVisible="true"
+            paginatorPosition="top"
+            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+            rows="10"
+            sortBy="#{category.id}"
+            emptyMessage="No entries found. Is the database empty? If so, add some items. If not, change your filters."
+            selection="#{categoryBB.selectedCategories}"
+            rowKey="#{category.id}"
+            editable="true"
+            currentPageReportTemplate="Page {currentPage} of {totalPages}"
+            rowsPerPageTemplate="10,50,100"> 
+
+            <f:facet name="header">
+                Categories
+            </f:facet>
+            <p:ajax event="rowEdit" listener="#{editCategoryCtrl.onRowEdit}"/>
+            <p:ajax event="rowEditCancel" listener="#{editCategoryCtrl.onRowCancel}"/>
+            <p:column selectionMode="multiple" style="width:48px;text-align:center"/>
+            <p:column sortBy="#{category.id}" filterBy="#{category.id}" filterMatchMode="contains" headerText="ID">    
+                <h:outputText value="#{category.id}" />
+            </p:column>
+            <p:column sortBy="#{category.name}" filterBy="#{category.name}" filterMatchMode="contains" headerText="Name">                 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{category.name}"/></f:facet>
+                    <f:facet name="input">
+                        <p:inputText id="nameInput" value="#{category.name}" validator="#{editCategoryValidator.validate}"/>
+                        <p:message for="nameInput"/>
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column sortBy="#{category.description}" filterBy="#{category.description}" filterMatchMode="contains" headerText="Description">                 
+                <p:cellEditor>
+                    <f:facet name="output"><h:outputText value="#{category.description}"/></f:facet>
+                    <f:facet name="input">
+                        <p:inputText id="descriptionInput" value="#{category.description}" validator="#{editCategoryValidator.validate}"/>
+                        <p:message for="descriptionInput" />
+                    </f:facet>
+                </p:cellEditor>
+            </p:column>
+            <p:column style="width:53px">
+                <p:rowEditor />
+            </p:column>
+            <f:facet name="footer">
+                <p:commandButton value="New category" style="align: left" onclick="PF('newCategoryDialog').show();"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
+    
+    <p:dialog header="Create new category" widgetVar="newCategoryDialog" 
+              modal="true" showEffect="size" hideEffect="size" resizable="true" 
+              closeOnEscape="true" draggable="false" appendTo="@(body)">
+                    <ui:include src="/private/user/category/newCategoryDialog.xhtml"/>
+                </p:dialog>
+
+</ui:composition>

@@ -10,24 +10,36 @@ and open the template in the editor.
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
                 xmlns:f="http://java.sun.com/jsf/core">
-    <table width="100%">
-        <br/>
-        <ui:repeat id="orders" value="#{orderBB.orders}" var="order">
-            <tr>
-                <td align="right" style="padding-bottom: 1em">
-                    <h:outputText value="#{order.id} -"/>
-                </td>
-                <td align="left" style="padding-bottom: 1em">
-                    <h:outputText value="#{order.title}, "/>
-                    <h:outputText value="#{order.quantity} "/>
-                    <h:outputText value="#{order.unit}"/>
-                </td>
-                <td align="right" style="padding-bottom: 1em">
-                    <p:commandLink title="Remove from orders" actionListener="#{orderCtrl.removeFromList(order.id)}" styleClass="ui-icon ui-icon-closethick" update=":layout"/> 
-                </td>
-            </tr>
-        </ui:repeat>
-    </table>
+    <h:form id="tableForm">
+        <p:dataTable 
+            var="order" 
+            value="#{dashboardBB.orders}"
+            lazy="true" 
+            paginator="true"
+            paginatorPosition="top"
+            rows="10"
+            sortBy="#{order.date}"
+            emptyMessage="You haven't placed any orders yet. Go order something from the products page!"
+            rowKey="#{order.id}"
+            paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" 
+            currentPageReportTemplate="Page {currentPage} of {totalPages}"
+            rowsPerPageTemplate="10,50,100"
+            id="orders"
+            > 
 
-    <hr/>
+            <f:facet name="header">
+                Orders
+            </f:facet>            
+            <p:column headerText="Information">    
+                <h5>#{order.tableString}</h5>
+                <p:dataList value="#{order.items}" var="item" rows="5" paginatorAlwaysVisible="false" paginatorPosition="bottom" paginator="true">
+
+                    <h:outputText value="#{item.orderQuantity} #{item.unit} of #{item.title}"/>
+                </p:dataList>          
+            </p:column>
+        </p:dataTable>
+
+    </h:form>
+
+
 </ui:composition>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/WEB-INF/template.xhtml">
+    <head>       
+    </head>
+    <ui:define name="content"> 
+        <br/>
+        <p:layout id="layout" style="position: absolute; top: 50px; bottom: 0px; left: 0px; right: 0px;">
+            <p:layoutUnit position="center">       
+                <h:form>
+                    <div align="center">
+                        <br/>
+                        <br/>
+                        <h1>Your order has been placed :-)</h1>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <ui:include src="/private/user/order/orderTable.xhtml"/>
+                        <br/>
+                        <p:commandButton value="Export to PDF" ajax="false" icon="ui-icon ui-icon-note"> 
+                            <p:dataExporter type="pdf" target="pftable" fileName="Order #{orderBB.date}" encoding="UTF-8" preProcessor="#{orderBB.preProcessPDF}" postProcessor="#{orderBB.postProcessPDF}"/>
+                        </p:commandButton>                         
+                        <p:commandButton value="OK" action="confirm" icon="ui-icon ui-icon-check"/>
+                    </div>
+                </h:form>
+            </p:layoutUnit>
+        </p:layout>
+    </ui:define>
+</ui:composition>
+

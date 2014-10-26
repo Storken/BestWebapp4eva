@@ -1,4 +1,4 @@
-package se.chalmers.bestwebapp4eva.auth;
+package se.chalmers.bestwebapp4eva.dao;
 
 import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
@@ -13,21 +13,22 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import se.chalmers.bestwebapp4eva.dao.AbstractDAO;
+import se.chalmers.bestwebapp4eva.entity.Groups;
+import se.chalmers.bestwebapp4eva.entity.User;
 
 /**
  *
- * @author hajo
+ * @author Bosch
  */
 @Stateless
-public class AuthDAO extends AbstractDAO<User, String> {
+public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO{
 
-    private static final Logger LOG = Logger.getLogger(AuthDAO.class.getName());
+    private static final Logger LOG = Logger.getLogger(UserDAO.class.getName());
 
     @PersistenceContext//(unitName = "jee_auth_pu")
     protected EntityManager em;
 
-    public AuthDAO() {
+    public UserDAO() {
         super(User.class);
     }
 
@@ -41,6 +42,13 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return em;
     }
     
+    /**
+     * Create a user with a group of either user or admin.
+     * @param username
+     * @param password 
+     * @param groupname should be "user" or "admin"
+     */
+    @Override
     public void createUserAndGroup(String username, String password, String groupname) {
         User user = new User();
         user.setUsername(username);
@@ -53,6 +61,9 @@ public class AuthDAO extends AbstractDAO<User, String> {
         em.persist(group);
     }
 
+    // FINDING METHODS
+    
+    
     public List<User> getById(long id) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.id =:id", User.class)
@@ -63,7 +74,8 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return found;
     }
 
-    public List<User> getUserByUsername(String username) {
+    @Override
+    public List<User> getByUsername(String username) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.username =:username", User.class)
                 .setParameter("username", username);
@@ -73,12 +85,13 @@ public class AuthDAO extends AbstractDAO<User, String> {
         return found;
     }
     
-    public List<Groups> getGroupByUsername(String username) {
-        TypedQuery<Groups> query;
-        query = em.createQuery("select g from " + Groups.class.getSimpleName() + " g WHERE g.username =:username", Groups.class)
-                .setParameter("username", username);
+    @Override
+    public List<User> getUserByPassword(String password) {
+        TypedQuery<User> query;
+        query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.password =:password", User.class)
+                .setParameter("password", password);
 
-        List<Groups> found = new ArrayList<>();
+        List<User> found = new ArrayList<>();
         found.addAll(query.getResultList());
         return found;
     }

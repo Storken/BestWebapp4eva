@@ -31,17 +31,15 @@
        </div>
             
        <ui class="nav navbar-nav pull-left">
-           <li>
                
             <li>
                 <h:link value="Dashboard" 
-                        outcome="#{authBean.isAdmin? 'admindashboard' : 'dashboard'}" />
+                        outcome="#{userCtrl.currentUserIsAdmin()? 'admindashboard' : 'dashboard'}"/>
             </li>
-               <li>
+            <li>
                 <h:link value="Products" 
-                        outcome="#{authBean.isAdmin? 'adminproducts' : 'products'}" />
+                        outcome="#{userCtrl.currentUserIsAdmin()? 'adminproducts' : 'products'}" />
             </li>
-           </li>
        </ui>
        <h:graphicImage id="headimg" library="img" name="header.png"/>
         <!-- Right side menu items -->   
@@ -49,52 +47,52 @@
             
             <li>
                 
-                <h:link value="#{authBean.isLoggedIn? authBean.username : ''}" 
-                        outcome="#{authBean.isAdmin? 'adminprofile' : 'profile'}" />
+                <h:link value="#{userCtrl.userInlogged? userBB.username : ''}" 
+                        outcome="#{userCtrl.currentUserIsAdmin()? 'adminprofile' : 'profile'}" />
             </li>
             
             <li>
-                <p:commandLink value="#{authBean.isLoggedIn? '' : 'Log in'}" onclick="PF('dlg1').show(); PF('dlg2').hide()"  />
+                <p:commandLink value="#{userCtrl.userInlogged? '' : 'Log in'}" onclick="PF('loginDialog').show(); PF('createDialog').hide()"  />
             </li>
      
             
-            <p:dialog header="Log in" widgetVar="dlg1" id="dialogue1" 
+                        <p:dialog header="Log in" widgetVar="loginDialog" id="loginDialog" 
                       resizable="false" closable="false" draggable="false">
                     <h:form>
                         <h:outputText value="Username: "/>
                         <br/>
-                        <h:inputText id="usrname" value="#{authBean.username}"/>
+                        <h:inputText id="usrname" value="#{userBB.username}"/>
                         <br/>
                         <h:outputText value="Password: "/>
                         <br/>
-                        <h:inputText id="passwrd" value="#{authBean.password}"/>
+                        <h:inputText id="passwrd" value="#{userBB.password}"/>
                         <br/>
-                        <p:commandButton value="Log in" action="#{authBean.login}"/>
-                        <p:commandButton value="Create" onclick="PF('dlg2').show(); PF('dlg1').hide()"/>
+                        <p:commandButton value="Log in" action="#{userCtrl.login}"/>
+                        <p:commandButton value="Create" onclick="PF('createDialog').show(); PF('loginDialog').hide()"/>
                     </h:form>
                 </p:dialog>
      
             
-            <p:dialog header="Create a new user" widgetVar="dlg2" id="dialogue2"
-                      resizable="false" closable="false" draggable="false">
+                        <p:dialog header="Create a new user" widgetVar="createDialog" id="createDdialog"
+                      resizable="false" closable="true" draggable="false">
                     <h:form>
                         <h:outputText value="Username: "/>
                         <br/>
-                        <h:inputText value="#{authBean.username}"/>
+                        <h:inputText value="#{userBB.username}"/>
                         <br/>
                         <h:outputText value="Password: "/>
                         <br/>
-                        <h:inputText value="#{authBean.password}"/>
+                        <h:inputText value="#{userBB.password}"/>                    
                         <br/>
                         <h:outputText value="Check if admin: "/>
-                        <h:selectBooleanCheckbox value="#{authBean.isAdmin}" />
+                        <h:selectBooleanCheckbox value="#{userBB.admin}" />
                         <br/>
-                        <h:commandButton value="Create" action="#{authBean.createAccount}"/>
+                        <h:commandButton value="Create" action="#{userCtrl.createAccount}"/>
                     </h:form>
                 </p:dialog>
   
             <li>
-                <p:commandLink value="#{authBean.isLoggedIn? 'Log out' : ''}" action="#{authBean.logout()}"/>
+                <p:commandLink value="#{userCtrl.userInlogged? 'Log out' : ''}" action="#{userCtrl.logout}"/>
             </li>
             
         </ul>
@@ -102,7 +100,6 @@
    </nav>
     
      
-     <ui:insert name="dash">Dash</ui:insert>
      <div id="content">
          
             <ui:insert name="content"></ui:insert>
@@ -110,7 +107,6 @@
      </div>
    <footer>
    </footer>
-   
  </h:body>
 
 </html>

@@ -1,11 +1,12 @@
 package se.chalmers.bestwebapp4eva.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
@@ -13,23 +14,32 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity.Unit;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
+ * A backing bean for the dialog used to add new entities. Has to be ViewScoped
+ * to be able to toggle category panel? Otherwise the bean "forgets" the
+ * newCatPanelVisible value when clicking on + button in dialog.
  *
- * @author tholene
  * @author simon
  */
 @Named
-@RequestScoped
-public class NewEntityDialogBB {
+@ViewScoped
+public class NewEntityDialogBB implements Serializable {
 
     private Long id;
     private String title;
     private double price;
     private double quantity;
-
     private Unit unit;
-    private List<Unit> units;
     private Category category;
+
+    private List<Unit> units;
     private List<Category> categories;
+
+    // Variables for custom category.
+    private String newCatName;
+    private String newCatDescription;
+
+    // Boolean used to toggle the panel used to add custom category.
+    private boolean newCatPanelVisible;
 
     @EJB
     ICategoryDAO cc;
@@ -105,8 +115,32 @@ public class NewEntityDialogBB {
         this.categories = categories;
     }
 
+    public String getNewCatName() {
+        return newCatName;
+    }
+
+    public void setNewCatName(String newCatName) {
+        this.newCatName = newCatName;
+    }
+
+    public String getNewCatDescription() {
+        return newCatDescription;
+    }
+
+    public void setNewCatDescription(String newCatDescription) {
+        this.newCatDescription = newCatDescription;
+    }
+
+    public boolean getNewCatPanelVisible() {
+        return newCatPanelVisible;
+    }
+
+    public void setNewCatPanelVisible(boolean newCatPanelVisible) {
+        this.newCatPanelVisible = newCatPanelVisible;
+    }
+
     @Override
     public String toString() {
-        return "AddEntityBB{" + "id=" + id + ", name=" + title + ", price=" + price + ", quantity=" + quantity + ",unit=" + unit + ",category=" + category.getName() + "}";
+        return "NewEntityDialogBB{" + "id=" + id + ", name=" + title + ", price=" + price + ", quantity=" + quantity + ",unit=" + unit + ",category=" + category.getName() + "}";
     }
 }

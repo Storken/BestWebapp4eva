@@ -5,8 +5,8 @@
     <jta-data-source>jdbc/maindb</jta-data-source>
     <class>se.chalmers.bestwebapp4eva.entity.BasicEntity</class>
     <class>se.chalmers.bestwebapp4eva.entity.Category</class>
-    <class>se.chalmers.bestwebapp4eva.auth.User</class>
-    <class>se.chalmers.bestwebapp4eva.auth.Groups</class>
+    <class>se.chalmers.bestwebapp4eva.entity.User</class>
+    <class>se.chalmers.bestwebapp4eva.entity.Groups</class>
     <class>se.chalmers.bestwebapp4eva.entity.Order</class>
     <class>se.chalmers.bestwebapp4eva.entity.OrderItem</class>
     <exclude-unlisted-classes>true</exclude-unlisted-classes>

@@ -18,13 +18,13 @@
                         <h2>Your Best profile 4eva</h2>
                         <br/>
                         <h2>Username: </h2>
-                        <h:outputText class="h2" value="#{authBean.username}" />
+                        <h:outputText class="h2" value="#{userBB.username}" />
                         <br/>
                         <h2>Password: </h2>
-                        <h:outputText class="h2" value="#{authBean.password}" />
+                        <h:outputText class="h2" value="#{userBB.password}" />
                         <br/>
-                        <h2>Admin: </h2>
-                        <h:outputText class="h2" value="#{authBean.isAdmin? 'Yes':'No'}" />
+                        <h2>Level of user: </h2>
+                        <h:outputText class="h2" value="#{userCtrl.userGroup}" />
                         <br/>
                         </p:layoutUnit>
                 </p:layout>

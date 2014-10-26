@@ -3,10 +3,8 @@ package se.chalmers.bestwebapp4eva.dao;
 import com.uaihebert.factory.EasyCriteriaFactory;
 import com.uaihebert.model.EasyCriteria;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +13,7 @@ import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
- * A data access object (DAO) for basic entities.
+ * A data access object for BasicEntity objects.
  *
  * @author simon
  */
@@ -24,12 +22,6 @@ public class BasicEntityDAO extends AbstractDAO<BasicEntity, Long> implements IB
 
     @PersistenceContext
     private EntityManager em;
-
-    // TODO Ugly to have another collection referenced here!!!
-    @EJB
-    private ICategoryDAO cc;
-
-    private static final String[] logicalOperators = new String[]{"<", ">", "<=", ">=", "="};
 
     @Override
     protected EntityManager getEntityManager() {
@@ -42,44 +34,45 @@ public class BasicEntityDAO extends AbstractDAO<BasicEntity, Long> implements IB
 
     @Override
     public List<BasicEntity> getById(long id) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("id", id);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("id", id);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByTitle(String title) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("title", title);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("title", title);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByPrice(double price) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("price", price);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("price", price);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByQuantity(double quantity) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("quantity", quantity);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("quantity", quantity);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByUnit(BasicEntity.Unit unit) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("unit", unit);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.andEquals("unit", unit);
+        return criteria.getResultList();
     }
 
     @Override
     public List<BasicEntity> getByCategory(Category category) {
-        Map<String, Object> filter = new HashMap<>();
-        filter.put("category", category);
-        return getResultList(-1, -1, null, null, filter);
+        EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, BasicEntity.class);
+        criteria.innerJoin("category");
+        criteria.andEquals("category", category);
+        return criteria.getResultList();
     }
 
     @Override
@@ -107,45 +100,46 @@ public class BasicEntityDAO extends AbstractDAO<BasicEntity, Long> implements IB
         // Filter
         List<String> stringAttributes = new ArrayList<>();
         stringAttributes.add("title");
-        stringAttributes.add("unit");
         stringAttributes.add("category.name");
 
-        for (Map.Entry<String, Object> filter : filters.entrySet()) {
-            String key = filter.getKey();
-            String value = filter.getValue().toString().toLowerCase();
+        if (filters != null) {
+            for (Map.Entry<String, Object> filter : filters.entrySet()) {
+                String key = filter.getKey();
+                String value = filter.getValue().toString().toLowerCase();
 
-            // If filter is on a String attribute, use SQL LIKE operator...
-            if (stringAttributes.contains(key)) {
-                criteria.andStringLike(true, key, "%" + value + "%");
-                // If filter is pointing to a number attribute, check for operators and do appropriate criteria action...
-            } else {
-                // Create operator by removing all digits from value.
-                String operator = value.replaceAll("[0-9]", "").trim();
+                // If filter is on a String attribute, use SQL LIKE operator...
+                if (stringAttributes.contains(key)) {
+                    criteria.andStringLike(true, key, "%" + value + "%");
+                    // If filter is pointing to a number attribute, check for operators and do appropriate criteria action...
+                } else {
+                    // Create operator by removing all digits from value.
+                    String operator = value.replaceAll("[0-9]", "").trim();
 
-                // Extract the actual digits from the filter value.
-                String valueDigits = value.replaceAll("\\D+", "").trim();
-                if (!valueDigits.equals("")) {
-                    long longValue = Long.parseLong(valueDigits);
-                    switch (operator) {
-                        case "<":
-                            criteria.andLessThan(key, longValue);
-                            break;
-                        case "<=":
-                            criteria.andLessOrEqualTo(key, longValue);
-                            break;
-                        case ">":
-                            criteria.andGreaterThan(key, longValue);
-                            break;
-                        case ">=":
-                            criteria.andGreaterOrEqualTo(key, longValue);
-                            break;
-                        case "":
-                        case "=":
-                            criteria.andEquals(key, longValue);
-                            break;
-                        default:
-                            // Ilegal operator... Maybe show error message?
-                            break;
+                    // Extract the actual digits from the filter value.
+                    String valueDigits = value.replaceAll("\\D+", "").trim();
+                    if (!valueDigits.equals("")) {
+                        long longValue = Long.parseLong(valueDigits);
+                        switch (operator) {
+                            case "<":
+                                criteria.andLessThan(key, longValue);
+                                break;
+                            case "<=":
+                                criteria.andLessOrEqualTo(key, longValue);
+                                break;
+                            case ">":
+                                criteria.andGreaterThan(key, longValue);
+                                break;
+                            case ">=":
+                                criteria.andGreaterOrEqualTo(key, longValue);
+                                break;
+                            case "":
+                            case "=":
+                                criteria.andEquals(key, longValue);
+                                break;
+                            default:
+                                // Ilegal operator... Maybe show error message?
+                                break;
+                        }
                     }
                 }
             }
