@@ -17,24 +17,28 @@ public interface IDAO<T, K> {
 
     /**
      * Persist an object in the database.
+     *
      * @param t The object to persist.
      */
     public void create(T t);
 
     /**
      * Delete an object in the database.
+     *
      * @param id The ID of the object to delete.
      */
     public void delete(K id);
 
     /**
      * Update an object in the database.
+     *
      * @param t The object to update.
      */
     public void update(T t);
-    
+
     /**
      * Find an object in the database by id.
+     *
      * @param id The id of the object to find.
      * @return The found object.
      */
@@ -42,12 +46,14 @@ public interface IDAO<T, K> {
 
     /**
      * Find all objects in the database.
+     *
      * @return A list of all objects in the database.
      */
     public List<T> findAll();
 
     /**
      * Find a range of objects in the database
+     *
      * @param first The position of the first object to include in the list.
      * @param n The position of the last object to include in the list.
      * @return A list of objects within the provided range.
@@ -56,7 +62,8 @@ public interface IDAO<T, K> {
 
     /**
      * Get number of objects in the database.
-     * @return 
+     *
+     * @return
      */
     public int count();
 

@@ -27,42 +27,43 @@ import se.chalmers.bestwebapp4eva.entity.User;
 
 /**
  * Controller for the authentication, here all the important methods exist.
- * 
+ *
  * @author Bosch
  */
 @Named
 @SessionScoped
-public class UserCtrl implements Serializable{
-    
+public class UserCtrl implements Serializable {
+
     private static final Logger LOG = Logger.getLogger(UserDAO.class.getName());
-    
+
     private User currentUser;
-    
+
     private boolean userInlogged;
-    
-    public UserCtrl(){
-        
+
+    public UserCtrl() {
+
     }
 
     @EJB
     private IUserDAO userDAO;
-    
+
     @EJB
     private IGroupsDAO groupsDAO;
-    
+
     @Inject
     private UserBB ab;
-    
+
     @PostConstruct
-    public void init(){
-        
+    public void init() {
+
     }
-    
+
     /**
-     * This method tries to communicate and login to the database through glassfish.
-     * There are a lot of LOG-messages so be sure to check your logs if something doesn't
-     * go as it should.
-     * @return success if it succeeds or fail if it fails 
+     * This method tries to communicate and login to the database through
+     * glassfish. There are a lot of LOG-messages so be sure to check your logs
+     * if something doesn't go as it should.
+     *
+     * @return success if it succeeds or fail if it fails
      */
     public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -71,16 +72,16 @@ public class UserCtrl implements Serializable{
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
 
         // Really check is there some data in database?
-        if(userDAO.getByUsername(ab.getUsername()).size() < 1){
+        if (userDAO.getByUsername(ab.getUsername()).size() < 1) {
             LOG.log(Level.INFO, "*** No such username: {0}", new Object[]{ab.getUsername()});
             message("Username and password did not match!");
             return "fail";
         }
-        if(!ab.hasValue()){
+        if (!ab.hasValue()) {
             message("Username or password did not have a value");
             return "fail";
         }
-        
+
         User u = userDAO.getByUsername(ab.getUsername()).get(0);
         LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPassword()});
 
@@ -95,26 +96,29 @@ public class UserCtrl implements Serializable{
             externalContext.getSessionMap().put("user", u);  // Store User in session
             currentUser = u;
             userInlogged = true;
-            if(!getUserGroup().equals("admin"))
+            if (!getUserGroup().equals("admin")) {
                 return "success";
+            }
             return "adminsuccess";
         } catch (ServletException e) {
-           
+
             LOG.log(Level.INFO, e.getMessage());
 
         }
         return "fail";
     }
-    
+
     /**
      * Create an account for either an admin or a user.
-     * @return 
+     *
+     * @return
      */
-    public String createAccount(){
-        if(ab.hasValue()){
-            if(userDAO.getByUsername(ab.getUsername()).isEmpty()){
-                if(ab.isAdmin())
+    public String createAccount() {
+        if (ab.hasValue()) {
+            if (userDAO.getByUsername(ab.getUsername()).isEmpty()) {
+                if (ab.isAdmin()) {
                     return createAdmin();
+                }
                 return createUser();
             }
             LOG.log(Level.INFO, "*** This username already exists");
@@ -128,17 +132,19 @@ public class UserCtrl implements Serializable{
 
     /**
      * Create a user with privilege of a user.
-     * @return 
+     *
+     * @return
      */
     public String createUser() {
         userDAO.createUserAndGroup(ab.getUsername(), ab.getPassword(), "user");
         LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
         return login();
     }
-    
+
     /**
      * Create a user with privilege of an admin.
-     * @return 
+     *
+     * @return
      */
     public String createAdmin() {
         userDAO.createUserAndGroup(ab.getUsername(), ab.getPassword(), "admin");
@@ -148,7 +154,8 @@ public class UserCtrl implements Serializable{
 
     /**
      * Logs the user out from the session
-     * @return 
+     *
+     * @return
      */
     public String logout() {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -159,42 +166,46 @@ public class UserCtrl implements Serializable{
         userInlogged = false;
         return "success";
     }
-    
+
     /**
      * Failmessages
+     *
      * @param out the string to be printed
      */
-    private void message(String out){
+    private void message(String out) {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         externalContext.getFlash().setKeepMessages(true);
 
         FacesContext.getCurrentInstance().
-                    addMessage(null, 
-                            new FacesMessage(FacesMessage.SEVERITY_WARN,
-                                    out, null));
+                addMessage(null,
+                        new FacesMessage(FacesMessage.SEVERITY_WARN,
+                                out, null));
     }
-    
+
     /**
      * Get a bool telling if the user is admin or not.
+     *
      * @return true if current user is admin, false otherwise
      */
-    public boolean currentUserIsAdmin(){
-        if(currentUser != null)
+    public boolean currentUserIsAdmin() {
+        if (currentUser != null) {
             return groupsDAO.getByUsername(currentUser.getUsername()).get(0).getGroupname().equals("admin");
+        }
         return false;
     }
 
     /**
      * Checks if a user is logged in
+     *
      * @return true if user is logged in
      */
     public boolean isUserInlogged() {
         return userInlogged;
     }
-    
-    public String getUserGroup(){
+
+    public String getUserGroup() {
         return groupsDAO.getByUsername(currentUser.getUsername()).get(0).getGroupname();
     }
-    
+
 }

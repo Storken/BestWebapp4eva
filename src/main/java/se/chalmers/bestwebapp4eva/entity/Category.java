@@ -8,6 +8,7 @@ import javax.persistence.Id;
 
 /**
  * Simple class representing a category (with name and description attributes).
+ *
  * @author simon
  */
 @Entity
@@ -29,6 +30,7 @@ public class Category extends AbstractDBObject {
 
     /**
      * Constructor for Category.
+     *
      * @param name The name of the category.
      * @param description The description of the category.
      */
@@ -40,6 +42,7 @@ public class Category extends AbstractDBObject {
     /**
      * Constructor for Category. Should normally not be used, id provided by
      * database for new objects.
+     *
      * @param id If of the category.
      * @param name Name of the category.
      * @param description Description of the category.
@@ -57,6 +60,7 @@ public class Category extends AbstractDBObject {
 
     /**
      * Get the name.
+     *
      * @return The name.
      */
     public String getName() {
@@ -65,6 +69,7 @@ public class Category extends AbstractDBObject {
 
     /**
      * Get the description.
+     *
      * @return The description.
      */
     public String getDescription() {
@@ -78,6 +83,7 @@ public class Category extends AbstractDBObject {
 
     /**
      * Set the name.
+     *
      * @param name The new name.
      */
     public void setName(String name) {
@@ -86,6 +92,7 @@ public class Category extends AbstractDBObject {
 
     /**
      * Set the description.
+     *
      * @param description The new description.
      */
     public void setDescription(String description) {

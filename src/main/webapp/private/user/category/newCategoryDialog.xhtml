@@ -11,13 +11,13 @@
         <h:panelGrid id="newCategoryPanel" columns="2" cellpadding="5">
             <h:outputLabel value="Name:" for="name"/>
             <h:inputText id="name" value="#{newCategoryDialogBB.name}" validator="#{newCategoryValidator.validate}"/>
-            
+
             <h:outputText value=""/>
             <p:message for="name"/>
 
             <h:outputLabel value="Description:" for="description"/>
             <h:inputText id="description" value="#{newCategoryDialogBB.description}" validator="#{newCategoryValidator.validate}"/>
-            
+
             <h:outputText value=""/>
             <p:message for="description"/>
 

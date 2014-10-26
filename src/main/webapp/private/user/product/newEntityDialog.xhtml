@@ -49,22 +49,22 @@
                 </p:panelGrid>
             </p:panelGrid>
             <p:panel id="newCatPanel" header="New Category" visible="#{newEntityDialogBB.newCatPanelVisible}">
-                    <p:panelGrid columns="2" id="newCatGrid">
-                        <p:outputLabel for="newName" value="Name:"/>
-                        <p:inputText id="newName" value="#{newEntityDialogBB.newCatName}" validator="#{newEntityValidator.validate}" />
+                <p:panelGrid columns="2" id="newCatGrid">
+                    <p:outputLabel for="newName" value="Name:"/>
+                    <p:inputText id="newName" value="#{newEntityDialogBB.newCatName}" validator="#{newEntityValidator.validate}" />
 
-                        <h:outputText value=""/>
-                        <p:message for="newName"/>
+                    <h:outputText value=""/>
+                    <p:message for="newName"/>
 
-                        <p:outputLabel for="newDescription" value="Description:"/>
-                        <p:inputText id="newDescription" value="#{newEntityDialogBB.newCatDescription}" validator="#{newEntityValidator.validate}" />
-                                     
-                        <h:outputText value=""/>
-                        <p:message for="newDescription"/>
-                    </p:panelGrid>
-                </p:panel> 
+                    <p:outputLabel for="newDescription" value="Description:"/>
+                    <p:inputText id="newDescription" value="#{newEntityDialogBB.newCatDescription}" validator="#{newEntityValidator.validate}" />
+
+                    <h:outputText value=""/>
+                    <p:message for="newDescription"/>
+                </p:panelGrid>
+            </p:panel> 
             <p:commandButton value="Cancel" onclick="newEntityDialog.hide()"/>
-                <p:commandButton value="Create entity" update=":newEntityForm:newEntityPanel :newEntityForm:newCatPanel :tableForm:entities" oncomplete="handleSubmit(xhr, status, args)" actionListener="#{newEntityCtrl.add}"/>
+            <p:commandButton value="Create entity" update=":newEntityForm:newEntityPanel :newEntityForm:newCatPanel :tableForm:entities" oncomplete="handleSubmit(xhr, status, args)" actionListener="#{newEntityCtrl.add}"/>
         </p:dialog>
     </h:form>
 

@@ -59,49 +59,49 @@ public class CategoryDAO extends AbstractDAO<Category, Long> implements ICategor
         }
 
         // Filter
-        if(filters != null) {
+        if (filters != null) {
             for (Map.Entry<String, Object> filter : filters.entrySet()) {
-            String key = filter.getKey();
-            String value = filter.getValue().toString().toLowerCase();
+                String key = filter.getKey();
+                String value = filter.getValue().toString().toLowerCase();
 
-            // If filter is pointing to a number attribute, check for operators and do appropriate criteria action...
-            if (key.equals("id")) {
-                // Create operator by removing all digits from value.
-                String operator = value.replaceAll("[0-9]", "").trim();
+                // If filter is pointing to a number attribute, check for operators and do appropriate criteria action...
+                if (key.equals("id")) {
+                    // Create operator by removing all digits from value.
+                    String operator = value.replaceAll("[0-9]", "").trim();
 
-                // Extract the actual digits from the filter value.
-                String valueDigits = value.replaceAll("\\D+", "").trim();
-                if (!valueDigits.equals("")) {
-                    long longValue = Long.parseLong(valueDigits);
-                    switch (operator) {
-                        case "<":
-                            criteria.andLessThan(key, longValue);
-                            break;
-                        case "<=":
-                            criteria.andLessOrEqualTo(key, longValue);
-                            break;
-                        case ">":
-                            criteria.andGreaterThan(key, longValue);
-                            break;
-                        case ">=":
-                            criteria.andGreaterOrEqualTo(key, longValue);
-                            break;
-                        case "":
-                        case "=":
-                            criteria.andEquals(key, longValue);
-                            break;
-                        default:
-                            // Ilegal operator... Maybe show error message?
-                            break;
+                    // Extract the actual digits from the filter value.
+                    String valueDigits = value.replaceAll("\\D+", "").trim();
+                    if (!valueDigits.equals("")) {
+                        long longValue = Long.parseLong(valueDigits);
+                        switch (operator) {
+                            case "<":
+                                criteria.andLessThan(key, longValue);
+                                break;
+                            case "<=":
+                                criteria.andLessOrEqualTo(key, longValue);
+                                break;
+                            case ">":
+                                criteria.andGreaterThan(key, longValue);
+                                break;
+                            case ">=":
+                                criteria.andGreaterOrEqualTo(key, longValue);
+                                break;
+                            case "":
+                            case "=":
+                                criteria.andEquals(key, longValue);
+                                break;
+                            default:
+                                // Ilegal operator... Maybe show error message?
+                                break;
+                        }
                     }
+                    // If filter is on a String attribute, use SQL LIKE operator...
+                } else {
+                    criteria.andStringLike(true, key, "%" + value + "%");
                 }
-                // If filter is on a String attribute, use SQL LIKE operator...
-            } else {
-                criteria.andStringLike(true, key, "%" + value + "%");
             }
         }
-        }
-        
+
         return criteria.setFirstResult(first).setMaxResults(first).getResultList();
     }
 

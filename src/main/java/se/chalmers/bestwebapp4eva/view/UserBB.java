@@ -8,7 +8,7 @@ import javax.inject.Named;
 
 /**
  * Backing bean for authentication
- * 
+ *
  * @author Bosch
  */
 @Named
@@ -22,12 +22,13 @@ public class UserBB implements Serializable {
 
     public UserBB() {
     }
-    
+
     /**
      * checks if the username-field or the password-field is empty.
+     *
      * @return false if empty.
      */
-    public boolean hasValue(){
+    public boolean hasValue() {
         return !username.isEmpty() && !password.isEmpty();
     }
 
@@ -57,7 +58,5 @@ public class UserBB implements Serializable {
     public void setAdmin(boolean admin) {
         this.admin = admin;
     }
-    
-    
-    
+
 }

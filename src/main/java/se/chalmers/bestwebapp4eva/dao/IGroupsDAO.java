@@ -14,17 +14,19 @@ import se.chalmers.bestwebapp4eva.entity.Groups;
  * @author Bosch
  */
 @Local
-public interface IGroupsDAO extends IDAO<Groups, Long>  {
-    
+public interface IGroupsDAO extends IDAO<Groups, Long> {
+
     /**
      * Get a Groups by searching for a groupname.
+     *
      * @param groupname the groupname
      * @return returns the found groups
      */
     public List<Groups> getByGroupname(String groupname);
-    
+
     /**
      * Get a Groups by searching for a username.
+     *
      * @param username the username
      * @return returns the found groups
      */

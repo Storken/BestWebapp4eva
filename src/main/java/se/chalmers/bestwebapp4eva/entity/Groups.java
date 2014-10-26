@@ -18,19 +18,18 @@ import javax.persistence.Table;
  * @author Bosch
  */
 @Entity
-@Table(name="USER_GROUPS")
+@Table(name = "USER_GROUPS")
 public class Groups extends AbstractDBObject implements Serializable {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @Column(nullable = false)
     private String username;
-    
+
     @Column(nullable = false)
     private String groupname;
-    
 
     @Override
     public Long getId() {
@@ -57,6 +56,5 @@ public class Groups extends AbstractDBObject implements Serializable {
     public void setUsername(String username) {
         this.username = username;
     }
-    
-    
+
 }

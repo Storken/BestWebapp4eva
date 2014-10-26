@@ -15,6 +15,7 @@ import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 /**
  * Validator class that is used for validating input and displaying appropriate
  * error message when an entity is added via the "new entity dialog".
+ *
  * @author simon
  */
 @Named
@@ -30,7 +31,7 @@ public class NewEntityValidator implements Serializable, Validator {
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
         FacesMessage message = null;
- 
+
         switch (component.getId()) {
             case "title":
                 message = getTitleMessage(value.toString());
@@ -59,7 +60,7 @@ public class NewEntityValidator implements Serializable, Validator {
 
         if (title.isEmpty()) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title cannot be empty.");
-        }else if (!basicEntityDAO.getByTitle(title).isEmpty()) {
+        } else if (!basicEntityDAO.getByTitle(title).isEmpty()) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title already exists.");
         } else if (title.length() > 25) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Title", "Title too long (25 chars max).");
@@ -93,11 +94,11 @@ public class NewEntityValidator implements Serializable, Validator {
             return null;
         }
     }
-    
+
     private FacesMessage getCategoryDescriptionMessage(String categoryDescription) {
-        if(categoryDescription.length() > 50) {
+        if (categoryDescription.length() > 50) {
             return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Description", "Description too long (50 chars max).");
-        }else{
+        } else {
             return null;
         }
     }

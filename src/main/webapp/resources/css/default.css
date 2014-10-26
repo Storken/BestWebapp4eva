@@ -19,12 +19,12 @@ body {
 .ui-tabs{
     height: 750px;
     margin-top: 5px;
-   
+
 }
 
 .ui-datatable{
     margin-top: 11px;
-    
+
 }
 
 #gridContainer{
@@ -47,12 +47,12 @@ body {
 /* Navigation bar branding text color(BestWebapp4eva) */
 .navbar-header .navbar-brand{
     color: #EEEEEE;
-    
+
 }
 
 #homeLink{
-   size: 20px;
-    
+    size: 20px;
+
 }
 
 .navbar-header .navbar-brand > h2{
@@ -63,7 +63,7 @@ body {
 
 /*Color of list elements in navigation bar*/
 .navbar-inverse .navbar-nav > li > a {
-  color: #EEEEEE;
+    color: #EEEEEE;
 }
 .navbar-fixed-top {
     margin-bottom: 0;
@@ -75,7 +75,7 @@ aside{
     width: 200px;
     height: 750px;
     background: #22313F;
-    
+
 }
 aside > h2{
     color: #FFFFFF;

@@ -25,25 +25,25 @@ import se.chalmers.bestwebapp4eva.view.DashboardBB;
  */
 @Named
 @SessionScoped
-public class DashboardCtrl implements Serializable{
-    
+public class DashboardCtrl implements Serializable {
+
     @EJB
     private ICategoryDAO categoryDAO;
-    
+
     @Inject
     private DashboardBB dashboardBB;
-    
-    public DashboardCtrl(){
-        
+
+    public DashboardCtrl() {
+
     }
-    
+
     public void onRowEdit(RowEditEvent event) {
-        Category editedEntity = (Category)event.getObject();
+        Category editedEntity = (Category) event.getObject();
         categoryDAO.update(editedEntity);
     }
-    
+
     public void onRowCancel(RowEditEvent event) {
         System.out.println("rowCancel");
     }
-    
+
 }

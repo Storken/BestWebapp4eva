@@ -23,8 +23,8 @@ public class EditCategoryCtrl {
     ICategoryDAO categoryDAO;
 
     /**
-     * Method that is called via an ajax call if a cell in the category
-     * table has been edited (and validation has passed).
+     * Method that is called via an ajax call if a cell in the category table
+     * has been edited (and validation has passed).
      *
      * @param event The event sent from the ajax call.
      */
@@ -34,8 +34,8 @@ public class EditCategoryCtrl {
     }
 
     /**
-     * Method that is called via an ajax call if the user cancels edit
-     * mode on a cell in the category table.
+     * Method that is called via an ajax call if the user cancels edit mode on a
+     * cell in the category table.
      *
      * @param event The event sent from the ajax call.
      */

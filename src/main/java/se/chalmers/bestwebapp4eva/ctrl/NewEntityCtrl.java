@@ -70,7 +70,8 @@ public class NewEntityCtrl {
     }
 
     /**
-     * Method for toggling the custom category dialog in the "new entity dialog".
+     * Method for toggling the custom category dialog in the "new entity
+     * dialog".
      */
     public void toggleCategoryPanel() {
         boolean oldValue = newEntityDialogBB.getNewCatPanelVisible();

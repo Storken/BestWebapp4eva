@@ -19,15 +19,15 @@ import se.chalmers.bestwebapp4eva.entity.User;
  * @author Bosch
  */
 @Stateless
-public class GroupsDAO extends AbstractDAO<Groups, Long> implements IGroupsDAO{
-    
+public class GroupsDAO extends AbstractDAO<Groups, Long> implements IGroupsDAO {
+
     @PersistenceContext//(unitName = "jee_auth_pu")
     protected EntityManager em;
-    
-    public GroupsDAO(){
+
+    public GroupsDAO() {
         super(Groups.class);
     }
-    
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -63,5 +63,5 @@ public class GroupsDAO extends AbstractDAO<Groups, Long> implements IGroupsDAO{
         found.addAll(query.getResultList());
         return found;
     }
-    
+
 }

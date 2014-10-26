@@ -18,7 +18,7 @@ import se.chalmers.bestwebapp4eva.view.NewCategoryDialogBB;
 @Named
 @RequestScoped
 public class NewCategoryCtrl implements Serializable {
-    
+
     @EJB
     private ICategoryDAO categoryDAO;
 
@@ -34,7 +34,7 @@ public class NewCategoryCtrl implements Serializable {
         categoryDAO.create(new Category(categoryDialogBB.getName(), categoryDialogBB.getDescription()));
         clearFields();
     }
-    
+
     // Used to clear fields of the "new category dialog" when the new category has been added.
     private void clearFields() {
         categoryDialogBB.setId(0l);

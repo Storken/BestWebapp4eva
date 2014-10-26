@@ -14,10 +14,11 @@ import se.chalmers.bestwebapp4eva.entity.User;
  * @author Bosch
  */
 @Local
-public interface IUserDAO extends IDAO<User, Long>{
-    
+public interface IUserDAO extends IDAO<User, Long> {
+
     /**
      * Get a User by searching on a username.
+     *
      * @param username the username
      * @return the user put in a List
      */
@@ -25,6 +26,7 @@ public interface IUserDAO extends IDAO<User, Long>{
 
     /**
      * Get a User by searching on a password.
+     *
      * @param password the password
      * @return the user put in a List
      */
@@ -32,6 +34,7 @@ public interface IUserDAO extends IDAO<User, Long>{
 
     /**
      * Create a username and a group for that username directly to the database.
+     *
      * @param username
      * @param password
      * @param groupname should be either "user" or "admin"

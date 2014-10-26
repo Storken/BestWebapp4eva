@@ -135,6 +135,7 @@ public class BasicEntity extends AbstractDBObject {
 
     /**
      * Get the category
+     *
      * @return The category.
      */
     public Category getCategory() {
@@ -143,6 +144,7 @@ public class BasicEntity extends AbstractDBObject {
 
     /**
      * Get the name of the category.
+     *
      * @return The name of the category.
      */
     public String getCategoryName() {
@@ -187,6 +189,7 @@ public class BasicEntity extends AbstractDBObject {
 
     /**
      * Set the category.
+     *
      * @param category The new category.
      */
     public void setCategory(Category category) {

@@ -29,19 +29,19 @@ import se.chalmers.bestwebapp4eva.dao.IUserDAO;
  */
 @RunWith(Arquillian.class)
 public class TestGroupsDAO {
-       
+
     @PersistenceContext
     private EntityManager em;
- 
+
     @Resource
     private UserTransaction utx;
- 
+
     @EJB
     private IUserDAO ud;
- 
+
     @EJB
     private IGroupsDAO gd;
-       
+
     @Deployment
     public static WebArchive createDeployment() {
         return ShrinkWrap.create(WebArchive.class)
@@ -50,19 +50,19 @@ public class TestGroupsDAO {
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
                 .addAsWebInfResource(EmptyAsset.INSTANCE, "beans.xml");
     }
- 
+
     @Before
     public void prepareTest() throws Exception {
         clearData();
         utx.begin();
     }
- 
+
     @After
     public void commitTransaction() throws Exception {
         utx.commit();
         clearData();
     }
- 
+
     private void clearData() throws Exception {
         utx.begin();
         em.joinTransaction();
@@ -70,50 +70,49 @@ public class TestGroupsDAO {
         em.createQuery("DELETE FROM Groups").executeUpdate();
         utx.commit();
     }
-    
-      
+
     @Test
     public void testCreateUserWithAGroup() throws Exception {
         User u = new User();
         u.setUsername("Bosch");
         u.setPassword("123");
         ud.create(u);
-       
+
         Groups g = new Groups();
         g.setUsername(u.getUsername());
         g.setGroupname("user");
         gd.create(g);
-       
+
         assertTrue(gd.getByUsername("Bosch").size() > 0);
     }
-    
+
     @Test
     public void testGetByUsername() throws Exception {
         User u = new User();
         u.setUsername("Bosch");
         u.setPassword("123");
         ud.create(u);
-       
+
         Groups g = new Groups();
         g.setUsername(u.getUsername());
         g.setGroupname("user");
         gd.create(g);
-       
+
         assertTrue(gd.getByUsername("Bosch").get(0).getGroupname().equals("user"));
     }
-    
+
     @Test
     public void testGetByGroupname() throws Exception {
         User u = new User();
         u.setUsername("Bosch");
         u.setPassword("123");
         ud.create(u);
-       
+
         Groups g = new Groups();
         g.setUsername(u.getUsername());
         g.setGroupname("user");
         gd.create(g);
-       
+
         assertTrue(gd.getByGroupname("user").get(0).getUsername().equals("Bosch"));
     }
 }

@@ -22,33 +22,32 @@ import se.chalmers.bestwebapp4eva.entity.Order;
  *
  * @author Bosch
  */
-
 @Named
 @ViewScoped
-public class DashboardBB implements Serializable{
-    
+public class DashboardBB implements Serializable {
+
     private List<Order> orders;
-    
+
     private List<Category> categories;
-    
+
     @EJB
     private IOrderDAO od;
-    
+
     @EJB
     private ICategoryDAO cd;
-    
+
     @Inject
     private UserBB authBB;
-    
-    public DashboardBB(){
-        
+
+    public DashboardBB() {
+
     }
-    
+
     @PostConstruct
-    public void init(){
+    public void init() {
         orders = new ArrayList();
         categories = new ArrayList();
-        
+
         orders.addAll(od.getByUser(authBB.getUsername()));
         categories.addAll(cd.findAll());
     }
@@ -68,5 +67,5 @@ public class DashboardBB implements Serializable{
     public void setCategories(List<Category> categories) {
         this.categories = categories;
     }
-    
+
 }

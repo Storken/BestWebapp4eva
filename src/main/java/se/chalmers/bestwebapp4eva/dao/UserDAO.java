@@ -21,7 +21,7 @@ import se.chalmers.bestwebapp4eva.entity.User;
  * @author Bosch
  */
 @Stateless
-public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO{
+public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO {
 
     private static final Logger LOG = Logger.getLogger(UserDAO.class.getName());
 
@@ -41,11 +41,12 @@ public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO{
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
     /**
      * Create a user with a group of either user or admin.
+     *
      * @param username
-     * @param password 
+     * @param password
      * @param groupname should be "user" or "admin"
      */
     @Override
@@ -54,7 +55,7 @@ public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO{
         user.setUsername(username);
         user.setPassword(password);
         em.persist(user);
-        
+
         Groups group = new Groups();
         group.setGroupname(groupname);
         group.setUsername(username);
@@ -62,8 +63,6 @@ public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO{
     }
 
     // FINDING METHODS
-    
-    
     public List<User> getById(long id) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.id =:id", User.class)
@@ -84,7 +83,7 @@ public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO{
         found.addAll(query.getResultList());
         return found;
     }
-    
+
     @Override
     public List<User> getUserByPassword(String password) {
         TypedQuery<User> query;

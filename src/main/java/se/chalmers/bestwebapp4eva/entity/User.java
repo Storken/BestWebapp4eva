@@ -18,18 +18,18 @@ import se.chalmers.bestwebapp4eva.entity.AbstractDBObject;
  * @author Bosch
  */
 @Entity
-@Table(name="USERS")
+@Table(name = "USERS")
 public class User extends AbstractDBObject implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    
+
     @Column(nullable = false)
     private String username;
-    
+
     @Column(nullable = false)
     private String password;
 
@@ -40,7 +40,7 @@ public class User extends AbstractDBObject implements Serializable {
         this.username = username;
         this.password = passwd;
     }
-    
+
     public String getUsername() {
         return username;
     }

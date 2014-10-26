@@ -7,13 +7,13 @@ import se.chalmers.bestwebapp4eva.entity.Category;
 
 /**
  * Interface defining functions for CategoryDAO.
+ *
  * @author simon
  */
-
 public interface ICategoryDAO extends IDAO<Category, Long> {
-    
+
     public List<Category> getByName(String name);
-    
+
     /**
      * Method for getting a specific list of categories from the db. The list
      * might be sorted and filtered.
@@ -29,7 +29,7 @@ public interface ICategoryDAO extends IDAO<Category, Long> {
      * according to the parameters.
      */
     public List<Category> getResultList(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters);
-    
+
     /**
      * Method for getting the number of items in the database that applies to
      * the provided filters.
