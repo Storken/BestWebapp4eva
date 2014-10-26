@@ -73,6 +73,8 @@ public class TestBasicEntityDAO {
     private void clearData() throws Exception {
         utx.begin();
         em.joinTransaction();
+        em.createQuery("DELETE FROM Order").executeUpdate();
+        em.createQuery("DELETE FROM OrderItem").executeUpdate();
         em.createQuery("DELETE FROM BasicEntity").executeUpdate();
         em.createQuery("DELETE FROM Category").executeUpdate();
         utx.commit();

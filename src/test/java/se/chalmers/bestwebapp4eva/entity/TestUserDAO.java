@@ -65,11 +65,19 @@ public class TestUserDAO {
         clearData();
     }
 
+    /**
+     * Needs to delete in this order because of constraints
+     * @throws Exception 
+     */
     private void clearData() throws Exception {
         utx.begin();
         em.joinTransaction();
-        em.createQuery("DELETE FROM User").executeUpdate();
         em.createQuery("DELETE FROM Groups").executeUpdate();
+        em.createQuery("DELETE FROM Order").executeUpdate();
+        em.createQuery("DELETE FROM OrderItem").executeUpdate();
+        em.createQuery("DELETE FROM BasicEntity").executeUpdate();
+        em.createQuery("DELETE FROM Category").executeUpdate();
+        em.createQuery("DELETE FROM User").executeUpdate();
         utx.commit();
     }
 
