@@ -8,6 +8,7 @@ package se.chalmers.bestwebapp4eva.ctrl;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -36,6 +37,10 @@ public class AuthCtrl implements Serializable{
     
     private boolean userInlogged;
     
+    private FacesContext context;
+    
+    private ExternalContext externalContext;
+    
     public AuthCtrl(){
         
     }
@@ -46,17 +51,21 @@ public class AuthCtrl implements Serializable{
     @Inject
     private AuthBB ab;
     
+    @PostConstruct
+    public void init(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        ExternalContext externalContext = context.getExternalContext();
+        
+    }
+    
     /**
      * This method tries to communicate and login to the database through glassfish.
      * 
      * @return success if it succeeds or fail if it fails 
      */
     public String login() {
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
         LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
-            externalContext.getFlash().setKeepMessages(true);
 
         // Really check is there some data in database?
         if(ad.getUserByUsername(ab.getUsername()).size() < 1){
@@ -139,8 +148,6 @@ public class AuthCtrl implements Serializable{
      * @return 
      */
     public String logout() {
-        ExternalContext externalContext = FacesContext.getCurrentInstance().
-                getExternalContext();
         externalContext.invalidateSession();
         LOG.log(Level.INFO, "*** Logout success");
         currentUser = null;
@@ -153,7 +160,9 @@ public class AuthCtrl implements Serializable{
      * @param out the string to be printed
      */
     private void message(String out){
-            FacesContext.getCurrentInstance().
+        externalContext.getFlash().setKeepMessages(true);
+
+        FacesContext.getCurrentInstance().
                     addMessage(null, 
                             new FacesMessage(FacesMessage.SEVERITY_WARN,
                                     out, null));

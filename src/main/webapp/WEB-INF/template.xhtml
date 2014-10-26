@@ -52,11 +52,11 @@
             </li>
             
             <li>
-                <p:commandLink value="#{authCtrl.userInlogged? '' : 'Log in'}" onclick="PF('dlg1').show(); PF('dlg2').hide()"  />
+                <p:commandLink value="#{authCtrl.userInlogged? '' : 'Log in'}" onclick="PF('loginDialog').show(); PF('createDialog').hide()"  />
             </li>
      
             
-            <p:dialog header="Log in" widgetVar="dlg1" id="dialogue1" 
+                        <p:dialog header="Log in" widgetVar="loginDialog" id="loginDialog" 
                       resizable="false" closable="false" draggable="false">
                     <h:form>
                         <h:outputText value="Username: "/>
@@ -68,13 +68,13 @@
                         <h:inputText id="passwrd" value="#{authBB.password}"/>
                         <br/>
                         <p:commandButton value="Log in" action="#{authCtrl.login}"/>
-                        <p:commandButton value="Create" onclick="PF('dlg2').show(); PF('dlg1').hide()"/>
+                        <p:commandButton value="Create" onclick="PF('createDialog').show(); PF('loginDialog').hide()"/>
                     </h:form>
                 </p:dialog>
      
             
-            <p:dialog header="Create a new user" widgetVar="dlg2" id="dialogue2"
-                      resizable="false" closable="false" draggable="false">
+                        <p:dialog header="Create a new user" widgetVar="createDialog" id="createDdialog"
+                      resizable="false" closable="true" draggable="false">
                     <h:form>
                         <h:outputText value="Username: "/>
                         <br/>
@@ -100,7 +100,6 @@
    </nav>
     
      
-     <ui:insert name="dash">Dash</ui:insert>
      <div id="content">
          
             <ui:insert name="content"></ui:insert>
@@ -108,7 +107,6 @@
      </div>
    <footer>
    </footer>
-   
  </h:body>
 
 </html>

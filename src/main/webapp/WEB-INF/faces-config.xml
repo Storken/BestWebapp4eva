@@ -71,6 +71,12 @@
             <redirect/>
         </navigation-case>
         <navigation-case>
+            <from-action>#{authCtrl.createAccount}</from-action>
+            <from-outcome>fail</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+        <navigation-case>
             <from-action>#{authCtrl.logout}</from-action>
             <from-outcome>success</from-outcome>
             <to-view-id>index.xhtml</to-view-id>

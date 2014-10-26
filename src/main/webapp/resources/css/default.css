@@ -176,3 +176,7 @@ aside > h2{
     right: 0px;
     width: 200px;
 }
+
+.errorMessage {
+    color: #FFFFFF;
+}
