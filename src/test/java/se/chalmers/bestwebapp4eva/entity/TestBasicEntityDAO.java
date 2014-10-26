@@ -71,6 +71,7 @@ public class TestBasicEntityDAO {
         utx.begin();
         em.joinTransaction();
         em.createQuery("DELETE FROM BasicEntity").executeUpdate();
+        em.createQuery("DELETE FROM Category").executeUpdate();
         utx.commit();
     }
     
