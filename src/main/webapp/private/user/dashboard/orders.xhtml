@@ -32,7 +32,7 @@ and open the template in the editor.
             <p:column headerText="Information">    
                 <p:commandLink value="#{order.tableString}" onclick="#{orderBB.setOrder(order)};
                         PF('orderDialog').show()"/>
-                <p:dialog id="orderDialog" header="Order" position="center" widgetVar="orderDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="90%" closeOnEscape="true" draggable="false">
+                <p:dialog id="orderDialog" header="Order" widgetVar="orderDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" width="90%" closeOnEscape="true" draggable="false">
                     <ui:include src="/private/user/order/orderDialog.xhtml"/>
                 </p:dialog>   
             </p:column>
