@@ -39,10 +39,10 @@ public class EditEntityValidator implements Validator {
                 message = getTitleMessage(value.toString());
                 break;
             case "priceInput":
-                message = getPriceMessage((double) value);
+                message = getPriceMessage(value);
                 break;
             case "quantityInput":
-                message = getQuantityMessage((double) value);
+                message = getQuantityMessage(value);
                 break;
         }
 
@@ -66,19 +66,31 @@ public class EditEntityValidator implements Validator {
         }
     }
 
-    private FacesMessage getPriceMessage(Double price) {
-        if (price < 0 || price > Double.MAX_VALUE) {
-            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Price", "Price has to be between 0 and " + Double.MAX_VALUE + ".");
+    private FacesMessage getPriceMessage(Object price) {
+        // check if price is empty  
+        if (price == null) {
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Price", "Price cannot be empty.");
         } else {
-            return null;
+            // if price not null, parse double
+            double onlyDigitsDouble = Double.parseDouble(price.toString().replaceAll("\\D+", "").trim());
+            if (onlyDigitsDouble < 0 || onlyDigitsDouble > Double.MAX_VALUE) {
+                return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Price", "Price has to be between 0 and " + Double.MAX_VALUE + ".");
+            }
         }
+        return null;
     }
 
-    private FacesMessage getQuantityMessage(Double quantity) {
-        if (quantity < 0 || quantity > Double.MAX_VALUE) {
-            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Quantity", "Quantity has to be between 0 and " + Double.MAX_VALUE + ".");
+    private FacesMessage getQuantityMessage(Object quantity) {
+        // check if quantity is empty  
+        if (quantity == null) {
+            return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Quantity", "Quantity cannot be empty.");
         } else {
-            return null;
+            // if quantity not null, parse double
+            double onlyDigitsDouble = Double.parseDouble(quantity.toString().replaceAll("\\D+", "").trim());
+            if (onlyDigitsDouble < 0 || onlyDigitsDouble > Double.MAX_VALUE) {
+                return new FacesMessage(FacesMessage.SEVERITY_WARN, "Invalid Quantity", "Quantity has to be between 0 and " + Double.MAX_VALUE + ".");
+            }
         }
+        return null;
     }
 }
