@@ -12,7 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import se.chalmers.bestwebapp4eva.entity.Groups;
-import se.chalmers.bestwebapp4eva.entity.User;
 
 /**
  *
@@ -44,6 +43,7 @@ public class GroupsDAO extends AbstractDAO<Groups, Long> implements IGroupsDAO {
         return found;
     }
 
+    @Override
     public List<Groups> getByUsername(String username) {
         TypedQuery<Groups> query;
         query = em.createQuery("select g from " + Groups.class.getSimpleName() + " g WHERE g.username =:username", Groups.class)
@@ -54,6 +54,7 @@ public class GroupsDAO extends AbstractDAO<Groups, Long> implements IGroupsDAO {
         return found;
     }
 
+    @Override
     public List<Groups> getByGroupname(String groupname) {
         TypedQuery<Groups> query;
         query = em.createQuery("select g from " + Groups.class.getSimpleName() + " g WHERE g.groupname =:groupname", Groups.class)

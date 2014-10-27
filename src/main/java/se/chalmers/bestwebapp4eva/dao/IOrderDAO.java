@@ -2,6 +2,7 @@ package se.chalmers.bestwebapp4eva.dao;
 
 import java.util.Date;
 import java.util.List;
+import javax.ejb.Local;
 import se.chalmers.bestwebapp4eva.entity.Order;
 
 /**
@@ -9,6 +10,7 @@ import se.chalmers.bestwebapp4eva.entity.Order;
  *
  * @author erik
  */
+@Local
 public interface IOrderDAO extends IDAO<Order, Long> {
 
     /**

@@ -30,6 +30,7 @@ public class CategoryDAO extends AbstractDAO<Category, Long> implements ICategor
         return em;
     }
 
+    @Override
     public List<Category> getByName(String name) {
         EasyCriteria criteria = EasyCriteriaFactory.createQueryCriteria(em, Category.class);
         criteria.andEquals("name", name);

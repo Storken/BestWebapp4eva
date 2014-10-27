@@ -44,7 +44,8 @@ public class BasicEntity extends AbstractDBObject {
     @Enumerated(EnumType.STRING)
     private Unit unit;
 
-    @ManyToOne
+    @Column(nullable = false)
+    @ManyToOne    
     private Category category;
 
     public BasicEntity() {

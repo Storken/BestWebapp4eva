@@ -39,15 +39,15 @@ public class CatalogueBB implements Serializable {
     private ICategoryDAO categoryDAO;
 
     @EJB
-    private IBasicEntityDAO bec;
+    private IBasicEntityDAO basicEntityDAO;
 
     @PostConstruct
     public void init() {
         this.entities = new LazyDataModel<BasicEntity>() {
             @Override
             public List<BasicEntity> load(int first, int pageSize, String sortField, SortOrder sortOrder, Map<String, Object> filters) {
-                List<BasicEntity> result = bec.getResultList(first, pageSize, sortField, sortOrder, filters);
-                entities.setRowCount(bec.count(sortField, sortOrder, filters));
+                List<BasicEntity> result = basicEntityDAO.getResultList(first, pageSize, sortField, sortOrder, filters);
+                entities.setRowCount(basicEntityDAO.count(sortField, sortOrder, filters));
                 return result;
             }
         };

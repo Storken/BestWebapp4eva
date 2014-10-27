@@ -2,6 +2,7 @@ package se.chalmers.bestwebapp4eva.dao;
 
 import java.util.List;
 import java.util.Map;
+import javax.ejb.Local;
 import org.primefaces.model.SortOrder;
 import se.chalmers.bestwebapp4eva.entity.Category;
 
@@ -10,6 +11,7 @@ import se.chalmers.bestwebapp4eva.entity.Category;
  *
  * @author simon
  */
+@Local
 public interface ICategoryDAO extends IDAO<Category, Long> {
 
     public List<Category> getByName(String name);

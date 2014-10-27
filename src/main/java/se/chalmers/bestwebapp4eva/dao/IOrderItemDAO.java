@@ -1,6 +1,7 @@
 package se.chalmers.bestwebapp4eva.dao;
 
 import java.util.List;
+import javax.ejb.Local;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.entity.OrderItem;
 
@@ -9,6 +10,7 @@ import se.chalmers.bestwebapp4eva.entity.OrderItem;
  *
  * @author erik
  */
+@Local
 public interface IOrderItemDAO extends IDAO<OrderItem, Long> {
 
     /**

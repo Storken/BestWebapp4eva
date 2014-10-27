@@ -63,6 +63,7 @@ public class UserDAO extends AbstractDAO<User, Long> implements IUserDAO {
     }
 
     // FINDING METHODS
+    @Override
     public List<User> getById(long id) {
         TypedQuery<User> query;
         query = em.createQuery("select u from " + User.class.getSimpleName() + " u WHERE u.id =:id", User.class)
