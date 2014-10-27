@@ -8,7 +8,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 
 /**
@@ -20,9 +19,6 @@ import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 @Named
 @RequestScoped
 public class NewCategoryValidator implements Validator {
-
-    @EJB
-    IBasicEntityDAO basicEntityDAO;
 
     @EJB
     ICategoryDAO categoryDAO;

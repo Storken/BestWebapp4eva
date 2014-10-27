@@ -2,12 +2,10 @@ package se.chalmers.bestwebapp4eva.ctrl;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.event.RowEditEvent;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.Category;
-import se.chalmers.bestwebapp4eva.view.CategoryBB;
 
 /**
  * Small controller for handling edit events when user edits categories directly

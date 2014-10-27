@@ -26,13 +26,13 @@ public class DashboardBB implements Serializable {
     private List<Category> categories;
 
     @EJB
-    private IOrderDAO od;
+    private IOrderDAO orderDAO;
 
     @EJB
-    private ICategoryDAO cd;
+    private ICategoryDAO categoryDAO;
 
     @Inject
-    private UserBB authBB;
+    private UserBB userBB;
 
     public DashboardBB() {
 
@@ -43,8 +43,8 @@ public class DashboardBB implements Serializable {
         orders = new ArrayList();
         categories = new ArrayList();
 
-        orders.addAll(od.getByUser(authBB.getUsername()));
-        categories.addAll(cd.findAll());
+        orders.addAll(orderDAO.getByUser(userBB.getUsername()));
+        categories.addAll(categoryDAO.findAll());
     }
 
     public List<Order> getOrders() {

@@ -8,7 +8,6 @@ package se.chalmers.bestwebapp4eva.ctrl;
 import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -18,7 +17,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import se.chalmers.bestwebapp4eva.dao.GroupsDAO;
 import se.chalmers.bestwebapp4eva.dao.IGroupsDAO;
 import se.chalmers.bestwebapp4eva.dao.IUserDAO;
 import se.chalmers.bestwebapp4eva.view.UserBB;
@@ -51,12 +49,7 @@ public class UserCtrl implements Serializable {
     private IGroupsDAO groupsDAO;
 
     @Inject
-    private UserBB ab;
-
-    @PostConstruct
-    public void init() {
-
-    }
+    private UserBB userBB;
 
     /**
      * This method tries to communicate and login to the database through
@@ -69,25 +62,25 @@ public class UserCtrl implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
+        LOG.log(Level.INFO, "*** Try login {0} {1}", new Object[]{userBB.getUsername(), userBB.getPassword()});
 
         // Really check is there some data in database?
-        if (userDAO.getByUsername(ab.getUsername()).size() < 1) {
-            LOG.log(Level.INFO, "*** No such username: {0}", new Object[]{ab.getUsername()});
+        if (userDAO.getByUsername(userBB.getUsername()).size() < 1) {
+            LOG.log(Level.INFO, "*** No such username: {0}", new Object[]{userBB.getUsername()});
             message("Username and password did not match!");
             return "fail";
         }
-        if (!ab.hasValue()) {
+        if (!userBB.hasValue()) {
             message("Username or password did not have a value");
             return "fail";
         }
 
-        User u = userDAO.getByUsername(ab.getUsername()).get(0);
+        User u = userDAO.getByUsername(userBB.getUsername()).get(0);
         LOG.log(Level.INFO, "*** Found {0} {1}", new Object[]{u.getUsername(), u.getPassword()});
 
         try {
             //request.setCharacterEncoding("UTF-8");
-            request.login(ab.getUsername(), ab.getPassword());
+            request.login(userBB.getUsername(), userBB.getPassword());
             LOG.log(Level.INFO, "*** Login success");
             LOG.log(Level.INFO, "*** User principal {0}", request.getUserPrincipal());
             LOG.log(Level.INFO, "*** Is role admin {0}", request.isUserInRole("admin"));
@@ -114,9 +107,9 @@ public class UserCtrl implements Serializable {
      * @return
      */
     public String createAccount() {
-        if (ab.hasValue()) {
-            if (userDAO.getByUsername(ab.getUsername()).isEmpty()) {
-                if (ab.isAdmin()) {
+        if (userBB.hasValue()) {
+            if (userDAO.getByUsername(userBB.getUsername()).isEmpty()) {
+                if (userBB.isAdmin()) {
                     return createAdmin();
                 }
                 return createUser();
@@ -136,8 +129,8 @@ public class UserCtrl implements Serializable {
      * @return
      */
     public String createUser() {
-        userDAO.createUserAndGroup(ab.getUsername(), ab.getPassword(), "user");
-        LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
+        userDAO.createUserAndGroup(userBB.getUsername(), userBB.getPassword(), "user");
+        LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{userBB.getUsername(), userBB.getPassword()});
         return login();
     }
 
@@ -147,8 +140,8 @@ public class UserCtrl implements Serializable {
      * @return
      */
     public String createAdmin() {
-        userDAO.createUserAndGroup(ab.getUsername(), ab.getPassword(), "admin");
-        LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{ab.getUsername(), ab.getPassword()});
+        userDAO.createUserAndGroup(userBB.getUsername(), userBB.getPassword(), "admin");
+        LOG.log(Level.INFO, "*** New User {0} {1}", new Object[]{userBB.getUsername(), userBB.getPassword()});
         return login();
     }
 

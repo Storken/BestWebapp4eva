@@ -10,7 +10,6 @@ import javax.faces.validator.ValidatorException;
 import javax.inject.Named;
 import org.primefaces.component.datatable.DataTable;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
-import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 
 /**
  * Validator class that is used for validating input and displaying appropriate
@@ -24,9 +23,6 @@ public class EditEntityValidator implements Validator {
 
     @EJB
     IBasicEntityDAO basicEntityDAO;
-
-    @EJB
-    ICategoryDAO categoryDAO;
 
     private long entityId;
 

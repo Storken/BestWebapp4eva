@@ -40,10 +40,10 @@ public class CartCtrl implements Serializable {
     private IOrderItemDAO basicOrderItemDAO;
 
     @EJB
-    private IUserDAO authDAO;
+    private IUserDAO userDAO;
 
     @Inject
-    private UserBB authBB;
+    private UserBB userBB;
 
     @Inject
     private CartBB cartBB;
@@ -52,7 +52,7 @@ public class CartCtrl implements Serializable {
     private OrderBB orderBB;
 
     @Inject
-    private CatalogueBB entities;
+    private CatalogueBB catelogueBB;
 
     // Boolean for telling if the orderButton should be disabled or not
     private boolean orderDisabled = true;
@@ -118,7 +118,7 @@ public class CartCtrl implements Serializable {
      * @param actionEvent The received event
      */
     public void addSelectionToCart(ActionEvent actionEvent) {
-        List<BasicEntity> items = entities.getSelectedEntities();
+        List<BasicEntity> items = catelogueBB.getSelectedEntities();
         for (BasicEntity be : items) {
             OrderItem bi = new OrderItem(be);
             if (!cartBB.getCartItems().contains(bi)) {
@@ -155,7 +155,7 @@ public class CartCtrl implements Serializable {
             basicOrderItemDAO.create(i);
 
         }
-        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, authDAO.getByUsername(authBB.getUsername()).get(0));
+        Order dbOrder = new Order(new Date(System.currentTimeMillis()), order, userDAO.getByUsername(userBB.getUsername()).get(0));
         try {
             orderDAO.create(dbOrder);
             orderBB.setOrder(dbOrder);

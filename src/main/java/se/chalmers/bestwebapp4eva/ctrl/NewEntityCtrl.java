@@ -1,15 +1,12 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
-import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
-import se.chalmers.bestwebapp4eva.view.CatalogueBB;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.entity.Category;
 import se.chalmers.bestwebapp4eva.view.NewEntityDialogBB;

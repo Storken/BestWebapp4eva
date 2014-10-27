@@ -17,7 +17,7 @@ import se.chalmers.bestwebapp4eva.view.NewCategoryDialogBB;
  */
 @Named
 @RequestScoped
-public class NewCategoryCtrl implements Serializable {
+public class NewCategoryCtrl {
 
     @EJB
     private ICategoryDAO categoryDAO;
