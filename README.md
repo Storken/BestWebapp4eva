@@ -66,6 +66,7 @@ The models of the application, such as a User or an Order.
   
 The classes that provide the web pages with the information they should show (backing beans). For example these classes are used in almost every table that lists things from the database.
 
-
-
+UML
+==============
+UML for all java packages and classes can be found in the UML folder.
 
