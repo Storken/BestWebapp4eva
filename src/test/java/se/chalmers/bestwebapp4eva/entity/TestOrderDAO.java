@@ -18,7 +18,6 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import se.chalmers.bestwebapp4eva.dao.UserDAO;
 import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 import se.chalmers.bestwebapp4eva.dao.IOrderDAO;

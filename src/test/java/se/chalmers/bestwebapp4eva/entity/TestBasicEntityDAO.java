@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.Map;
 import javax.annotation.Resource;
 import javax.ejb.EJB;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;

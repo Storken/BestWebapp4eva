@@ -1,6 +1,5 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
-import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.event.ActionEvent;

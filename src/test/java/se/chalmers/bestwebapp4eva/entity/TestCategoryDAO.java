@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.chalmers.bestwebapp4eva.entity;
 
 import java.util.HashMap;
@@ -24,7 +19,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.primefaces.model.SortOrder;
-import se.chalmers.bestwebapp4eva.dao.IBasicEntityDAO;
 import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
 
 /**

@@ -1,10 +1,7 @@
 package se.chalmers.bestwebapp4eva.dao;
 
 import java.util.List;
-import java.util.Map;
 import javax.ejb.Local;
-import org.primefaces.model.SortOrder;
-import se.chalmers.bestwebapp4eva.entity.BasicEntity;
 
 /**
  * Basic interface for containers of different db objects.

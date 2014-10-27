@@ -7,6 +7,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 /**
@@ -44,7 +45,7 @@ public class BasicEntity extends AbstractDBObject {
     @Enumerated(EnumType.STRING)
     private Unit unit;
 
-    @Column(nullable = false)
+    @JoinColumn(nullable = false)
     @ManyToOne    
     private Category category;
 

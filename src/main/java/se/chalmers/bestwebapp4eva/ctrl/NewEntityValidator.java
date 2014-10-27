@@ -1,6 +1,5 @@
 package se.chalmers.bestwebapp4eva.ctrl;
 
-import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
@@ -20,7 +19,7 @@ import se.chalmers.bestwebapp4eva.dao.ICategoryDAO;
  */
 @Named
 @RequestScoped
-public class NewEntityValidator implements Serializable, Validator {
+public class NewEntityValidator implements Validator {
 
     @EJB
     IBasicEntityDAO basicEntityDAO;
