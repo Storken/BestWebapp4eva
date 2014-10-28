@@ -34,8 +34,9 @@ Usecases
 * Add categories to the database
 * Edit categories in the database
 * Filter and sort entities based on their attributes
+* Filter and sort categories based on their attributes
 * Place an order of entities from the database
-* Go through previouly placed orders
+* Go through previously placed orders
 * Export a placed order as a PDF file after placing it
 
 Approach
