@@ -18,11 +18,11 @@ Currently, the entities stored in the database are accessible to any user (also 
 
 Members of the group: 
 ==============
-Erik Tholén - 9209280537 ltd180@gmail.com
+Erik Tholén - 920928-xxxx ltd180[at]gmail.com
 
-Magnus Junghard Huttu - 9307043555 magnushuttu@gmail.com
+Magnus Junghard Huttu - 930704-xxxx magnushuttu[at]gmail.com
 
-Simon Persson - 9204171293 simon.jrp@gmail.com
+Simon Persson - 920417-xxxx simon.jrp[at]gmail.com
 
 Usecases
 ==============
